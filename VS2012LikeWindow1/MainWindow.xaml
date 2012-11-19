@@ -1,0 +1,28 @@
+﻿<Window x:Class="VS2012LikeWindow1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="MainWindow"
+		Width="500"
+		Height="200"
+		AllowsTransparency="True"
+		WindowStyle="None"
+		Background="Transparent">
+	<Border BorderBrush="#FF007ACC"
+			Background="#FF2D2D30"
+			BorderThickness="1"
+			Margin="10">
+		<Border.Effect>
+			<DropShadowEffect ShadowDepth="0"
+							  Color="#FF007ACC"
+							  BlurRadius="8" />
+		</Border.Effect>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="23" />
+			</Grid.RowDefinitions>
+			<Border Grid.Row="1"
+					Background="#FF007ACC" />
+		</Grid>
+	</Border>
+</Window>
