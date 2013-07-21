@@ -18,7 +18,7 @@ namespace VS2012LikeWindow2.Views
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow
 	{
 		public MainWindow()
 		{

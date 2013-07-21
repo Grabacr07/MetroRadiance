@@ -2,40 +2,76 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					xmlns:bh="clr-namespace:VS2012LikeWindow2.Views.Behaviors"
-					xmlns:local="clr-namespace:VS2012LikeWindow2"
-					xmlns:metro="clr-namespace:VS2012LikeWindow2.Views.MetroChrome">
+					xmlns:metro="clr-namespace:VS2012LikeWindow2.Views.MetroChrome"
+                    xmlns:converters="clr-namespace:VS2012LikeWindow2.Views.Converters">
 
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<converters:WindowStateToVisibilityConverter x:Key="WindowStateToVisiblityConverter" />
 
-	<Style TargetType="{x:Type metro:Glow}">
-		<Setter Property="Background"
-				Value="{DynamicResource AccentBrushKey}" />
-		<Setter Property="Width"
-				Value="1" />
-		<Setter Property="Padding"
-				Value="0,8" />
+
+	<Style TargetType="{x:Type metro:MetroWindow}">
+		<Setter Property="WindowChrome.WindowChrome"
+				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
+		<Setter Property="WindowChrome">
+			<Setter.Value>
+				<WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
+							  ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+			</Setter.Value>
+		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:Glow}">
-					<Grid Margin="{TemplateBinding Padding}"
-						  Background="Transparent">
-						<Border Grid.Row="1"
-								Grid.Column="1"
-								Background="{TemplateBinding Background}" />
-						<Border x:Name="glowSource"
-								Grid.Row="1"
-								Grid.Column="1"
-								Margin="-1,0"
-								Opacity="0.5"
-								Background="{TemplateBinding Background}">
-							<Border.Effect>
-								<BlurEffect Radius="8" />
-							</Border.Effect>
-						</Border>
-					</Grid>
+				<ControlTemplate TargetType="{x:Type metro:MetroWindow}">
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+						<ContentPresenter Margin="{TemplateBinding Padding}" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+	<Style TargetType="{x:Type metro:GlowWindow}">
+		<Setter Property="Background"
+				Value="Transparent" />
+		<Setter Property="Foreground"
+				Value="{DynamicResource AccentBrushKey}" />
+		<Setter Property="Padding"
+				Value="0,8" />
+		<Setter Property="SnapsToDevicePixels"
+				Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type metro:GlowWindow}">
+					<Border Background="{TemplateBinding Background}"
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+						<Grid x:Name="glow"
+							  Width="1"
+							  Margin="{TemplateBinding Padding}"
+							  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+							<Border Background="{TemplateBinding Foreground}" />
+							<Border x:Name="glowSource"
+									Margin="-1,0"
+									Opacity="0.5"
+									Background="{TemplateBinding Foreground}">
+								<Border.Effect>
+									<BlurEffect Radius="8" />
+								</Border.Effect>
+							</Border>
+						</Grid>
+					</Border>
 					<ControlTemplate.Triggers>
 						<Trigger Property="Orientation"
 								 Value="Horizontal">
+							<Setter TargetName="glow"
+									Property="Width"
+									Value="Auto" />
+							<Setter TargetName="glow"
+									Property="Height"
+									Value="1" />
 							<Setter TargetName="glowSource"
 									Property="Margin"
 									Value="0,-1" />
@@ -47,21 +83,16 @@
 		<Style.Triggers>
 			<Trigger Property="IsGlow"
 					 Value="False">
-				<Setter Property="Background"
+				<Setter Property="Foreground"
 						Value="{DynamicResource BorderBrushKey}" />
 			</Trigger>
 			<Trigger Property="Orientation"
 					 Value="Horizontal">
-				<Setter Property="Width"
-						Value="Auto" />
-				<Setter Property="Height"
-						Value="1" />
 				<Setter Property="Padding"
 						Value="0" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>
-	
 
 	<Style TargetType="{x:Type metro:CaptionButton}">
 		<Setter Property="Width"
@@ -123,7 +154,6 @@
 		</Setter>
 	</Style>
 
-
 	<Style TargetType="{x:Type metro:CaptionButtons}">
 		<Setter Property="Focusable"
 				Value="False" />
@@ -176,4 +206,48 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<Style TargetType="{x:Type metro:ResizeGrip}">
+		<Setter Property="Width"
+				Value="16" />
+		<Setter Property="Height"
+				Value="16" />
+		<Setter Property="HorizontalAlignment"
+				Value="Right" />
+		<Setter Property="VerticalAlignment"
+				Value="Bottom" />
+		<Setter Property="HorizontalContentAlignment"
+				Value="Right" />
+		<Setter Property="VerticalContentAlignment"
+				Value="Bottom" />
+		<Setter Property="Background"
+				Value="Transparent" />
+		<Setter Property="BorderThickness"
+				Value="0" />
+		<Setter Property="Content">
+			<Setter.Value>
+				<Grid>
+					<Path Style="{DynamicResource ResizeGripIconElementKey}" />
+					<Path Style="{DynamicResource ResizeGripIconShadowElemenKey}" />
+				</Grid>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Visibility"
+				Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState, Converter={StaticResource WindowStateToVisiblityConverter}}" />
+		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+				Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type metro:ResizeGrip}">
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}">
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
 </ResourceDictionary>

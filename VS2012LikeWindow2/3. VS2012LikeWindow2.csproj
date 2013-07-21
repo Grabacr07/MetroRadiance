@@ -54,16 +54,18 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Livet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\Microsoft.Expression.Interactions.dll</HintPath>
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Livet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Windows.Design.Extensibility, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,19 +91,21 @@
     <Compile Include="Models\Win32\WM.cs" />
     <Compile Include="Models\Win32\WS.cs" />
     <Compile Include="Models\Win32\WSEX.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Views\Behaviors\DirectWindowAction.cs" />
-    <Compile Include="Views\Behaviors\ResizeGripBehavior.cs" />
     <Compile Include="Views\Behaviors\WindowAction.cs" />
+    <Compile Include="Views\Converters\WindowStateToVisibilityConverter.cs" />
     <Compile Include="Views\MetroChrome\CaptionButton.cs" />
     <Compile Include="Views\MetroChrome\CaptionButtons.cs" />
-    <Compile Include="Views\MetroChrome\Glow.cs" />
-    <Compile Include="Views\MetroChrome\GlowDirection.cs" />
-    <Compile Include="Views\MetroChrome\GlowWindow.xaml.cs">
-      <DependentUpon>GlowWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Behaviors\MetroChromeBehavior.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindow.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindowProcessor.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindowProcessorBottom.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindowProcessorLeft.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindowProcessorRight.cs" />
+    <Compile Include="Views\MetroChrome\GlowWindowProcessorTop.cs" />
+    <Compile Include="Views\MetroChrome\MetroWindow.cs" />
+    <Compile Include="Views\MetroChrome\ResizeGrip.cs" />
+    <Compile Include="Views\ViewExtensions.cs" />
     <Compile Include="Views\ThemeService.cs" />
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -119,10 +123,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\MetroChrome\GlowWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -142,6 +142,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -150,10 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="libs\Microsoft.Expression.Interactions.dll" />
-    <Content Include="libs\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

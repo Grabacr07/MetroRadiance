@@ -21,6 +21,7 @@
 		<SolidColorBrush x:Key="ThemeForegroundDarkBrushKey"
 						 Color="#FF969696" />
 
+		
 		<Style TargetType="{x:Type Button}">
 			<Setter Property="Background"
 					Value="{DynamicResource ThemeBackgroundDarkBrushKey}" />
@@ -69,6 +70,33 @@
 							Value="{DynamicResource ThemeForegroundDarkBrushKey}" />
 				</Trigger>
 			</Style.Triggers>
+		</Style>
+
+		<Style x:Key="ResizeGripIconElementKey"
+			   TargetType="{x:Type Path}">
+			<Setter Property="Data"
+					Value="M6,0 L7,0 7,1 6,1 z M6,2 L6,3 7,3 7,2 z M6,4 L6,5 7,5 7,4 z M6,6 L6,7 7,7 7,6 z M0,6 L0,7 1,7 1,6 z M2,6 L2,7 3,7 3,6 z M4,6 L4,7 5,7 5,6 z M4,2 L4,3 5,3, 5,2 z M4,4 L4,5 5,5, 5,4 z M2,4 L2,5 3,5, 3,4 z" />
+			<Setter Property="Fill"
+					Value="{DynamicResource ThemeForegroundBrushKey}" />
+			<Setter Property="Margin"
+					Value="2" />
+			<Setter Property="Opacity"
+					Value="0.5" />
+			<Setter Property="HorizontalAlignment"
+					Value="Right" />
+			<Setter Property="VerticalAlignment"
+					Value="Bottom" />
+			<Setter Property="SnapsToDevicePixels"
+					Value="True" />
+		</Style>
+
+		<Style x:Key="ResizeGripIconShadowElemenKey"
+			   TargetType="{x:Type Path}"
+			   BasedOn="{StaticResource ResizeGripIconElementKey}">
+			<Setter Property="Fill"
+					Value="{DynamicResource ThemeBackgroundBrushKey}" />
+			<Setter Property="Margin"
+					Value="3" />
 		</Style>
 	</Application.Resources>
 </Application>

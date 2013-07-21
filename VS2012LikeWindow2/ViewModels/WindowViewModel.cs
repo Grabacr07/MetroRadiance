@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using VS2012LikeWindow2.Models;
+using Livet;
 using VS2012LikeWindow2.Views;
 
 namespace VS2012LikeWindow2.ViewModels
 {
-	class WindowViewModel : ViewModelBase
+	internal class WindowViewModel : ViewModel
 	{
-
 		#region WindowState 変更通知プロパティ
 
 		private WindowState _WindowState;
@@ -111,15 +108,16 @@ namespace VS2012LikeWindow2.ViewModels
 
 		#endregion
 
-
 		public void ChangePurple()
 		{
 			App.Current.ThemeService.Change(Accent.Purple);
 		}
+
 		public void ChangeBlue()
 		{
 			App.Current.ThemeService.Change(Accent.Blue);
 		}
+
 		public void ChangeOrange()
 		{
 			App.Current.ThemeService.Change(Accent.Orange);
