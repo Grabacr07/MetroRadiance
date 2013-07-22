@@ -7,28 +7,28 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using VS2012LikeWindow2.Models.Win32;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
-	internal class GlowWindowProcessorTop : GlowWindowProcessor
+	internal class GlowWindowProcessorRight : GlowWindowProcessor
 	{
 		public override Orientation Orientation
 		{
-			get { return Orientation.Horizontal; }
+			get { return Orientation.Vertical; }
 		}
 
 		public override HorizontalAlignment HorizontalAlignment
 		{
-			get { return HorizontalAlignment.Stretch; }
+			get { return HorizontalAlignment.Left; }
 		}
 
 		public override VerticalAlignment VerticalAlignment
 		{
-			get { return VerticalAlignment.Bottom; }
+			get { return VerticalAlignment.Stretch; }
 		}
 
 		public override double GetLeft(double ownerLeft, double ownerWidth)
 		{
-			return ownerLeft;
+			return ownerLeft + ownerWidth;
 		}
 
 		public override double GetTop(double ownerTop, double ownerHeight)
@@ -38,32 +38,32 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 
 		public override double GetWidth(double ownerLeft, double ownerWidth)
 		{
-			return ownerWidth;
+			return GlowSize;
 		}
 
 		public override double GetHeight(double ownerTop, double ownerHeight)
 		{
-			return GlowSize;
+			return ownerHeight + GlowSize * 2;
 		}
 
 		public override HitTestValues GetHitTestValue(Point point, double actualWidht, double actualHeight)
 		{
-			var topLeft = new Rect(0, 0, EdgeSize - GlowSize, actualHeight);
-			var topRight = new Rect(actualWidht - EdgeSize + GlowSize, 0, EdgeSize - GlowSize, actualHeight);
+			var rightTop = new Rect(0, 0, actualWidht, EdgeSize);
+			var rightBottom = new Rect(0, actualHeight - EdgeSize, actualWidht, EdgeSize);
 
-			return topLeft.Contains(point)
-				? HitTestValues.HTTOPLEFT
-				: topRight.Contains(point) ? HitTestValues.HTTOPRIGHT : HitTestValues.HTTOP;
+			return rightTop.Contains(point)
+				? HitTestValues.HTTOPRIGHT
+				: rightBottom.Contains(point) ? HitTestValues.HTBOTTOMRIGHT : HitTestValues.HTRIGHT;
 		}
 
 		public override Cursor GetCursor(Point point, double actualWidht, double actualHeight)
 		{
-			var topLeft = new Rect(0, 0, EdgeSize - GlowSize, actualHeight);
-			var topRight = new Rect(actualWidht - EdgeSize + GlowSize, 0, EdgeSize - GlowSize, actualHeight);
+			var rightTop = new Rect(0, 0, actualWidht, EdgeSize);
+			var rightBottom = new Rect(0, actualHeight - EdgeSize, actualWidht, EdgeSize);
 
-			return topLeft.Contains(point)
-				? Cursors.SizeNWSE
-				: topRight.Contains(point) ? Cursors.SizeNESW : Cursors.SizeNS;
+			return rightTop.Contains(point)
+				? Cursors.SizeNESW
+				: rightBottom.Contains(point) ? Cursors.SizeNWSE : Cursors.SizeWE;
 		}
 	}
 }

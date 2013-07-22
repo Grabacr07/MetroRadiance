@@ -2,14 +2,22 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					xmlns:bh="clr-namespace:VS2012LikeWindow2.Views.Behaviors"
-					xmlns:metro="clr-namespace:VS2012LikeWindow2.Views.MetroChrome"
+					xmlns:chrome="clr-namespace:VS2012LikeWindow2.Views.Chrome"
                     xmlns:converters="clr-namespace:VS2012LikeWindow2.Views.Converters">
 
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 	<converters:WindowStateToVisibilityConverter x:Key="WindowStateToVisiblityConverter" />
 
 
-	<Style TargetType="{x:Type metro:MetroWindow}">
+	<Style TargetType="{x:Type chrome:MetroWindow}">
+		<Setter Property="Padding"
+				Value="0" />
+		<Setter Property="Foreground"
+				Value="{DynamicResource ThemeForegroundBrushKey}" />
+		<Setter Property="SnapsToDevicePixels"
+				Value="True" />
+		<Setter Property="TextOptions.TextFormattingMode"
+				Value="Display" />
 		<Setter Property="WindowChrome.WindowChrome"
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
 		<Setter Property="WindowChrome">
@@ -20,7 +28,7 @@
 		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:MetroWindow}">
+				<ControlTemplate TargetType="{x:Type chrome:MetroWindow}">
 					<Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
@@ -30,10 +38,22 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Style.Triggers>
+			<Trigger Property="IsActive"
+					 Value="False">
+				<Setter Property="Foreground"
+						Value="{DynamicResource ThemeForegroundDarkBrushKey}" />
+			</Trigger>
+			<Trigger Property="WindowState"
+					 Value="Maximized">
+				<Setter Property="Padding"
+						Value="8" />
+			</Trigger>
+		</Style.Triggers>
 	</Style>
 
 
-	<Style TargetType="{x:Type metro:GlowWindow}">
+	<Style TargetType="{x:Type chrome:GlowWindow}">
 		<Setter Property="Background"
 				Value="Transparent" />
 		<Setter Property="Foreground"
@@ -44,7 +64,7 @@
 				Value="True" />
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:GlowWindow}">
+				<ControlTemplate TargetType="{x:Type chrome:GlowWindow}">
 					<Border Background="{TemplateBinding Background}"
 							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 						<Grid x:Name="glow"
@@ -84,7 +104,7 @@
 			<Trigger Property="IsGlow"
 					 Value="False">
 				<Setter Property="Foreground"
-						Value="{DynamicResource BorderBrushKey}" />
+						Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
 			</Trigger>
 			<Trigger Property="Orientation"
 					 Value="Horizontal">
@@ -94,7 +114,7 @@
 		</Style.Triggers>
 	</Style>
 
-	<Style TargetType="{x:Type metro:CaptionButton}">
+	<Style TargetType="{x:Type chrome:CaptionButton}">
 		<Setter Property="Width"
 				Value="34" />
 		<Setter Property="Height"
@@ -105,16 +125,8 @@
 				Value="Center" />
 		<Setter Property="BorderThickness"
 				Value="0" />
-		<Setter Property="Padding"
-				Value="0" />
 		<Setter Property="Background"
 				Value="Transparent" />
-		<Setter Property="Foreground"
-				Value="{DynamicResource ThemeForegroundBrushKey}" />
-		<Setter Property="FontFamily"
-				Value="Marlett" />
-		<Setter Property="FontSize"
-				Value="13" />
 		<Setter Property="SnapsToDevicePixels"
 				Value="True" />
 		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
@@ -127,87 +139,69 @@
 				Value="False" />
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:CaptionButton}">
+				<ControlTemplate TargetType="{x:Type chrome:CaptionButton}">
 					<Border x:Name="border"
 							Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
 							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-						<ContentPresenter Margin="{TemplateBinding Padding}"
+						<ContentPresenter x:Name="contentPresenter"
+										  Margin="{TemplateBinding Padding}"
 										  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsMouseOver"
-								 Value="True">
-							<Setter Property="Background"
-									TargetName="border"
-									Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
-						</Trigger>
-						<Trigger Property="IsPressed"
-								 Value="True">
-							<Setter Property="Background"
-									TargetName="border"
-									Value="{DynamicResource AccentBrushKey}" />
-						</Trigger>
-					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Style.Triggers>
+			<Trigger Property="WindowAction"
+					 Value="Minimize">
+				<Setter Property="Content">
+					<Setter.Value>
+						<Path Style="{DynamicResource MinimizeIconKey}" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="WindowAction"
+					 Value="Maximize">
+				<Setter Property="Content">
+					<Setter.Value>
+						<Path Style="{DynamicResource MaximizeIconKey}" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="WindowAction"
+					 Value="Normalize">
+				<Setter Property="Content">
+					<Setter.Value>
+						<Path Style="{DynamicResource NormalizeIconKey}" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="WindowAction"
+					 Value="Close">
+				<Setter Property="Content">
+					<Setter.Value>
+						<Path Style="{DynamicResource CloseIconKey}" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+
+			<Trigger Property="IsMouseOver"
+					 Value="True">
+				<Setter Property="Background"
+						Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
+			</Trigger>
+			<Trigger Property="IsPressed"
+					 Value="True">
+				<Setter Property="Background"
+						Value="{DynamicResource AccentBrushKey}" />
+			</Trigger>
+		</Style.Triggers>
 	</Style>
 
-	<Style TargetType="{x:Type metro:CaptionButtons}">
-		<Setter Property="Focusable"
-				Value="False" />
-		<Setter Property="Foreground"
-				Value="{DynamicResource ThemeForegroundBrushKey}" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:CaptionButtons}">
-					<StackPanel Orientation="Horizontal">
-						<metro:CaptionButton Content="0"
-											 Padding="4,0,0,4"
-											 FontSize="18"
-											 Foreground="{TemplateBinding Foreground}"
-											 Visibility="{Binding CanMinimize, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:CaptionButtons}}}">
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<bh:DirectWindowAction WindowAction="Minimize" />
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</metro:CaptionButton>
-						<metro:CaptionButton Content="1"
-											 Foreground="{TemplateBinding Foreground}"
-											 Visibility="{Binding CanMaximize, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:CaptionButtons}}}">
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<bh:DirectWindowAction WindowAction="Maximize" />
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</metro:CaptionButton>
-						<metro:CaptionButton Content="2"
-											 FontSize="16"
-											 Foreground="{TemplateBinding Foreground}"
-											 Visibility="{Binding CanNormalize, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:CaptionButtons}}}">
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<bh:DirectWindowAction WindowAction="Normalize" />
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</metro:CaptionButton>
-						<metro:CaptionButton Content="r"
-											 Foreground="{TemplateBinding Foreground}">
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Click">
-									<bh:DirectWindowAction WindowAction="Close" />
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</metro:CaptionButton>
-					</StackPanel>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
 
-	<Style TargetType="{x:Type metro:ResizeGrip}">
+	<Style TargetType="{x:Type chrome:ResizeGrip}">
 		<Setter Property="Width"
 				Value="16" />
 		<Setter Property="Height"
@@ -238,7 +232,7 @@
 				Value="True" />
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type metro:ResizeGrip}">
+				<ControlTemplate TargetType="{x:Type chrome:ResizeGrip}">
 					<Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}">

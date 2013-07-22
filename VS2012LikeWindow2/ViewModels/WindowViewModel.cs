@@ -10,6 +10,25 @@ namespace VS2012LikeWindow2.ViewModels
 {
 	internal class WindowViewModel : ViewModel
 	{
+		#region Title 変更通知プロパティ
+
+		private string _Title;
+
+		public string Title
+		{
+			get { return this._Title; }
+			set
+			{
+				if (this._Title != value)
+				{
+					this._Title = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region WindowState 変更通知プロパティ
 
 		private WindowState _WindowState;
@@ -107,6 +126,11 @@ namespace VS2012LikeWindow2.ViewModels
 		}
 
 		#endregion
+
+		public WindowViewModel()
+		{
+			this.Title = "Visual Studio 2012 っぽい何か";
+		}
 
 		public void ChangePurple()
 		{

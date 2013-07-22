@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using VS2012LikeWindow2.Models.Win32;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
 	internal class GlowWindowProcessorBottom : GlowWindowProcessor
 	{

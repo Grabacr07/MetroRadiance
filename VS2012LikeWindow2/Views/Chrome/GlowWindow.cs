@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using VS2012LikeWindow2.Models.Win32;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
 	/// <summary>
 	/// ウィンドウの四辺にアタッチされる発行ウィンドウを表します。
@@ -118,6 +118,8 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 			{
 				this.ownerHandle = new WindowInteropHelper(this.owner).Handle;
 			}
+
+			this.IsGlow = this.owner.IsActive;
 
 			var dpiScaleFactor = this.GetDpiScaleFactor();
 			var left = (int)Math.Round(processor.GetLeft(owner.Left, owner.ActualWidth) * dpiScaleFactor.X);

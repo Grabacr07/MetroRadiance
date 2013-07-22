@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using VS2012LikeWindow2.Models.Win32;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
 	/// <summary>
 	/// ウィンドウをリサイズするためのグリップ コントロールを表します。

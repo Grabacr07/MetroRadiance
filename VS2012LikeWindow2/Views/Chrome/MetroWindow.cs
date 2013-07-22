@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shell;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
 	/// <summary>
 	/// Metro スタイル風のウィンドウを表します。
@@ -60,16 +60,6 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 		{
 			base.OnStateChanged(e);
 			this.UpdateGlowWindows();
-
-			switch (this.WindowState)
-			{
-				case WindowState.Normal:
-					this.Padding = new Thickness(0);
-					break;
-				case WindowState.Maximized:
-					this.Padding = new Thickness(8);
-					break;
-			}
 		}
 
 		protected override void OnActivated(EventArgs e)

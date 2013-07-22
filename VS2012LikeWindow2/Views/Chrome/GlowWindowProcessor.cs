@@ -7,10 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using VS2012LikeWindow2.Models.Win32;
 
-namespace VS2012LikeWindow2.Views.MetroChrome
+namespace VS2012LikeWindow2.Views.Chrome
 {
 	/// <summary>
-	/// <see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+	/// <see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 	/// の各種座標を計算します。
 	/// </summary>
 	internal abstract class GlowWindowProcessor
@@ -38,19 +38,19 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 		public abstract Orientation Orientation { get; }
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// に設定する <see cref="P:System.Windows.Controls.Control.HorizontalContentAlignment"/> プロパティの値を取得します。
 		/// </summary>
 		public abstract HorizontalAlignment HorizontalAlignment { get; }
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// に設定する <see cref="P:System.Windows.Controls.Control.VerticalContentAlignment"/> プロパティの値を取得します。
 		/// </summary>
 		public abstract VerticalAlignment VerticalAlignment { get; }
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// の左端座標を取得します。
 		/// </summary>
 		/// <param name="ownerLeft">アタッチ先ウィンドウの左端座標。</param>
@@ -58,7 +58,7 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 		public abstract double GetLeft(double ownerLeft, double ownerWidth);
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// の上端座標を取得します。
 		/// </summary>
 		/// <param name="ownerTop">アタッチ先ウィンドウの上端座標。</param>
@@ -66,7 +66,7 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 		public abstract double GetTop(double ownerTop, double ownerHeight);
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// の横幅を取得します。
 		/// </summary>
 		/// <param name="ownerLeft">アタッチ先ウィンドウの左端座標。</param>
@@ -74,7 +74,7 @@ namespace VS2012LikeWindow2.Views.MetroChrome
 		public abstract double GetWidth(double ownerLeft, double ownerWidth);
 
 		/// <summary>
-		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.MetroChrome.GlowWindow"/>
+		/// 派生クラスでオーバーライドされると、<see cref="T:VS2012LikeWindow2.Views.Chrome.GlowWindow"/>
 		/// の縦幅を取得します。
 		/// </summary>
 		/// <param name="ownerTop">アタッチ先ウィンドウの上端座標。</param>
