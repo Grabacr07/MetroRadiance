@@ -140,6 +140,11 @@ namespace VS2012LikeWindow2.Views.Chrome
 
 			if (msg == (int)WM.LBUTTONDOWN)
 			{
+				if (!this.owner.IsActive)
+				{
+					this.owner.Activate();
+				}
+
 				var ptScreen = lParam.ToPoint();
 
 				NativeMethods.PostMessage(
