@@ -98,6 +98,8 @@
 					Value="M5,30 L25,30 L25,35 L5,35 z" />
 			<Setter Property="VerticalAlignment"
 					Value="Bottom" />
+			<Setter Property="ToolTip"
+					Value="Minimize" />
 		</Style>
 
 		<Style x:Key="MaximizeIconKey"
@@ -109,6 +111,8 @@
 					Value="11" />
 			<Setter Property="Data"
 					Value="M5,12.5 L5,32.5 L30.078125,32.5 L30.078125,12.5 z M2.5,7.5 L32.578125,7.5 L32.578125,35 L2.5,35 z" />
+			<Setter Property="ToolTip"
+					Value="Maximize" />
 		</Style>
 
 		<Style x:Key="NormalizeIconKey"
@@ -116,6 +120,8 @@
 			   BasedOn="{StaticResource ChromeIconBaseKey}">
 			<Setter Property="Data"
 					Value="M5,22.5 L5,32.5 L22.5,32.5 L22.5,22.5 z M12.5,12.5 L12.5,17.5 L25,17.5 L25,22.5 L30,22.5 L30,12.5 z M10,7.5 L32.5,7.5 L32.5,25 L25,25 L25,35 L2.5,35 L2.5,17.5 L10,17.5 z" />
+			<Setter Property="ToolTip"
+					Value="Normalize" />
 		</Style>
 
 		<Style x:Key="CloseIconKey"
@@ -129,6 +135,8 @@
 					Value="M48.578243,0 L57.856652,0 71.665367,15.433628 85.779,0 94.404,0 75.760063,19.752212 94.404,39.999999 85.125595,39.999999 71.229759,24.460176 56.98544,39.999999 48.404,39.999999 67.135063,20.141593 z" />
 			<!--<Setter Property="Data"
 				Value="M6.875,6.8554688 L10.683594,6.8554688 L19.951172,16.113281 L29.335938,6.8554688 L33.144531,6.8554688 L33.144531,10.664063 L23.769531,19.931641 L33.144531,29.199219 L33.144531,33.125 L29.335938,33.125 L19.951172,23.75 L10.683594,33.125 L6.875,33.125 L6.875,29.316406 L16.132813,19.931641 L6.875,10.664063 z" />-->
+			<Setter Property="ToolTip"
+					Value="Close" />
 		</Style>
 
 
