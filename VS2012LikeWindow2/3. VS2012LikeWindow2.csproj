@@ -84,6 +84,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Win32\ClassLongFlags.cs" />
+    <Compile Include="Models\Win32\ClassStyles.cs" />
     <Compile Include="Models\Win32\GWL.cs" />
     <Compile Include="Models\Win32\HitTestValues.cs" />
     <Compile Include="Models\Win32\NativeMethods.cs" />
