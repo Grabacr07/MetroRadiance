@@ -85,6 +85,10 @@ namespace VS2012LikeWindow2.Views.Chrome
 				wsex |= WSEX.NOACTIVATE;
 				this.handle.SetWindowLongEx(wsex);
 
+				var cs = this.handle.GetClassLong(ClassLongFlags.GclStyle);
+				cs |= ClassStyles.DblClks;
+				this.handle.SetClassLong(ClassLongFlags.GclStyle, cs);
+
 				source.AddHook(this.WndProc);
 			}
 		}
@@ -159,6 +163,18 @@ namespace VS2012LikeWindow2.Views.Chrome
 				var ptClient = this.PointFromScreen(ptScreen);
 
 				this.Cursor = this.processor.GetCursor(ptClient, this.ActualWidth, this.ActualHeight);
+			}
+
+			if (msg == (int)WM.LBUTTONDBLCLK)
+			{
+				if (this.processor.GetType() == typeof(GlowWindowProcessorTop))
+				{
+					NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTTOP, IntPtr.Zero);
+				}
+				else if (this.processor.GetType() == typeof(GlowWindowProcessorBottom))
+				{
+					NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
+				}
 			}
 
 			return IntPtr.Zero;

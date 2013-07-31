@@ -35,5 +35,38 @@ namespace VS2012LikeWindow2.Models.Win32
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern bool PostMessage(IntPtr hwnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		public static extern IntPtr SendMessage(IntPtr hWnd, WM msg, IntPtr wParam, IntPtr lParam);
+
+		public static ClassStyles GetClassLong(this IntPtr hwnd, ClassLongFlags flags)
+		{
+			if (IntPtr.Size == 8)
+			{
+				return (ClassStyles)NativeMethods.GetClassLong64(hwnd, flags);
+			}
+			return (ClassStyles)NativeMethods.GetClassLong32(hwnd, flags);
+		}
+
+		[DllImport("user32.dll", EntryPoint="GetClassLong")]
+		public static extern IntPtr GetClassLong32(IntPtr hwnd, ClassLongFlags nIndex);
+
+		[DllImport("user32.dll", EntryPoint="GetClassLongPtr")]
+		public static extern IntPtr GetClassLong64(IntPtr hwnd, ClassLongFlags nIndex);
+
+		public static ClassStyles SetClassLong(this IntPtr hwnd, ClassLongFlags flags, ClassStyles dwLong)
+		{
+			if (IntPtr.Size == 8)
+			{
+				return (ClassStyles)NativeMethods.SetClassLong64(hwnd, flags, (IntPtr)dwLong);
+			}
+			return (ClassStyles)NativeMethods.SetClassLong32(hwnd, flags, (IntPtr)dwLong);
+		}
+
+		[DllImport("user32.dll", EntryPoint="SetClassLong")]
+		public static extern IntPtr SetClassLong32(IntPtr hWnd, ClassLongFlags nIndex, IntPtr dwNewLong);
+
+		[DllImport("user32.dll", EntryPoint="SetClassLongPtr")]
+		public static extern IntPtr SetClassLong64(IntPtr hWnd, ClassLongFlags nIndex, IntPtr dwNewLong);
 	}
 }
