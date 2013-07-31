@@ -119,14 +119,14 @@
 				Value="34" />
 		<Setter Property="Height"
 				Value="26" />
+		<Setter Property="Background"
+				Value="Transparent" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Center" />
 		<Setter Property="VerticalContentAlignment"
 				Value="Center" />
 		<Setter Property="BorderThickness"
 				Value="0" />
-		<Setter Property="Background"
-				Value="Transparent" />
 		<Setter Property="SnapsToDevicePixels"
 				Value="True" />
 		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
@@ -145,57 +145,73 @@
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-						<ContentPresenter x:Name="contentPresenter"
-										  Margin="{TemplateBinding Padding}"
-										  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+						<Grid Margin="{TemplateBinding Padding}"
+							  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+							<ContentPresenter x:Name="contentPresenter" />
+							<Path x:Name="icon"
+								  Fill="{TemplateBinding Foreground}"
+								  Visibility="Collapsed" />
+						</Grid>
 					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="WindowAction"
+								 Value="Minimize">
+							<Setter TargetName="icon"
+									Property="Style"
+									Value="{DynamicResource MinimizeIconKey}" />
+						</Trigger>
+						<Trigger Property="WindowAction"
+								 Value="Maximize">
+							<Setter TargetName="icon"
+									Property="Style"
+									Value="{DynamicResource MaximizeIconKey}" />
+						</Trigger>
+						<Trigger Property="WindowAction"
+								 Value="Normalize">
+							<Setter TargetName="icon"
+									Property="Style"
+									Value="{DynamicResource NormalizeIconKey}" />
+						</Trigger>
+						<Trigger Property="WindowAction"
+								 Value="Close">
+							<Setter TargetName="icon"
+									Property="Style"
+									Value="{DynamicResource CloseIconKey}" />
+						</Trigger>
+						<Trigger Property="Content"
+								 Value="{x:Null}">
+							<Setter TargetName="icon"
+									Property="Visibility"
+									Value="Visible" />
+						</Trigger>
+					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 		<Style.Triggers>
-			<Trigger Property="WindowAction"
-					 Value="Minimize">
-				<Setter Property="Content">
-					<Setter.Value>
-						<Path Style="{DynamicResource MinimizeIconKey}" />
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-			<Trigger Property="WindowAction"
-					 Value="Maximize">
-				<Setter Property="Content">
-					<Setter.Value>
-						<Path Style="{DynamicResource MaximizeIconKey}" />
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-			<Trigger Property="WindowAction"
-					 Value="Normalize">
-				<Setter Property="Content">
-					<Setter.Value>
-						<Path Style="{DynamicResource NormalizeIconKey}" />
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-			<Trigger Property="WindowAction"
-					 Value="Close">
-				<Setter Property="Content">
-					<Setter.Value>
-						<Path Style="{DynamicResource CloseIconKey}" />
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Background"
-						Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
+						Value="{DynamicResource ItemMouseOverBackgroundBrushKey}" />
+				<Setter Property="BorderBrush"
+						Value="{DynamicResource ItemMouseOverBorderBrushKey}" />
+				<Setter Property="Foreground"
+						Value="{DynamicResource ItemMouseOverForegroundBrushKey}" />
 			</Trigger>
 			<Trigger Property="IsPressed"
 					 Value="True">
 				<Setter Property="Background"
-						Value="{DynamicResource AccentBrushKey}" />
+						Value="{DynamicResource ItemPressedBackgroundBrushKey}" />
+				<Setter Property="BorderBrush"
+						Value="{DynamicResource ItemPressedBorderBrushKey}" />
+				<Setter Property="Foreground"
+						Value="{DynamicResource ItemPressedForegroundBrushKey}" />
+			</Trigger>
+			<Trigger Property="IsEnabled"
+					 Value="False">
+				<Setter Property="Opacity"
+						Value="0.6" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>
@@ -218,14 +234,6 @@
 				Value="Transparent" />
 		<Setter Property="BorderThickness"
 				Value="0" />
-		<Setter Property="Content">
-			<Setter.Value>
-				<Grid>
-					<Path Style="{DynamicResource ResizeGripIconElementKey}" />
-					<Path Style="{DynamicResource ResizeGripIconShadowElemenKey}" />
-				</Grid>
-			</Setter.Value>
-		</Setter>
 		<Setter Property="Visibility"
 				Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState, Converter={StaticResource WindowStateToVisiblityConverter}}" />
 		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
@@ -236,8 +244,11 @@
 					<Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}">
-						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+						<Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+							<Path Style="{DynamicResource ResizeGripIconElementKey}" />
+							<Path Style="{DynamicResource ResizeGripIconShadowElemenKey}" />
+						</Grid>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
