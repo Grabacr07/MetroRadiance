@@ -41,20 +41,12 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Border Grid.Column="0"
-						Background="Transparent"
-						Padding="10,8"
-						WindowChrome.IsHitTestVisibleInChrome="True">
+				<chrome:CaptionIcon Grid.Column="0">
 					<Ellipse Width="18"
 							 Height="18"
 							 Fill="{Binding ElementName=Window, Path=Foreground}"
 							 Opacity="0.7" />
-					<i:Interaction.Triggers>
-						<i:EventTrigger EventName="MouseLeftButtonDown">
-							<bh:DirectWindowAction WindowAction="OpenSystemMenu" />
-						</i:EventTrigger>
-					</i:Interaction.Triggers>
-				</Border>
+				</chrome:CaptionIcon>
 				<TextBlock Grid.Column="1"
 						   Text="{Binding Title}"
 						   TextTrimming="CharacterEllipsis"

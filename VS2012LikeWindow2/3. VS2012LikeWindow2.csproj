@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Views\Behaviors\DirectWindowAction.cs" />
     <Compile Include="Views\Chrome\WindowAction.cs" />
+    <Compile Include="Views\Chrome\CaptionIcon.cs" />
     <Compile Include="Views\Converters\WindowStateToVisibilityConverter.cs" />
     <Compile Include="Views\Chrome\CaptionButton.cs" />
     <Compile Include="Views\Chrome\GlowWindow.cs" />
