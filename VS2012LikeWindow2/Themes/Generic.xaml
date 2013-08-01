@@ -234,6 +234,8 @@
 				Value="Transparent" />
 		<Setter Property="BorderThickness"
 				Value="0" />
+		<Setter Property="IsTabStop"
+				Value="False" />
 		<Setter Property="Visibility"
 				Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState, Converter={StaticResource WindowStateToVisiblityConverter}}" />
 		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
