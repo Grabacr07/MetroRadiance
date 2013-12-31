@@ -24,5 +24,10 @@ namespace VS2012LikeWindow2.Views
 		{
 			InitializeComponent();
 		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			this.Hide();
+		}
 	}
 }
