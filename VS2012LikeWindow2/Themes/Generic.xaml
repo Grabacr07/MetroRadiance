@@ -56,7 +56,7 @@
 	<Style TargetType="{x:Type chrome:GlowWindow}">
 		<Setter Property="Background"
 				Value="Transparent" />
-		<Setter Property="Foreground"
+		<Setter Property="BorderBrush"
 				Value="{DynamicResource AccentBrushKey}" />
 		<Setter Property="Padding"
 				Value="0,8" />
@@ -72,11 +72,11 @@
 							  Margin="{TemplateBinding Padding}"
 							  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-							<Border Background="{TemplateBinding Foreground}" />
+							<Border Background="{TemplateBinding BorderBrush}" />
 							<Border x:Name="glowSource"
 									Margin="-1,0"
 									Opacity="0.5"
-									Background="{TemplateBinding Foreground}">
+									Background="{TemplateBinding BorderBrush}">
 								<Border.Effect>
 									<BlurEffect Radius="8" />
 								</Border.Effect>
@@ -103,7 +103,7 @@
 		<Style.Triggers>
 			<Trigger Property="IsGlow"
 					 Value="False">
-				<Setter Property="Foreground"
+				<Setter Property="BorderBrush"
 						Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
 			</Trigger>
 			<Trigger Property="Orientation"
@@ -112,6 +112,37 @@
 						Value="0" />
 			</Trigger>
 		</Style.Triggers>
+	</Style>
+	
+	<Style TargetType="{x:Type chrome:CaptionIcon}">
+		<Setter Property="Background"
+				Value="Transparent" />
+		<Setter Property="Padding"
+				Value="10,8" />
+		<Setter Property="BorderThickness"
+				Value="0" />
+		<Setter Property="SnapsToDevicePixels"
+				Value="True" />
+		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+				Value="True" />
+		<Setter Property="FocusVisualStyle"
+				Value="{x:Null}" />
+		<Setter Property="IsTabStop"
+				Value="False" />
+		<Setter Property="Focusable"
+				Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type chrome:CaptionIcon}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Background="{TemplateBinding Background}"
+							Padding="{TemplateBinding Padding}">
+						<ContentPresenter x:Name="contentPresenter" />
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 	<Style TargetType="{x:Type chrome:CaptionButton}">
@@ -234,6 +265,8 @@
 				Value="Transparent" />
 		<Setter Property="BorderThickness"
 				Value="0" />
+		<Setter Property="IsTabStop"
+				Value="False" />
 		<Setter Property="Visibility"
 				Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=WindowState, Converter={StaticResource WindowStateToVisiblityConverter}}" />
 		<Setter Property="WindowChrome.IsHitTestVisibleInChrome"

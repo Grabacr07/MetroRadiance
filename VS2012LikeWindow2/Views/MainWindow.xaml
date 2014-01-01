@@ -41,20 +41,12 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<Border Grid.Column="0"
-						Background="Transparent"
-						Padding="10,8"
-						WindowChrome.IsHitTestVisibleInChrome="True">
+				<chrome:CaptionIcon Grid.Column="0">
 					<Ellipse Width="18"
 							 Height="18"
 							 Fill="{Binding ElementName=Window, Path=Foreground}"
 							 Opacity="0.7" />
-					<i:Interaction.Triggers>
-						<i:EventTrigger EventName="MouseLeftButtonDown">
-							<bh:DirectWindowAction WindowAction="OpenSystemMenu" />
-						</i:EventTrigger>
-					</i:Interaction.Triggers>
-				</Border>
+				</chrome:CaptionIcon>
 				<TextBlock Grid.Column="1"
 						   Text="{Binding Title}"
 						   TextTrimming="CharacterEllipsis"
@@ -77,42 +69,55 @@
 			</Grid>
 		</Border>
 		<Grid Grid.Row="1">
-			<StackPanel Orientation="Horizontal"
-						HorizontalAlignment="Center"
+			<StackPanel HorizontalAlignment="Center"
 						VerticalAlignment="Center">
-				<Button Content="Purple"
-						Width="100"
-						Height="30"
-						Margin="5">
-					<i:Interaction.Triggers>
-						<i:EventTrigger EventName="Click">
-							<ei:CallMethodAction TargetObject="{Binding}"
-												 MethodName="ChangePurple" />
-						</i:EventTrigger>
-					</i:Interaction.Triggers>
-				</Button>
-				<Button Content="Blue"
-						Width="100"
-						Height="30"
-						Margin="5">
-					<i:Interaction.Triggers>
-						<i:EventTrigger EventName="Click">
-							<ei:CallMethodAction TargetObject="{Binding}"
-												 MethodName="ChangeBlue" />
-						</i:EventTrigger>
-					</i:Interaction.Triggers>
-				</Button>
-				<Button Content="Orange"
-						Width="100"
-						Height="30"
-						Margin="5">
-					<i:Interaction.Triggers>
-						<i:EventTrigger EventName="Click">
-							<ei:CallMethodAction TargetObject="{Binding}"
-												 MethodName="ChangeOrange" />
-						</i:EventTrigger>
-					</i:Interaction.Triggers>
-				</Button>
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center">
+					<Button Content="Purple"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangePurple" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+					<Button Content="Blue"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeBlue" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+					<Button Content="Orange"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeOrange" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+				</StackPanel>
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center">
+					<Button Content="Hide"
+							Width="100"
+							Height="30"
+							Margin="5"
+							Click="Button_Click">
+					</Button>
+				</StackPanel>
 			</StackPanel>
 		</Grid>
 		<Grid Grid.Row="2"

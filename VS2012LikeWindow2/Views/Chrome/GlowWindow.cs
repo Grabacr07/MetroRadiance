@@ -105,7 +105,7 @@ namespace VS2012LikeWindow2.Views.Chrome
 
 		public void Update()
 		{
-			if (this.owner.WindowState == WindowState.Normal)
+			if (this.owner.WindowState == WindowState.Normal && this.owner.Visibility == Visibility.Visible)
 			{
 				this.UpdateCore();
 				this.Visibility = Visibility.Visible;
