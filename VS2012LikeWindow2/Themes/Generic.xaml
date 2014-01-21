@@ -3,7 +3,7 @@
 					xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					xmlns:bh="clr-namespace:VS2012LikeWindow2.Views.Behaviors"
 					xmlns:chrome="clr-namespace:VS2012LikeWindow2.Views.Chrome"
-                    xmlns:converters="clr-namespace:VS2012LikeWindow2.Views.Converters">
+					xmlns:converters="clr-namespace:VS2012LikeWindow2.Views.Converters">
 
 	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 	<converters:WindowStateToVisibilityConverter x:Key="WindowStateToVisiblityConverter" />
@@ -113,7 +113,7 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
-	
+
 	<Style TargetType="{x:Type chrome:CaptionIcon}">
 		<Setter Property="Background"
 				Value="Transparent" />
@@ -152,6 +152,8 @@
 				Value="26" />
 		<Setter Property="Background"
 				Value="Transparent" />
+		<Setter Property="Foreground"
+				Value="{DynamicResource ThemeForegroundBrushKey}" />
 		<Setter Property="HorizontalContentAlignment"
 				Value="Center" />
 		<Setter Property="VerticalContentAlignment"
@@ -224,20 +226,12 @@
 			<Trigger Property="IsMouseOver"
 					 Value="True">
 				<Setter Property="Background"
-						Value="{DynamicResource ItemMouseOverBackgroundBrushKey}" />
-				<Setter Property="BorderBrush"
-						Value="{DynamicResource ItemMouseOverBorderBrushKey}" />
-				<Setter Property="Foreground"
-						Value="{DynamicResource ItemMouseOverForegroundBrushKey}" />
+						Value="{DynamicResource ThemeBackgroundLightBrushKey}" />
 			</Trigger>
 			<Trigger Property="IsPressed"
 					 Value="True">
 				<Setter Property="Background"
-						Value="{DynamicResource ItemPressedBackgroundBrushKey}" />
-				<Setter Property="BorderBrush"
-						Value="{DynamicResource ItemPressedBorderBrushKey}" />
-				<Setter Property="Foreground"
-						Value="{DynamicResource ItemPressedForegroundBrushKey}" />
+						Value="{DynamicResource AccentBrushKey}" />
 			</Trigger>
 			<Trigger Property="IsEnabled"
 					 Value="False">

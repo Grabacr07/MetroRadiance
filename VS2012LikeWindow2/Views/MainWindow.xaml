@@ -1,26 +1,34 @@
-﻿<chrome:MetroWindow x:Class="VS2012LikeWindow2.Views.MainWindow"
-					x:Name="Window"
-					xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-					xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-					xmlns:bh="clr-namespace:VS2012LikeWindow2.Views.Behaviors"
-					xmlns:chrome="clr-namespace:VS2012LikeWindow2.Views.Chrome"
-					xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
-					Title="MainWindow"
-					Width="450"
-					Height="200"
-					Background="{DynamicResource ThemeBackgroundBrushKey}"
-					WindowState="{Binding WindowState}"
-					SnapsToDevicePixels="True"
-					TextOptions.TextFormattingMode="Display">
+﻿<Window x:Class="VS2012LikeWindow2.Views.MainWindow"
+		x:Name="Window"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+		xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome"
+		xmlns:bh="clr-namespace:VS2012LikeWindow2.Views.Behaviors"
+		xmlns:chrome2="clr-namespace:VS2012LikeWindow2.Views.Chrome"
+		xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
+		Title="MainWindow"
+		Width="450"
+		Height="200"
+		Background="{DynamicResource ThemeBackgroundBrushKey}"
+		Foreground="{DynamicResource ThemeForegroundBrushKey}"
+		WindowState="{Binding WindowState}"
+		SnapsToDevicePixels="True"
+		TextOptions.TextFormattingMode="Display">
 
 	<WindowChrome.WindowChrome>
 		<WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=CaptionBar, Mode=OneWay}"
-					  ResizeBorderThickness="0"
+					  ResizeBorderThickness="1"
 					  GlassFrameThickness="0"
 					  CornerRadius="0" />
 	</WindowChrome.WindowChrome>
+
+	<i:Interaction.Behaviors>
+		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
+									InactiveBrush="{DynamicResource ThemeBackgroundLightBrushKey}"
+									Mode="VisualStudio2013" />
+	</i:Interaction.Behaviors>
 
 	<Window.DataContext>
 		<vm:WindowViewModel />
@@ -41,12 +49,12 @@
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<chrome:CaptionIcon Grid.Column="0">
+				<chrome2:CaptionIcon Grid.Column="0">
 					<Ellipse Width="18"
 							 Height="18"
 							 Fill="{Binding ElementName=Window, Path=Foreground}"
 							 Opacity="0.7" />
-				</chrome:CaptionIcon>
+				</chrome2:CaptionIcon>
 				<TextBlock Grid.Column="1"
 						   Text="{Binding Title}"
 						   TextTrimming="CharacterEllipsis"
@@ -58,13 +66,13 @@
 				<StackPanel Grid.Column="2"
 							Orientation="Horizontal"
 							VerticalAlignment="Top">
-					<chrome:CaptionButton WindowAction="Minimize"
-										  Visibility="{Binding CanMinimize, Converter={StaticResource BooleanToVisibilityConverter}}" />
-					<chrome:CaptionButton WindowAction="Maximize"
-										  Visibility="{Binding CanMaximize, Converter={StaticResource BooleanToVisibilityConverter}}" />
-					<chrome:CaptionButton WindowAction="Normalize"
-										  Visibility="{Binding CanNormalize, Converter={StaticResource BooleanToVisibilityConverter}}" />
-					<chrome:CaptionButton WindowAction="Close" />
+					<chrome2:CaptionButton WindowAction="Minimize"
+										   Visibility="{Binding CanMinimize, Converter={StaticResource BooleanToVisibilityConverter}}" />
+					<chrome2:CaptionButton WindowAction="Maximize"
+										   Visibility="{Binding CanMaximize, Converter={StaticResource BooleanToVisibilityConverter}}" />
+					<chrome2:CaptionButton WindowAction="Normalize"
+										   Visibility="{Binding CanNormalize, Converter={StaticResource BooleanToVisibilityConverter}}" />
+					<chrome2:CaptionButton WindowAction="Close" />
 				</StackPanel>
 			</Grid>
 		</Border>
@@ -126,7 +134,7 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<chrome:ResizeGrip Grid.Column="1" />
+			<chrome2:ResizeGrip Grid.Column="1" />
 		</Grid>
 	</Grid>
-</chrome:MetroWindow>
+</Window>
