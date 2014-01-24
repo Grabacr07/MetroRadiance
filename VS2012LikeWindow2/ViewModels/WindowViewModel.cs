@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Livet;
+using MetroRadiance;
 using VS2012LikeWindow2.Views;
 
 namespace VS2012LikeWindow2.ViewModels
@@ -134,17 +135,17 @@ namespace VS2012LikeWindow2.ViewModels
 
 		public void ChangePurple()
 		{
-			App.Current.ThemeService.Change(Accent.Purple);
+			ThemeService.Current.Accent = Accent.Purple;
 		}
 
 		public void ChangeBlue()
 		{
-			App.Current.ThemeService.Change(Accent.Blue);
+			ThemeService.Current.Accent = Accent.Blue;
 		}
 
 		public void ChangeOrange()
 		{
-			App.Current.ThemeService.Change(Accent.Orange);
+			ThemeService.Current.Accent = Accent.Orange;
 		}
 	}
 }

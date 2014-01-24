@@ -5,23 +5,17 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using VS2012LikeWindow2.Models;
-using VS2012LikeWindow2.Views;
+using MetroRadiance;
 
 namespace VS2012LikeWindow2
 {
-	public partial class App : Application
+	public partial class App
 	{
-		public static new App Current
+		protected override void OnStartup(StartupEventArgs e)
 		{
-			get { return (App)Application.Current; }
-		}
+			base.OnStartup(e);
 
-		internal ThemeService ThemeService { get; private set; }
-
-		public App()
-		{
-			this.ThemeService = new ThemeService(this);
+			ThemeService.Current.Initialize(this);
 		}
 	}
 }

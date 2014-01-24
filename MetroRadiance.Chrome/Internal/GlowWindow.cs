@@ -27,6 +27,7 @@ namespace MetroRadiance.Chrome.Internal
 
 		private IntPtr handle;
 		private readonly GlowWindowProcessor processor;
+		private bool closed;
 
 		private readonly Window owner;
 		private IntPtr ownerHandle;
@@ -166,10 +167,13 @@ namespace MetroRadiance.Chrome.Internal
 			{
 				source.RemoveHook(this.WndProc);
 			}
+			this.closed = true;
 		}
 
 		public void Update()
 		{
+			if (closed) return;
+
 			if (this.owner.Visibility == Visibility.Hidden)
 			{
 				this.Visibility = Visibility.Hidden;

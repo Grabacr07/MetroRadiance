@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
+using MetroRadiance.Chrome.Behaviors;
 using MetroRadiance.Core;
 using MetroRadiance.Core.Win32;
 
@@ -14,8 +16,13 @@ namespace MetroRadiance.Controls
 	/// <summary>
 	/// Metro スタイル風のウィンドウを表します。
 	/// </summary>
+	[TemplatePart(Name = PART_ResizeGrip, Type = typeof(FrameworkElement))]
 	public class MetroWindow : Window
 	{
+		// ReSharper disable InconsistentNaming
+		private const string PART_ResizeGrip = "PART_ResizeGrip";
+		// ReSharper restore InconsistentNaming
+
 		static MetroWindow()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
@@ -32,6 +39,8 @@ namespace MetroRadiance.Controls
 		private Dpi currentDpi;
 
 		private HwndSource source;
+		private FrameworkElement resizeGrip;
+		private readonly List<UIElement> captionBarElements = new List<UIElement>();
 
 		#region DpiScaleTransform 依存関係プロパティ
 
@@ -65,18 +74,64 @@ namespace MetroRadiance.Controls
 
 		#endregion
 
-		#region InactiveBorderBrush 依存関係プロパティ
+		#region MetroChromeBehavior 依存関係プロパティ
 
-		/// <summary>
-		/// このウィンドウの非アクティブ時、ウィンドウの境界の塗りつぶしに使用するブラシを取得または設定します。
-		/// </summary>
-		public Brush InactiveBorderBrush
+		public MetroChromeBehavior MetroChromeBehavior
 		{
-			get { return (Brush)this.GetValue(InactiveBorderBrushProperty); }
-			set { this.SetValue(InactiveBorderBrushProperty, value); }
+			get { return (MetroChromeBehavior)this.GetValue(MetroChromeBehaviorProperty); }
+			set { this.SetValue(MetroChromeBehaviorProperty, value); }
 		}
-		public static readonly DependencyProperty InactiveBorderBrushProperty =
-			DependencyProperty.Register("InactiveBorderBrush", typeof(Brush), typeof(MetroWindow), new UIPropertyMetadata(null));
+		public static readonly DependencyProperty MetroChromeBehaviorProperty =
+			DependencyProperty.Register("MetroChromeBehavior", typeof(MetroChromeBehavior), typeof(MetroWindow), new UIPropertyMetadata(null, MetroChromeBehaviorChangedCallback));
+
+		private static void MetroChromeBehaviorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = (MetroWindow)d;
+			var oldBehavior = (MetroChromeBehavior)e.OldValue;
+			var newBehavior = (MetroChromeBehavior)e.NewValue;
+
+			if (Equals(oldBehavior, newBehavior)) return;
+
+			var behaviors = Interaction.GetBehaviors(instance);
+
+			if (oldBehavior != null) behaviors.Remove(oldBehavior);
+			if (newBehavior != null) behaviors.Add((Behavior)newBehavior.Clone());
+		}
+
+		#endregion
+
+		#region IsCaptionBarElement 添付プロパティ
+
+		public static readonly DependencyProperty IsCaptionBarElementProperty =
+			DependencyProperty.RegisterAttached("IsCaptionBarElement", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, IsCaptionBarElementChangedCallback));
+
+		public static void SetIsCaptionBarElement(UIElement element, Boolean value)
+		{
+			element.SetValue(IsCaptionBarElementProperty, value);
+		}
+		public static bool GetIsBubbleSource(UIElement element)
+		{
+			return (bool)element.GetValue(IsCaptionBarElementProperty);
+		}
+
+		private static void IsCaptionBarElementChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = d as UIElement;
+			if (instance == null) return;
+
+			var window = GetWindow(instance) as MetroWindow;
+			if (window == null) return;
+
+			var newValue = (bool)e.NewValue;
+			if (newValue)
+			{
+				if (!window.captionBarElements.Contains(instance)) window.captionBarElements.Add(instance);
+			}
+			else
+			{
+				window.captionBarElements.Remove(instance);
+			}
+		}
 
 		#endregion
 
@@ -97,6 +152,33 @@ namespace MetroRadiance.Controls
 			}
 		}
 
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			this.resizeGrip = this.GetTemplateChild(PART_ResizeGrip) as FrameworkElement;
+			if (this.resizeGrip != null)
+			{
+				this.resizeGrip.Visibility = this.ResizeMode == ResizeMode.CanResizeWithGrip
+					? Visibility.Visible
+					: Visibility.Collapsed;
+
+				WindowChrome.SetIsHitTestVisibleInChrome(this.resizeGrip, true);
+			}
+		}
+
+		protected override void OnActivated(EventArgs e)
+		{
+			base.OnActivated(e);
+			this.captionBarElements.ForEach(x => x.Opacity = 1);
+		}
+
+		protected override void OnDeactivated(EventArgs e)
+		{
+			base.OnDeactivated(e);
+			this.captionBarElements.ForEach(x => x.Opacity = 0.5);
+		}
+
 		protected override void OnClosed(EventArgs e)
 		{
 			base.OnClosed(e);
@@ -110,7 +192,24 @@ namespace MetroRadiance.Controls
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.DPICHANGED)
+			if (msg == (int)WM.NCHITTEST)
+			{
+				if (this.ResizeMode == ResizeMode.CanResizeWithGrip
+					&& this.WindowState == WindowState.Normal
+					&& this.resizeGrip != null)
+				{
+					var ptScreen = new Point(lParam.ToLoWord(), lParam.ToHiWord());
+					var ptClient = this.resizeGrip.PointFromScreen(ptScreen);
+
+					var rectTarget = new Rect(0, 0, this.resizeGrip.ActualWidth, this.resizeGrip.ActualHeight);
+					if (rectTarget.Contains(ptClient))
+					{
+						handled = true;
+						return (IntPtr)HitTestValues.HTBOTTOMRIGHT;
+					}
+				}
+			}
+			else if (msg == (int)WM.DPICHANGED)
 			{
 				var dpiX = wParam.ToHiWord();
 				var dpiY = wParam.ToLoWord();

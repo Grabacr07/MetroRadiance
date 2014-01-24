@@ -50,7 +50,9 @@
     <Compile Include="Dpi.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MonitorDpiType.cs" />
+    <Compile Include="Notificator.cs" />
     <Compile Include="PerMonitorDpi.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

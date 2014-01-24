@@ -12,28 +12,6 @@ namespace MetroRadiance.Core
 	public static class Extensions
 	{
 		/// <summary>
-		/// <see cref="Point"/> 構造体どうしを乗算します。
-		/// </summary>
-		/// <param name="multiplicand">被乗数。</param>
-		/// <param name="multiplier">乗数。</param>
-		/// <returns>乗算結果。</returns>
-		public static Point Multiplication(this Point multiplicand, Point multiplier)
-		{
-			return new Point(multiplicand.X * multiplier.X, multiplicand.Y * multiplier.Y);
-		}
-
-		/// <summary>
-		/// <see cref="Point"/> 構造体どうしを除算します。
-		/// </summary>
-		/// <param name="dividend">被除数。</param>
-		/// <param name="divisor">除数。</param>
-		/// <returns>除算結果。</returns>
-		public static Point Division(this Point dividend, Point divisor)
-		{
-			return new Point(dividend.X / divisor.X, dividend.Y / divisor.Y);
-		}
-
-		/// <summary>
 		/// 現在の <see cref="Visual"/> から、WPF が認識しているシステム DPI を取得します。
 		/// </summary>
 		/// <returns>

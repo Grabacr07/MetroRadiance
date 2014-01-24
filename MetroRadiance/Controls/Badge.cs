@@ -9,8 +9,13 @@ using System.Windows.Controls;
 
 namespace MetroRadiance.Controls
 {
+	[TemplatePart(Name = PART_CountHost, Type = typeof(TextBlock))]
 	public class Badge : Control
 	{
+		// ReSharper disable InconsistentNaming
+		private const string PART_CountHost = "PART_CountHost";
+		// ReSharper restore InconsistentNaming
+
 		static Badge()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
@@ -46,7 +51,7 @@ namespace MetroRadiance.Controls
 		{
 			base.OnApplyTemplate();
 
-			this.block = this.GetTemplateChild("PART_CountHost") as TextBlock;
+			this.block = this.GetTemplateChild(PART_CountHost) as TextBlock;
 			if (this.block != null)
 			{
 				this.initialSize = this.block.FontSize;
