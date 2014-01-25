@@ -5,6 +5,9 @@ namespace MetroRadiance.Core.Win32
 {
 	public static class NativeMethods
 	{
+		[DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
+		public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
 		public static WS GetWindowLong(this IntPtr hWnd)
 		{
 			return (WS)GetWindowLong(hWnd, (int)GWL.STYLE);
@@ -14,8 +17,9 @@ namespace MetroRadiance.Core.Win32
 			return (WSEX)GetWindowLong(hWnd, (int)GWL.EXSTYLE);
 		}
 
-		[DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
-		public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+		
+		[DllImport("user32.dll")]
+		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
 		public static WS SetWindowLong(this IntPtr hWnd, WS dwNewLong)
 		{
@@ -25,13 +29,16 @@ namespace MetroRadiance.Core.Win32
 		{
 			return (WSEX)SetWindowLong(hWnd, (int)GWL.EXSTYLE, (int)dwNewLong);
 		}
-		
-		[DllImport("user32.dll")]
-		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SWP flags);
+
+		[DllImport("user32.dll")]
+		public static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
+
+		[DllImport("user32.dll")]
+		public static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern bool PostMessage(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam);

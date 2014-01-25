@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
@@ -100,6 +102,33 @@ namespace MetroRadiance.Controls
 
 		#endregion
 
+		#region IsRestoringWindowPlacement 依存関係プロパティ
+
+		/// <summary>
+		/// ウィンドウの位置とサイズを復元できるようにするかどうかを示す値を取得または設定します。
+		/// </summary>
+		public bool IsRestoringWindowPlacement
+		{
+			get { return (bool)this.GetValue(IsRestoringWindowPlacementProperty); }
+			set { this.SetValue(IsRestoringWindowPlacementProperty, value); }
+		}
+		public static readonly DependencyProperty IsRestoringWindowPlacementProperty =
+			DependencyProperty.Register("IsRestoringWindowPlacement", typeof(bool), typeof(MetroWindow), new UIPropertyMetadata(false));
+
+		#endregion
+
+		#region WindowSettings 依存関係プロパティ
+
+		public IWindowSettings WindowSettings
+		{
+			get { return (IWindowSettings)this.GetValue(WindowSettingsProperty); }
+			set { this.SetValue(WindowSettingsProperty, value); }
+		}
+		public static readonly DependencyProperty WindowSettingsProperty =
+			DependencyProperty.Register("WindowSettings", typeof(IWindowSettings), typeof(MetroWindow), new UIPropertyMetadata(null));
+
+		#endregion
+
 		#region IsCaptionBarElement 添付プロパティ
 
 		public static readonly DependencyProperty IsCaptionBarElementProperty =
@@ -139,16 +168,36 @@ namespace MetroRadiance.Controls
 		protected override void OnSourceInitialized(EventArgs e)
 		{
 			base.OnSourceInitialized(e);
-			if (!PerMonitorDpi.IsSupported) return;
-
-			this.systemDpi = this.GetSystemDpi();
 
 			this.source = PresentationSource.FromVisual(this) as HwndSource;
-			if (this.source != null)
+			if (this.source == null) return;
+
+			if (PerMonitorDpi.IsSupported)
 			{
+				this.systemDpi = this.GetSystemDpi();
+
 				this.currentDpi = this.source.GetDpi();
 				this.ChangeDpi(this.currentDpi);
 				this.source.AddHook(this.WndProc);
+			}
+
+			if (this.WindowSettings == null)
+			{
+				this.WindowSettings = new WindowSettings(this);
+			}
+			if (this.IsRestoringWindowPlacement)
+			{
+				this.WindowSettings.Reload();
+
+				if (this.WindowSettings.Placement.HasValue)
+				{
+					var placement = this.WindowSettings.Placement.Value;
+					placement.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+					placement.flags = 0;
+					placement.showCmd = (placement.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : placement.showCmd);
+
+					NativeMethods.SetWindowPlacement(this.source.Handle, ref placement);
+				}
 			}
 		}
 
@@ -177,6 +226,21 @@ namespace MetroRadiance.Controls
 		{
 			base.OnDeactivated(e);
 			this.captionBarElements.ForEach(x => x.Opacity = 0.5);
+		}
+
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			base.OnClosing(e);
+
+			if (!e.Cancel)
+			{
+				WINDOWPLACEMENT placement;
+				var hwnd = new WindowInteropHelper(this).Handle;
+				NativeMethods.GetWindowPlacement(hwnd, out placement);
+
+				this.WindowSettings.Placement = this.IsRestoringWindowPlacement ? (WINDOWPLACEMENT?)placement : null;
+				this.WindowSettings.Save();
+			}
 		}
 
 		protected override void OnClosed(EventArgs e)

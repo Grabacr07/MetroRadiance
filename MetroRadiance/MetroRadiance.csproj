@@ -178,6 +178,7 @@
     <Compile Include="Controls\ExpanderButton.cs" />
     <Compile Include="Controls\HyperlinkEx.cs" />
     <Compile Include="Controls\ITabItem.cs" />
+    <Compile Include="Controls\IWindowSettings.cs" />
     <Compile Include="Controls\LinkButton.cs" />
     <Compile Include="Controls\MetroWindow.cs" />
     <Compile Include="Controls\PromptComboBox.cs" />
@@ -203,6 +204,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ThemeService.cs" />
+    <Compile Include="Controls\WindowSettings.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

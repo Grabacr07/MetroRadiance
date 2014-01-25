@@ -13,6 +13,7 @@
 					  Background="{DynamicResource ThemeBrushKey}"
 					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
 					  WindowState="{Binding WindowState}"
+					  IsRestoringWindowPlacement="True"
 					  SnapsToDevicePixels="True"
 					  TextOptions.TextFormattingMode="Display">
 
