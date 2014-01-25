@@ -13,6 +13,7 @@
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.PromptComboBox.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.PromptTextBox.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />
+		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.SystemButtons.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.TabView.xaml" />
 
 	</ResourceDictionary.MergedDictionaries>

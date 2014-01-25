@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\MetroRadiance.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -147,6 +148,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Generic.xaml</DependentUpon>
     </Page>
+    <Page Include="Themes\Generic.SystemButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Generic.xaml</DependentUpon>
+    </Page>
     <Page Include="Themes\Generic.TabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,6 +184,7 @@
     <Compile Include="Controls\PromptTextBox.cs" />
     <Compile Include="Controls\ResizeGrip.cs" />
     <Compile Include="Controls\Spinner.cs" />
+    <Compile Include="Controls\SystemButtons.cs" />
     <Compile Include="Controls\TabView.cs" />
     <Compile Include="Controls\WindowAction.cs" />
     <Compile Include="Converters\WindowStateToVisibilityConverter.cs" />

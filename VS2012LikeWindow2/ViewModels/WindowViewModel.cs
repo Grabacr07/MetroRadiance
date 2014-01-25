@@ -135,17 +135,26 @@ namespace VS2012LikeWindow2.ViewModels
 
 		public void ChangePurple()
 		{
-			ThemeService.Current.Accent = Accent.Purple;
+			ThemeService.Current.ChangeAccent(Accent.Purple);
 		}
 
 		public void ChangeBlue()
 		{
-			ThemeService.Current.Accent = Accent.Blue;
+			ThemeService.Current.ChangeAccent(Accent.Blue);
 		}
 
 		public void ChangeOrange()
 		{
-			ThemeService.Current.Accent = Accent.Orange;
+			ThemeService.Current.ChangeAccent(Accent.Orange);
+		}
+
+		public void ChangeRed()
+		{
+			var resource = new ResourceDictionary
+			{
+				Source = new Uri(@"pack://application:,,,/VS2012LikeWindow2;component/Themes/Accents/Red.xaml", UriKind.Absolute)
+			};
+			ThemeService.Current.ChangeAccent(resource);
 		}
 	}
 }

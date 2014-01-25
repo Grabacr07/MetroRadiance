@@ -8,7 +8,7 @@
 					  xmlns:controls="http://schemes.grabacr.net/winfx/2014/controls"
 					  xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
 					  Title="MainWindow"
-					  Width="450"
+					  Width="500"
 					  Height="200"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
@@ -62,22 +62,16 @@
 						   FontSize="15"
 						   Margin="3,0,0,-3"
 						   VerticalAlignment="Center" />
-				<StackPanel Grid.Column="2"
-							Orientation="Horizontal"
-							VerticalAlignment="Top">
-					<controls:CaptionButton WindowAction="Minimize" />
-					<controls:CaptionButton WindowAction="Maximize" />
-					<controls:CaptionButton WindowAction="Normalize" />
-					<controls:CaptionButton WindowAction="Close" />
-				</StackPanel>
+				<controls:SystemButtons Grid.Column="2"
+										VerticalAlignment="Top" />
 			</Grid>
 		</Border>
 		<Grid Grid.Row="1">
 			<StackPanel HorizontalAlignment="Center"
 						VerticalAlignment="Center">
-				<StackPanel Orientation="Horizontal"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center">
+				<WrapPanel Orientation="Horizontal"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center">
 					<Button Content="Purple"
 							Width="100"
 							Height="30"
@@ -111,7 +105,18 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
-				</StackPanel>
+					<Button Content="Red"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeRed" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+				</WrapPanel>
 			</StackPanel>
 		</Grid>
 		<Grid Grid.Row="2"

@@ -15,7 +15,7 @@ namespace VS2012LikeWindow2
 		{
 			base.OnStartup(e);
 
-			ThemeService.Current.Initialize(this);
+			ThemeService.Current.Initialize(this, Theme.Dark, Accent.Blue);
 		}
 	}
 }
