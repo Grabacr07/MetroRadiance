@@ -42,7 +42,7 @@ namespace MetroRadiance.Controls
 
 		private HwndSource source;
 		private FrameworkElement resizeGrip;
-		private readonly List<UIElement> captionBarElements = new List<UIElement>();
+		private FrameworkElement captionBar;
 
 		#region DpiScaleTransform 依存関係プロパティ
 
@@ -129,41 +129,37 @@ namespace MetroRadiance.Controls
 
 		#endregion
 
-		#region IsCaptionBarElement 添付プロパティ
+		#region IsCaptionBar 添付プロパティ
 
-		public static readonly DependencyProperty IsCaptionBarElementProperty =
-			DependencyProperty.RegisterAttached("IsCaptionBarElement", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, IsCaptionBarElementChangedCallback));
+		public static readonly DependencyProperty IsCaptionBarProperty =
+			DependencyProperty.RegisterAttached("IsCaptionBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, IsCaptionBarChangedCallback));
 
-		public static void SetIsCaptionBarElement(UIElement element, Boolean value)
+		public static void SetIsCaptionBar(FrameworkElement element, Boolean value)
 		{
-			element.SetValue(IsCaptionBarElementProperty, value);
+			element.SetValue(IsCaptionBarProperty, value);
 		}
-		public static bool GetIsBubbleSource(UIElement element)
+		public static bool GetIsCaptionBar(FrameworkElement element)
 		{
-			return (bool)element.GetValue(IsCaptionBarElementProperty);
+			return (bool)element.GetValue(IsCaptionBarProperty);
 		}
 
-		private static void IsCaptionBarElementChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private static void IsCaptionBarChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var instance = d as UIElement;
+			var instance = d as FrameworkElement;
 			if (instance == null) return;
 
 			var window = GetWindow(instance) as MetroWindow;
 			if (window == null) return;
 
-			var newValue = (bool)e.NewValue;
-			if (newValue)
-			{
-				if (!window.captionBarElements.Contains(instance)) window.captionBarElements.Add(instance);
-			}
-			else
-			{
-				window.captionBarElements.Remove(instance);
-			}
+			window.captionBar = (bool)e.NewValue ? instance : null;
 		}
 
 		#endregion
 
+		public double CaptionBarHeight
+		{
+			get { return this.captionBar == null ? SystemParameters.CaptionHeight : this.captionBar.ActualHeight; }
+		}
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{
@@ -219,13 +215,13 @@ namespace MetroRadiance.Controls
 		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
-			this.captionBarElements.ForEach(x => x.Opacity = 1);
+			this.captionBar.Opacity = 1.0;
 		}
 
 		protected override void OnDeactivated(EventArgs e)
 		{
 			base.OnDeactivated(e);
-			this.captionBarElements.ForEach(x => x.Opacity = 0.5);
+			this.captionBar.Opacity = 0.5;
 		}
 
 		protected override void OnClosing(CancelEventArgs e)

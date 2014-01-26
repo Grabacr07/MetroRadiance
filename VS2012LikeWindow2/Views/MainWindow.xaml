@@ -23,12 +23,12 @@
 									Mode="Office2013" />
 	</controls:MetroWindow.MetroChromeBehavior>-->
 
-	<WindowChrome.WindowChrome>
+	<!--<WindowChrome.WindowChrome>
 		<WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=CaptionBar, Mode=OneWay}"
 					  ResizeBorderThickness="1"
 					  GlassFrameThickness="0"
 					  CornerRadius="0" />
-	</WindowChrome.WindowChrome>
+	</WindowChrome.WindowChrome>-->
 
 	<Window.DataContext>
 		<vm:WindowViewModel />
@@ -41,9 +41,8 @@
 			<RowDefinition Height="23" />
 		</Grid.RowDefinitions>
 
-		<Border x:Name="CaptionBar"
-				Grid.Row="0"
-				controls:MetroWindow.IsCaptionBarElement="True">
+		<Border Grid.Row="0"
+				controls:MetroWindow.IsCaptionBar="True">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />

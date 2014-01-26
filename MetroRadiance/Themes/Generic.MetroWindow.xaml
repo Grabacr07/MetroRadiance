@@ -19,8 +19,10 @@
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
 		<Setter Property="WindowChrome">
 			<Setter.Value>
-				<WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
-							  ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+				<WindowChrome CaptionHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}}, Path=CaptionBarHeight}"
+							  ResizeBorderThickness="1"
+							  GlassFrameThickness="0"
+							  CornerRadius="0" />
 			</Setter.Value>
 		</Setter>
 		<Setter Property="MetroChromeBehavior">
