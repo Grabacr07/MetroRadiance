@@ -44,6 +44,14 @@ namespace MetroRadiance.Internal
 			}
 		}
 
+		/// <summary>
+		/// 現在の文字列と、指定した文字列を比較します。大文字と小文字は区別されません。
+		/// </summary>
+		public static bool Compare(this string strA, string strB)
+		{
+			return string.Compare(strA, strB, StringComparison.OrdinalIgnoreCase) == 0;
+		}
+
 		public static void ForEach<T>(this IEnumerable<T> sequence, Action<T> action)
 		{
 			foreach (var item in sequence) action(item);

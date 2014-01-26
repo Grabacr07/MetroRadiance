@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromeMode.cs" />
-    <Compile Include="IChromeHost.cs" />
     <Compile Include="Internal\GlowWindow.cs" />
     <Compile Include="Internal\GlowWindowProcessor.cs" />
     <Compile Include="Internal\GlowWindowProcessorBottom.cs" />

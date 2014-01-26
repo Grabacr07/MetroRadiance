@@ -9,6 +9,10 @@
 	</ResourceDictionary.MergedDictionaries>
 
 	<Style TargetType="{x:Type controls:MetroWindow}">
+		<Setter Property="Background"
+				Value="{DynamicResource ThemeBrushKey}" />
+		<Setter Property="Foreground"
+				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="Padding"
 				Value="0" />
 		<Setter Property="WindowChrome.WindowChrome"
