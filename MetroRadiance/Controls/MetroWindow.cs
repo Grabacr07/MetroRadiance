@@ -258,7 +258,7 @@ namespace MetroRadiance.Controls
 					&& this.WindowState == WindowState.Normal
 					&& this.resizeGrip != null)
 				{
-					var ptScreen = new Point(lParam.ToLoWord(), lParam.ToHiWord());
+					var ptScreen = lParam.ToPoint();
 					var ptClient = this.resizeGrip.PointFromScreen(ptScreen);
 
 					var rectTarget = new Rect(0, 0, this.resizeGrip.ActualWidth, this.resizeGrip.ActualHeight);

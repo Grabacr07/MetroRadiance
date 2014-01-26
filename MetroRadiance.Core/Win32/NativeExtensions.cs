@@ -17,5 +17,10 @@ namespace MetroRadiance.Core.Win32
 		{
 			return (ushort)((uint)dword >> 16);
 		}
+
+		public static Point ToPoint(this IntPtr dword)
+		{
+			return new Point((short)((uint)dword & 0xffff), (short)((uint)dword >> 16));
+		}
 	}
 }

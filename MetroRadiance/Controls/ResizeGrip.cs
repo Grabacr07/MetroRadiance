@@ -47,7 +47,7 @@ namespace MetroRadiance.Controls
 		{
 			if (msg == (int)WM.NCHITTEST && this.canResize)
 			{
-				var ptScreen = new Point(lParam.ToLoWord(), lParam.ToHiWord());
+				var ptScreen = lParam.ToPoint();
 				var ptClient = this.PointFromScreen(ptScreen);
 
 				var rectTarget = new Rect(0, 0, this.ActualWidth, this.ActualHeight);
