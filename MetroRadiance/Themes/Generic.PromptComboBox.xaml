@@ -121,7 +121,7 @@
 
 								<TextBox x:Name="PART_EditableTextBox"
 										 Grid.Column="0"
-										 Text="{Binding EditableText, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:PromptComboBox}}, UpdateSourceTrigger=PropertyChanged}"
+										 Text="{Binding EditableText, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
 										 Foreground="{TemplateBinding Foreground}"
 										 Margin="{TemplateBinding Padding}"
 										 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

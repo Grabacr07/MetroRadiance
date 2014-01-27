@@ -67,7 +67,7 @@
 							<MultiTrigger.Setters>
 								<Setter TargetName="Blur"
 										Property="Background"
-										Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type chrome:GlowWindow}}, Path=InactiveGlowBrush}" />
+										Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InactiveGlowBrush}" />
 							</MultiTrigger.Setters>
 						</MultiTrigger>
 
@@ -75,7 +75,7 @@
 								 Value="False">
 							<Setter TargetName="Border"
 									Property="Background"
-									Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type chrome:GlowWindow}}, Path=InactiveGlowBrush}" />
+									Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InactiveGlowBrush}" />
 						</Trigger>
 
 						<Trigger Property="Orientation"

@@ -55,9 +55,6 @@ namespace MetroRadiance.Controls
 			set { this.SetValue(DpiScaleTransformProperty, value); }
 		}
 
-		/// <summary>
-		/// <see cref="DpiScaleTransform" /> 依存関係プロパティを識別します。
-		/// </summary>
 		public static readonly DependencyProperty DpiScaleTransformProperty =
 			DependencyProperty.Register("DpiScaleTransform", typeof(Transform), typeof(MetroWindow), new UIPropertyMetadata(Transform.Identity));
 
@@ -65,6 +62,9 @@ namespace MetroRadiance.Controls
 
 		#region WindowChrome 依存関係プロパティ
 
+		/// <summary>
+		/// ウインドウの非クライアント領域のカスタマイズ方法を指定した <see cref="WindowChrome"/> を取得または設定します。
+		/// </summary>
 		public WindowChrome WindowChrome
 		{
 			get { return (WindowChrome)this.GetValue(WindowChromeProperty); }
@@ -78,6 +78,9 @@ namespace MetroRadiance.Controls
 
 		#region MetroChromeBehavior 依存関係プロパティ
 
+		/// <summary>
+		/// ウィンドウの枠を光らせるための <see cref="MetroChromeBehavior"/> を取得または設定します。
+		/// </summary>
 		public MetroChromeBehavior MetroChromeBehavior
 		{
 			get { return (MetroChromeBehavior)this.GetValue(MetroChromeBehaviorProperty); }
@@ -119,6 +122,9 @@ namespace MetroRadiance.Controls
 
 		#region WindowSettings 依存関係プロパティ
 
+		/// <summary>
+		/// ウィンドウの位置とサイズを保存または復元する方法を指定するオブジェクトを取得または設定します。
+		/// </summary>
 		public IWindowSettings WindowSettings
 		{
 			get { return (IWindowSettings)this.GetValue(WindowSettingsProperty); }
@@ -156,6 +162,9 @@ namespace MetroRadiance.Controls
 
 		#endregion
 
+		/// <summary>
+		/// IsCaptionBar 添付プロパティで指定したキャプション バーの高さを取得します。
+		/// </summary>
 		public double CaptionBarHeight
 		{
 			get { return this.captionBar == null ? SystemParameters.CaptionHeight : this.captionBar.ActualHeight; }

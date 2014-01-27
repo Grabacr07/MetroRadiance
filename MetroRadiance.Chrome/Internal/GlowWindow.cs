@@ -223,7 +223,7 @@ namespace MetroRadiance.Chrome.Internal
 					this.owner.Activate();
 				}
 
-				var ptScreen = new Point(lParam.ToLoWord(), lParam.ToHiWord());
+				var ptScreen = lParam.ToPoint();
 
 				NativeMethods.PostMessage(
 					this.ownerHandle,
@@ -233,7 +233,7 @@ namespace MetroRadiance.Chrome.Internal
 			}
 			if (msg == (int)WM.NCHITTEST)
 			{
-				var ptScreen = new Point(lParam.ToLoWord(), lParam.ToHiWord());
+				var ptScreen = lParam.ToPoint();
 				var ptClient = this.PointFromScreen(ptScreen);
 
 				this.Cursor = this.processor.GetCursor(ptClient, this.ActualWidth, this.ActualHeight);
