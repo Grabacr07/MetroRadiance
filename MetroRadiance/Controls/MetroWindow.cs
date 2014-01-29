@@ -158,17 +158,15 @@ namespace MetroRadiance.Controls
 			if (window == null) return;
 
 			window.captionBar = (bool)e.NewValue ? instance : null;
+
+			instance.Loaded += (sender, args) =>
+			{
+				var chrome = WindowChrome.GetWindowChrome(window);
+				if (chrome != null) chrome.CaptionHeight = instance.ActualHeight;
+			};
 		}
 
 		#endregion
-
-		/// <summary>
-		/// IsCaptionBar 添付プロパティで指定したキャプション バーの高さを取得します。
-		/// </summary>
-		public double CaptionBarHeight
-		{
-			get { return this.captionBar == null ? SystemParameters.CaptionHeight : this.captionBar.ActualHeight; }
-		}
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{

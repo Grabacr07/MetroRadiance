@@ -24,7 +24,7 @@
 	</controls:MetroWindow.MetroChromeBehavior>-->
 
 	<!--<WindowChrome.WindowChrome>
-		<WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=CaptionBar, Mode=OneWay}"
+		<WindowChrome CaptionHeight="0"
 					  ResizeBorderThickness="1"
 					  GlassFrameThickness="0"
 					  CornerRadius="0" />

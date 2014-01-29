@@ -8,6 +8,11 @@
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
+	<WindowChrome x:Key="DefaultChrome"
+				  ResizeBorderThickness="0"
+				  GlassFrameThickness="0"
+				  CornerRadius="0" />
+
 	<Style TargetType="{x:Type controls:MetroWindow}">
 		<Setter Property="Background"
 				Value="{DynamicResource ThemeBrushKey}" />
@@ -17,14 +22,8 @@
 				Value="0" />
 		<Setter Property="WindowChrome.WindowChrome"
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
-		<Setter Property="WindowChrome">
-			<Setter.Value>
-				<WindowChrome CaptionHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:MetroWindow}}, Path=CaptionBarHeight}"
-							  ResizeBorderThickness="0"
-							  GlassFrameThickness="0"
-							  CornerRadius="0" />
-			</Setter.Value>
-		</Setter>
+		<Setter Property="WindowChrome"
+				Value="{StaticResource DefaultChrome}" />
 		<Setter Property="MetroChromeBehavior">
 			<Setter.Value>
 				<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
