@@ -156,6 +156,8 @@ namespace MetroRadiance.Chrome.Internal
 				this.handle.SetClassLong(ClassLongFlags.GclStyle, cs);
 
 				source.AddHook(this.WndProc);
+
+				systemDpi = this.GetSystemDpi();
 			}
 		}
 
@@ -249,6 +251,11 @@ namespace MetroRadiance.Chrome.Internal
 				{
 					NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
 				}
+			}
+
+			if (msg == (int)WM.DPICHANGED)
+			{
+				systemDpi = this.GetSystemDpi();
 			}
 
 			return IntPtr.Zero;
