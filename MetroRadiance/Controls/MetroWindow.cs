@@ -177,7 +177,7 @@ namespace MetroRadiance.Controls
 
 			if (PerMonitorDpi.IsSupported)
 			{
-				this.systemDpi = this.GetSystemDpi();
+				this.systemDpi = this.GetSystemDpi() ?? Dpi.Default;
 
 				this.currentDpi = this.source.GetDpi();
 				this.ChangeDpi(this.currentDpi);

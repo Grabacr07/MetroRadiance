@@ -199,7 +199,7 @@ namespace MetroRadiance.Chrome.Internal
 
 			this.IsGlowing = this.owner.IsActive;
 
-			var dpi = systemDpi ?? (systemDpi = this.GetSystemDpi()).Value;
+			var dpi = systemDpi ?? (systemDpi = this.GetSystemDpi()) ?? Dpi.Default;
 			var left = (int)Math.Round(this.processor.GetLeft(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);
 			var top = (int)Math.Round(this.processor.GetTop(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
 			var width = (int)Math.Round(this.processor.GetWidth(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);

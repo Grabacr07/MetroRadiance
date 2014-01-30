@@ -17,7 +17,7 @@ namespace MetroRadiance.Core
 		/// <returns>
 		/// X 軸 および Y 軸それぞれの DPI 設定値を表す <see cref="Dpi"/> 構造体。
 		/// </returns>
-		public static Dpi GetSystemDpi(this Visual visual)
+		public static Dpi? GetSystemDpi(this Visual visual)
 		{
 			var source = PresentationSource.FromVisual(visual);
 			if (source != null && source.CompositionTarget != null)
@@ -27,7 +27,7 @@ namespace MetroRadiance.Core
 					(uint)(Dpi.Default.Y * source.CompositionTarget.TransformToDevice.M22));
 			}
 
-			return Dpi.Default;
+			return null;
 		}
 	}
 }
