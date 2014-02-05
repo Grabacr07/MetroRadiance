@@ -112,6 +112,7 @@
 												  Grid.Column="0"
 												  Content="{TemplateBinding SelectionBoxItem}"
 												  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+												  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
 												  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
 												  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
