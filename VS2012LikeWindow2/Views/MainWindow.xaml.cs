@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace VS2012LikeWindow2.Views
 {
@@ -25,9 +27,27 @@ namespace VS2012LikeWindow2.Views
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void OpenFileDialog(object sender, RoutedEventArgs e)
+		{
+			var dialog = new OpenFileDialog();
+			if ((bool)dialog.ShowDialog())
+			{
+
+			}
+		}
+
+		private async void Hide(object sender, RoutedEventArgs e)
 		{
 			this.Hide();
+
+			await this.Countdown();
+
+			this.Visibility = Visibility.Visible;
+		}
+
+		private Task Countdown()
+		{
+			return Task.Factory.StartNew(() => Thread.Sleep(2500));
 		}
 	}
 }

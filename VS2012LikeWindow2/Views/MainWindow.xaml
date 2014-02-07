@@ -116,6 +116,16 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
+					<Button Content="Hide"
+							MinWidth="100"
+							Height="30"
+							Margin="5"
+							Click="Hide" />
+					<Button Content="OpenFileDialog"
+							MinWidth="120"
+							Height="30"
+							Margin="5"
+							Click="OpenFileDialog" />
 				</WrapPanel>
 			</StackPanel>
 		</Grid>

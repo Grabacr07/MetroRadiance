@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +32,7 @@ namespace MetroRadiance.Chrome.Internal
 
 		private readonly Window owner;
 		private IntPtr ownerHandle;
+		private WindowState ownerState;
 
 		#region IsGlowing 依存関係プロパティ
 
@@ -115,6 +117,8 @@ namespace MetroRadiance.Chrome.Internal
 			this.HorizontalContentAlignment = processor.HorizontalAlignment;
 			this.VerticalContentAlignment = processor.VerticalAlignment;
 
+			this.ownerState = this.WindowState;
+
 			var bindingActive = new Binding("ActiveBrush") { Source = behavior, };
 			this.SetBinding(ActiveGlowBrushProperty, bindingActive);
 
@@ -129,11 +133,15 @@ namespace MetroRadiance.Chrome.Internal
 				this.Show();
 				this.Update();
 			};
+			this.owner.StateChanged += (sender, args) =>
+			{
+				this.Update();
+				this.ownerState = this.owner.WindowState;
+			};
+			this.owner.LocationChanged += (sender, args) => this.Update();
+			this.owner.SizeChanged += (sender, args) => this.Update();
 			this.owner.Activated += (sender, args) => this.Update();
 			this.owner.Deactivated += (sender, args) => this.Update();
-			this.owner.SizeChanged += (sender, args) => this.Update();
-			this.owner.LocationChanged += (sender, args) => this.Update();
-			this.owner.StateChanged += (sender, args) => this.Update();
 			this.owner.Closed += (sender, args) => this.Close();
 		}
 
@@ -145,16 +153,7 @@ namespace MetroRadiance.Chrome.Internal
 			if (source != null)
 			{
 				this.handle = source.Handle;
-
-				var wsex = this.handle.GetWindowLongEx();
-				wsex ^= WSEX.APPWINDOW;
-				wsex |= WSEX.NOACTIVATE;
-				this.handle.SetWindowLongEx(wsex);
-
-				var cs = this.handle.GetClassLong(ClassLongFlags.GclStyle);
-				cs |= ClassStyles.DblClks;
-				this.handle.SetClassLong(ClassLongFlags.GclStyle, cs);
-
+				this.SetWindowStyle();
 				source.AddHook(this.WndProc);
 			}
 		}
@@ -170,9 +169,9 @@ namespace MetroRadiance.Chrome.Internal
 			this.closed = true;
 		}
 
-		public void Update()
+		public async void Update()
 		{
-			if (closed) return;
+			if (this.closed) return;
 
 			if (this.owner.Visibility == Visibility.Hidden)
 			{
@@ -181,6 +180,14 @@ namespace MetroRadiance.Chrome.Internal
 			}
 			else if (this.owner.WindowState == WindowState.Normal)
 			{
+				if (this.ownerState == WindowState.Minimized
+					&& SystemParameters.MinimizeAnimation)
+				{
+					// 最小化から復帰 && 最小化アニメーションが有効の場合
+					// アニメーションが完了しウィンドウが表示されるまで遅延させる (それがだいたい 280 ミリ秒くらい)
+					await Task.Factory.StartNew(() => Thread.Sleep(280));
+				}
+
 				this.Visibility = Visibility.Visible;
 				this.UpdateCore();
 			}
@@ -204,7 +211,29 @@ namespace MetroRadiance.Chrome.Internal
 			var top = (int)Math.Round(this.processor.GetTop(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
 			var width = (int)Math.Round(this.processor.GetWidth(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);
 			var height = (int)Math.Round(this.processor.GetHeight(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
+
+			this.SetWindowStyle();
 			NativeMethods.SetWindowPos(this.handle, this.ownerHandle, left, top, width, height, SWP.NOACTIVATE);
+		}
+
+
+		private void SetWindowStyle()
+		{
+			var ws = this.handle.GetWindowLong();
+			ws ^= WS.SYSMENU;
+			ws ^= WS.OVERLAPPED;
+			ws |= WS.POPUP;
+
+			var wsex = this.handle.GetWindowLongEx();
+			wsex ^= WSEX.APPWINDOW;
+			wsex |= WSEX.TOOLWINDOW;
+
+			handle.SetWindowLong(ws);
+			handle.SetWindowLongEx(wsex);
+
+			var cs = this.handle.GetClassLong(ClassLongFlags.GclStyle);
+			cs |= ClassStyles.DblClks;
+			handle.SetClassLong(ClassLongFlags.GclStyle, cs);
 		}
 
 
