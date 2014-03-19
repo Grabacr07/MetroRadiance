@@ -222,13 +222,13 @@ namespace MetroRadiance.Controls
 		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
-			this.captionBar.Opacity = 1.0;
+			if (this.captionBar != null) this.captionBar.Opacity = 1.0;
 		}
 
 		protected override void OnDeactivated(EventArgs e)
 		{
 			base.OnDeactivated(e);
-			this.captionBar.Opacity = 0.5;
+			if (this.captionBar != null) this.captionBar.Opacity = 0.5;
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
