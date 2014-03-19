@@ -9,7 +9,7 @@
 					  xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
 					  Title="MainWindow"
 					  Width="500"
-					  Height="200"
+					  Height="300"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
 					  WindowState="{Binding WindowState}"
@@ -66,12 +66,38 @@
 										VerticalAlignment="Top" />
 			</Grid>
 		</Border>
-		<Grid Grid.Row="1">
+		<ScrollViewer Grid.Row="1"
+					  HorizontalScrollBarVisibility="Auto"
+					  VerticalScrollBarVisibility="Auto">
 			<StackPanel HorizontalAlignment="Center"
-						VerticalAlignment="Center">
-				<WrapPanel Orientation="Horizontal"
-						   HorizontalAlignment="Center"
-						   VerticalAlignment="Center">
+						VerticalAlignment="Center"
+						Margin="50">
+				<WrapPanel HorizontalAlignment="Center">
+					<Button Content="Dark theme"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeDarkTheme" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+					<Button Content="Light theme"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeLightTheme" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+				</WrapPanel>
+
+				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Purple"
 							Width="100"
 							Height="30"
@@ -116,6 +142,9 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
+				</WrapPanel>
+
+				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Hide"
 							MinWidth="100"
 							Height="30"
@@ -128,7 +157,8 @@
 							Click="OpenFileDialog" />
 				</WrapPanel>
 			</StackPanel>
-		</Grid>
+		</ScrollViewer>
+
 		<Grid Grid.Row="2"
 			  Background="{DynamicResource AccentBrushKey}">
 			<Grid.ColumnDefinitions>

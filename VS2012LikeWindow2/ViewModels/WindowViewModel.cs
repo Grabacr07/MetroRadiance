@@ -156,5 +156,16 @@ namespace VS2012LikeWindow2.ViewModels
 			};
 			ThemeService.Current.ChangeAccent(resource);
 		}
+
+
+		public void ChangeDarkTheme()
+		{
+			ThemeService.Current.ChangeTheme(Theme.Dark);
+		}
+
+		public void ChangeLightTheme()
+		{
+			ThemeService.Current.ChangeTheme(Theme.Light);
+		}
 	}
 }
