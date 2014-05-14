@@ -7,6 +7,7 @@
 					  xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome"
 					  xmlns:controls="http://schemes.grabacr.net/winfx/2014/controls"
 					  xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
+					  xmlns:views="clr-namespace:VS2012LikeWindow2.Views"
 					  Title="MainWindow"
 					  Width="500"
 					  Height="300"
@@ -66,12 +67,12 @@
 										VerticalAlignment="Top" />
 			</Grid>
 		</Border>
+
 		<ScrollViewer Grid.Row="1"
 					  HorizontalScrollBarVisibility="Auto"
 					  VerticalScrollBarVisibility="Auto">
 			<StackPanel HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						Margin="50">
+						VerticalAlignment="Center">
 				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Dark theme"
 							Width="100"
@@ -156,6 +157,8 @@
 							Margin="5"
 							Click="OpenFileDialog" />
 				</WrapPanel>
+
+				<views:BrushSamples />
 			</StackPanel>
 		</ScrollViewer>
 
