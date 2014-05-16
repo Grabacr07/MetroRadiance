@@ -58,7 +58,7 @@ namespace MetroRadiance.Controls
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
-			var window = Window.GetWindow(this);
+			var window = Window.GetWindow(this) as MetroWindow;
 			if (window == null)
 			{
 				base.OnMouseDown(e);
@@ -73,7 +73,7 @@ namespace MetroRadiance.Controls
 					{
 						this.isSystemMenuOpened = true;
 						var point = this.PointToScreen(new Point(0, this.ActualHeight));
-						SystemCommands.ShowSystemMenu(window, point);
+						SystemCommands.ShowSystemMenu(window, new Point(point.X / window.currentDpi.ScaleX, point.Y / window.currentDpi.ScaleY));
 					}
 					else
 					{

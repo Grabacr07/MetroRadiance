@@ -38,7 +38,7 @@ namespace MetroRadiance.Controls
 		/// <summary>
 		/// このウィンドウが表示されているモニターの現在の DPI。
 		/// </summary>
-		private Dpi currentDpi;
+		internal Dpi currentDpi;
 
 		private HwndSource source;
 		private FrameworkElement resizeGrip;
@@ -175,13 +175,16 @@ namespace MetroRadiance.Controls
 			this.source = PresentationSource.FromVisual(this) as HwndSource;
 			if (this.source == null) return;
 
+			this.systemDpi = this.GetSystemDpi() ?? Dpi.Default;
 			if (PerMonitorDpi.IsSupported)
 			{
-				this.systemDpi = this.GetSystemDpi() ?? Dpi.Default;
-
 				this.currentDpi = this.source.GetDpi();
 				this.ChangeDpi(this.currentDpi);
 				this.source.AddHook(this.WndProc);
+			}
+			else
+			{
+				this.currentDpi = this.systemDpi;
 			}
 
 			if (this.WindowSettings == null)
