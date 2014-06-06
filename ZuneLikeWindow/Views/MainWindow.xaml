@@ -6,6 +6,7 @@
 		Width="525"
 		SnapsToDevicePixels="True"
 		Background="Black">
+	
 	<Window.Resources>
 		<Style x:Key="CaptionButtonStyleKey"
 			   TargetType="{x:Type Button}">
@@ -97,13 +98,14 @@
 			<Setter Property="FocusVisualStyle"
 					Value="{x:Null}" />
 		</Style>
-
 	</Window.Resources>
+
 	<WindowChrome.WindowChrome>
 		<WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
 					  ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
 					  GlassFrameThickness="0,0,0,1" />
 	</WindowChrome.WindowChrome>
+
 	<Border BorderBrush="Gray"
 			BorderThickness="1">
 		<Grid>

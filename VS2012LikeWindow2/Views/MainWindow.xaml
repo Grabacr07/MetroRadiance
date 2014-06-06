@@ -16,7 +16,8 @@
 					  WindowState="{Binding WindowState}"
 					  IsRestoringWindowPlacement="True"
 					  SnapsToDevicePixels="True"
-					  TextOptions.TextFormattingMode="Display">
+					  TextOptions.TextFormattingMode="Display"
+					  FontFamily="Segoe UI">
 
 	<!--<controls:MetroWindow.MetroChromeBehavior>
 		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
@@ -59,9 +60,9 @@
 						   Text="{Binding Title}"
 						   TextTrimming="CharacterEllipsis"
 						   Foreground="{DynamicResource ForegroundBrushKey}"
-						   FontFamily="Meiryo"
-						   FontSize="15"
-						   Margin="3,0,0,-3"
+						   FontFamily="Segoe UI Light"
+						   FontSize="18"
+						   Margin="3,0,0,0"
 						   VerticalAlignment="Center" />
 				<controls:SystemButtons Grid.Column="2"
 										VerticalAlignment="Top" />
