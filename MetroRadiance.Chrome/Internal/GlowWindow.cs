@@ -261,6 +261,11 @@ namespace MetroRadiance.Chrome.Internal
 			}
 			if (msg == (int)WM.NCHITTEST)
 			{
+				if (this.owner.ResizeMode == ResizeMode.NoResize)
+				{
+					return IntPtr.Zero;
+				}
+
 				var ptScreen = lParam.ToPoint();
 				var ptClient = this.PointFromScreen(ptScreen);
 
