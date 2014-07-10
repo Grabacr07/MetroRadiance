@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>MetroRadiance.Core</id>
+        <version>1.0.0</version>
+        <authors>Grabacr07</authors>
+        <owners>Grabacr07</owners>
+        <licenseUrl>https://github.com/Grabacr07/MetroRadiance/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/Grabacr07/MetroRadiance</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Modern WPF Themes (core)</description>
+        <language>ja-JP</language>
+        <tags>WPF</tags>
+    </metadata>
+    <files>
+        <file src=".\bin\Release\MetroRadiance.Core.dll" target="lib\net45\MetroRadiance.Core.dll" />
+        <file src=".\bin\Release\MetroRadiance.Core.xml" target="lib\net45\MetroRadiance.Core.xml" />
+    </files>
+</package>
