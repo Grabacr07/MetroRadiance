@@ -19,5 +19,7 @@
     <files>
         <file src="bin\Release\MetroRadiance.dll" target="lib\net45\MetroRadiance.dll" />
         <file src="bin\Release\MetroRadiance.xml" target="lib\net45\MetroRadiance.xml" />
+        <file src="bin\Release\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
+        <file src="bin\Release\Microsoft.Expression.Interactions.dll" target="lib\net45\Microsoft.Expression.Interactions.dll" />
     </files>
 </package>
