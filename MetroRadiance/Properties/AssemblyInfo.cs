@@ -11,6 +11,7 @@ using System.Windows.Markup;
 [assembly: AssemblyTitle("MetroRadiance")]
 [assembly: AssemblyCompany("grabacr.net")]
 [assembly: AssemblyProduct("MetroRadiance")]
+[assembly: AssemblyDescription("Modern WPF Themes")]
 [assembly: AssemblyCopyright("Copyright © 2014 Grabacr07")]
 
 // ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから
