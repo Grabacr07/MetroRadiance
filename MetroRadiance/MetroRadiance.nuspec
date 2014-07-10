@@ -17,7 +17,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src=".\bin\Release\MetroRadiance.dll" target="lib\net45\MetroRadiance.dll" />
-        <file src=".\bin\Release\MetroRadiance.xml" target="lib\net45\MetroRadiance.xml" />
+        <file src="bin\Release\MetroRadiance.dll" target="lib\net45\MetroRadiance.dll" />
+        <file src="bin\Release\MetroRadiance.xml" target="lib\net45\MetroRadiance.xml" />
     </files>
 </package>
