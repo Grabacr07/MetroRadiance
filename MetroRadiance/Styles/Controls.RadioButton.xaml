@@ -12,14 +12,16 @@
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="BorderThickness"
 				Value="1" />
-		<Setter Property="HorizontalContentAlignment"
-				Value="Left" />
 		<Setter Property="VerticalAlignment"
 				Value="Center" />
+		<Setter Property="HorizontalContentAlignment"
+				Value="Left" />
 		<Setter Property="VerticalContentAlignment"
 				Value="Center" />
 		<Setter Property="Padding"
 				Value="4,1,0,0" />
+		<Setter Property="FocusVisualStyle"
+				Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type RadioButton}">
@@ -36,8 +38,8 @@
 								Background="{TemplateBinding Background}"
 								CornerRadius="100"
 								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-								Margin="1,1,2,1"
-								VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								Margin="1,1,2,1">
 							<Grid x:Name="markGrid"
 								  Margin="3">
 								<Ellipse x:Name="optionMark"
@@ -52,18 +54,16 @@
 										  Content="{TemplateBinding Content}"
 										  ContentTemplate="{TemplateBinding ContentTemplate}"
 										  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-										  Focusable="False"
 										  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 										  Margin="{TemplateBinding Padding}"
+										  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 										  RecognizesAccessKey="True"
-										  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+										  Focusable="False" />
 					</Grid>
 					<ControlTemplate.Triggers>
 						<Trigger Property="HasContent"
 								 Value="True">
-							<Setter Property="FocusVisualStyle"
-									Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
 							<Setter Property="Padding"
 									Value="4,-1,0,0" />
 						</Trigger>
@@ -87,6 +87,8 @@
 							<Setter Property="Fill"
 									TargetName="optionMark"
 									Value="{DynamicResource InactiveForegroundBrushKey}" />
+							<Setter Property="Foreground"
+									Value="{DynamicResource InactiveForegroundBrushKey}" />
 						</Trigger>
 						<Trigger Property="IsPressed"
 								 Value="True">
@@ -99,6 +101,8 @@
 							<Setter Property="Fill"
 									TargetName="optionMark"
 									Value="{DynamicResource ActiveForegroundBrushKey}" />
+							<Setter Property="Foreground"
+									Value="{DynamicResource AccentHighlightBrushKey}" />
 						</Trigger>
 						<Trigger Property="IsChecked"
 								 Value="True">
