@@ -15,6 +15,7 @@
 					IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
 			<metro:PromptTextBox Margin="5" />
 			<metro:PromptComboBox Margin="5" />
+			<PasswordBox Margin="5" />
 			<CheckBox Content="チェックボックス"
 					  Margin="4" />
 			<RadioButton Content="ラジオボタン 1"
