@@ -21,8 +21,8 @@
 					<Binding Path="SampleNum"
 							 UpdateSourceTrigger="PropertyChanged">
 						<Binding.ValidationRules>
-							<metro:Int32RangeRule Min="0"
-												  Max="49" />
+							<metro:Int32Rule Min="0"
+											 Max="49" />
 						</Binding.ValidationRules>
 					</Binding>
 				</metro:PromptTextBox.Text>
@@ -33,8 +33,8 @@
 					<Binding Path="SampleNum"
 							 UpdateSourceTrigger="PropertyChanged">
 						<Binding.ValidationRules>
-							<metro:Int32RangeRule Min="0"
-												  Max="49" />
+							<metro:Int32Rule Min="0"
+											 Max="49" />
 						</Binding.ValidationRules>
 					</Binding>
 				</metro:PromptComboBox.Text>
