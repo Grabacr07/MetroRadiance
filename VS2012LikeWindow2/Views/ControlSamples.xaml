@@ -4,17 +4,41 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
+			 xmlns:vm="clr-namespace:VS2012LikeWindow2.ViewModels"
 			 mc:Ignorable="d"
 			 d:DesignWidth="500"
-			 d:DesignHeight="500">
+			 d:DesignHeight="500"
+			 d:DataContext="{d:DesignInstance vm:WindowViewModel}">
 	<StackPanel>
 		<CheckBox x:Name="EnabledCheck"
 				  Content="IsEnabled"
+				  IsChecked="True"
 				  Margin="4" />
 		<StackPanel Margin="12,0"
 					IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
-			<metro:PromptTextBox Margin="5" />
-			<metro:PromptComboBox Margin="5" />
+			<metro:PromptTextBox Margin="5">
+				<metro:PromptTextBox.Text>
+					<Binding Path="SampleNum"
+							 UpdateSourceTrigger="PropertyChanged">
+						<Binding.ValidationRules>
+							<metro:Int32RangeRule Min="0"
+												  Max="49" />
+						</Binding.ValidationRules>
+					</Binding>
+				</metro:PromptTextBox.Text>
+			</metro:PromptTextBox>
+			<metro:PromptComboBox Margin="5"
+								  IsEditable="True">
+				<metro:PromptComboBox.Text>
+					<Binding Path="SampleNum"
+							 UpdateSourceTrigger="PropertyChanged">
+						<Binding.ValidationRules>
+							<metro:Int32RangeRule Min="0"
+												  Max="49" />
+						</Binding.ValidationRules>
+					</Binding>
+				</metro:PromptComboBox.Text>
+			</metro:PromptComboBox>
 			<PasswordBox Margin="5" />
 			<CheckBox Content="チェックボックス"
 					  Margin="4" />

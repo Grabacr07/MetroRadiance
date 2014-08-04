@@ -197,6 +197,8 @@
     <Compile Include="Controls\CaptionButtonMode.cs" />
     <Compile Include="Controls\CaptionIcon.cs" />
     <Compile Include="Controls\ExpanderButton.cs" />
+    <Compile Include="Controls\Int32Rule.cs" />
+    <Compile Include="Controls\Int32RangeRule.cs" />
     <Compile Include="Controls\ITabItem.cs" />
     <Compile Include="Controls\IWindowSettings.cs" />
     <Compile Include="Controls\LinkButton.cs" />

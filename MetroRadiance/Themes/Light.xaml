@@ -105,7 +105,6 @@
 
 
 
-
 	<Color x:Key="LinkForegroundColorKey">#FF0000C8</Color>
 	<SolidColorBrush x:Key="LinkForegroundBrushKey"
 					 Color="#FF0000C8" />
@@ -114,5 +113,9 @@
 	<SolidColorBrush x:Key="ActiveLinkForegroundBrushKey"
 					 Color="#FF007ACC" />
 
+
 	
+	<Color x:Key="ValidationErrorColorKey">#FFC80000</Color>
+	<SolidColorBrush x:Key="ValidationErrorBrushKey"
+					 Color="#FFC80000" />
 </ResourceDictionary>

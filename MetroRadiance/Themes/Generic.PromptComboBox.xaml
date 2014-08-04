@@ -248,6 +248,41 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="Validation.ErrorTemplate">
+			<Setter.Value>
+				<ControlTemplate>
+					<DockPanel>
+						<StackPanel DockPanel.Dock="Bottom"
+									HorizontalAlignment="Left">
+							<Path Data="M35.749999,0.5 L70.999998,48.5 L0.49999973,48.5 z"
+								  Fill="{DynamicResource ValidationErrorBrushKey}"
+								  Stretch="Fill"
+								  Width="10"
+								  Height="10"
+								  HorizontalAlignment="Left"
+								  Margin="10,0,0,0" />
+							<Border Background="{DynamicResource ValidationErrorBrushKey}"
+									Padding="3">
+								<ItemsControl ItemsSource="{Binding ElementName=Placeholder, Path=AdornedElement.(Validation.Errors)}">
+									<ItemsControl.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding ErrorContent}"
+													   Margin="2"
+													   Foreground="{DynamicResource ActiveForegroundBrushKey}" />
+										</DataTemplate>
+									</ItemsControl.ItemTemplate>
+								</ItemsControl>
+							</Border>
+						</StackPanel>
+						<Border BorderThickness="1"
+								BorderBrush="{DynamicResource ValidationErrorBrushKey}"
+								HorizontalAlignment="Left">
+							<AdornedElementPlaceholder x:Name="Placeholder" />
+						</Border>
+					</DockPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 </ResourceDictionary>

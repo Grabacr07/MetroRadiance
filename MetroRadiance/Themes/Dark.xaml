@@ -5,8 +5,8 @@
 	<SolidColorBrush x:Key="ThemeBrushKey"
 					 Color="#FF2D2D30" />
 
-	
-	
+
+
 	<Color x:Key="BackgroundColorKey">#FF1B1B1C</Color>
 	<SolidColorBrush x:Key="BackgroundBrushKey"
 					 Color="#FF1B1B1C" />
@@ -113,5 +113,10 @@
 	<SolidColorBrush x:Key="ActiveLinkForegroundBrushKey"
 					 Color="#FF007ACC" />
 
+
+	
+	<Color x:Key="ValidationErrorColorKey">#FFC80000</Color>
+	<SolidColorBrush x:Key="ValidationErrorBrushKey"
+					 Color="#FFC80000" />
 
 </ResourceDictionary>
