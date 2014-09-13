@@ -89,13 +89,15 @@ namespace MetroRadiance.Controls
 
 		protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
 		{
-			base.OnMouseRightButtonUp(e);
-
-			var window = Window.GetWindow(this);
-			if (window == null) return;
+			var window = Window.GetWindow(this) as MetroWindow;
+			if (window == null)
+			{
+				base.OnMouseRightButtonUp(e);
+				return;
+			}
 
 			var point = this.PointToScreen(e.GetPosition(this));
-			SystemCommands.ShowSystemMenu(window, point);
+			SystemCommands.ShowSystemMenu(window, new Point(point.X / window.currentDpi.ScaleX, point.Y / window.currentDpi.ScaleY));
 		}
 
 		protected override void OnMouseLeave(MouseEventArgs e)
