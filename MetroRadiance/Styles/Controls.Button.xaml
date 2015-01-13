@@ -15,8 +15,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Button}">
-					<Border x:Name="border"
-							BorderBrush="{TemplateBinding BorderBrush}"
+					<Border BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 							Background="{TemplateBinding Background}">
@@ -79,8 +78,7 @@
 							<Ellipse StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
 									 Stroke="{TemplateBinding Foreground}"
 									 Fill="{TemplateBinding Background}" />
-							<ContentPresenter x:Name="content"
-											  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 											  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 											  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 											  RecognizesAccessKey="True" />

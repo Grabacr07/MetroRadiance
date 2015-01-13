@@ -11,13 +11,13 @@
 					  Title="MainWindow"
 					  Width="500"
 					  Height="300"
+					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
 					  WindowState="{Binding WindowState}"
 					  IsRestoringWindowPlacement="True"
-					  SnapsToDevicePixels="True"
-					  TextOptions.TextFormattingMode="Display"
-					  FontFamily="Segoe UI">
+					  UseLayoutRounding="True"
+					  TextOptions.TextFormattingMode="Display">
 
 	<!--<controls:MetroWindow.MetroChromeBehavior>
 		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
@@ -160,6 +160,7 @@
 				</WrapPanel>
 
 				<views:BrushSamples />
+				<views:ControlSamples />
 			</StackPanel>
 		</ScrollViewer>
 

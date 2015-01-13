@@ -75,6 +75,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.PasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.ScrollBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +197,7 @@
     <Compile Include="Controls\CaptionButtonMode.cs" />
     <Compile Include="Controls\CaptionIcon.cs" />
     <Compile Include="Controls\ExpanderButton.cs" />
+    <Compile Include="Controls\Int32Rule.cs" />
     <Compile Include="Controls\ITabItem.cs" />
     <Compile Include="Controls\IWindowSettings.cs" />
     <Compile Include="Controls\LinkButton.cs" />

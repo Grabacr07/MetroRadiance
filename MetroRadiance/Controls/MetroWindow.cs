@@ -281,8 +281,8 @@ namespace MetroRadiance.Controls
 			}
 			else if (msg == (int)WM.DPICHANGED)
 			{
-				var dpiX = wParam.ToHiWord();
-				var dpiY = wParam.ToLoWord();
+				var dpiX = wParam.ToLoWord();
+				var dpiY = wParam.ToHiWord();
 				this.ChangeDpi(new Dpi(dpiX, dpiY));
 				handled = true;
 			}

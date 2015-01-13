@@ -38,23 +38,25 @@
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-						<Grid>
-							<ContentPresenter Margin="{TemplateBinding Padding}"
-											  LayoutTransform="{TemplateBinding DpiScaleTransform}" />
-							<Border	x:Name="PART_ResizeGrip"
-									VerticalAlignment="Bottom"
-									HorizontalAlignment="Right"
-									Background="Transparent">
-								<Grid Width="16"
-									  Height="16"
-									  Margin="1">
-									<Path Style="{StaticResource ResizeGripIconElementKey}"
-										  Fill="{DynamicResource ForegroundBrushKey}" />
-									<Path Style="{StaticResource ResizeGripIconShadowElemenKey}"
-										  Fill="{DynamicResource BackgroundBrushKey}" />
-								</Grid>
-							</Border>
-						</Grid>
+						<AdornerDecorator>
+							<Grid>
+								<ContentPresenter Margin="{TemplateBinding Padding}"
+												  LayoutTransform="{TemplateBinding DpiScaleTransform}" />
+								<Border	x:Name="PART_ResizeGrip"
+										VerticalAlignment="Bottom"
+										HorizontalAlignment="Right"
+										Background="Transparent">
+									<Grid Width="16"
+										  Height="16"
+										  Margin="1">
+										<Path Style="{StaticResource ResizeGripIconElementKey}"
+											  Fill="{DynamicResource ForegroundBrushKey}" />
+										<Path Style="{StaticResource ResizeGripIconShadowElemenKey}"
+											  Fill="{DynamicResource BackgroundBrushKey}" />
+									</Grid>
+								</Border>
+							</Grid>
+						</AdornerDecorator>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
