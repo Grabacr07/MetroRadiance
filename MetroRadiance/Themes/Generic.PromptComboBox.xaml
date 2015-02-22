@@ -158,8 +158,7 @@
 										BorderBrush="{TemplateBinding BorderBrush}"
 										BorderThickness="1">
 									<ScrollViewer VerticalScrollBarVisibility="Auto">
-										<StackPanel IsItemsHost="True"
-													KeyboardNavigation.DirectionalNavigation="Contained" />
+										<ItemsPresenter />
 									</ScrollViewer>
 								</Border>
 							</Grid>
@@ -246,6 +245,13 @@
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemsPanel">
+			<Setter.Value>
+				<ItemsPanelTemplate>
+					<StackPanel KeyboardNavigation.DirectionalNavigation="Contained" />
+				</ItemsPanelTemplate>
 			</Setter.Value>
 		</Setter>
 		<Setter Property="Validation.ErrorTemplate">
