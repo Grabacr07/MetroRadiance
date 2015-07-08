@@ -11,6 +11,7 @@
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ExpanderButton.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.LinkButton.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.MetroWindow.xaml" />
+		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ProgressRing.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.PromptComboBox.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.PromptTextBox.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />

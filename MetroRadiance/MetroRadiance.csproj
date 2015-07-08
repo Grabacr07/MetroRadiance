@@ -155,6 +155,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Generic.xaml</DependentUpon>
     </Page>
+    <Page Include="Themes\Generic.ProgressRing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Generic.xaml</DependentUpon>
+    </Page>
     <Page Include="Themes\Generic.PromptComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +208,7 @@
     <Compile Include="Controls\IWindowSettings.cs" />
     <Compile Include="Controls\LinkButton.cs" />
     <Compile Include="Controls\MetroWindow.cs" />
+    <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\PromptComboBox.cs" />
     <Compile Include="Controls\PromptTextBox.cs" />
     <Compile Include="Controls\ResizeGrip.cs" />
@@ -257,7 +263,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

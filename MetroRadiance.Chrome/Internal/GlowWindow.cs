@@ -185,7 +185,7 @@ namespace MetroRadiance.Chrome.Internal
 				{
 					// 最小化から復帰 && 最小化アニメーションが有効の場合
 					// アニメーションが完了しウィンドウが表示されるまで遅延させる (それがだいたい 280 ミリ秒くらい)
-					await Task.Factory.StartNew(() => Thread.Sleep(280));
+					await Task.Delay(280);
 				}
 
 				this.Visibility = Visibility.Visible;
