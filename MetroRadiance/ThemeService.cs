@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using MetroRadiance.Core;
 using MetroRadiance.Internal;
 
 namespace MetroRadiance
@@ -23,7 +24,7 @@ namespace MetroRadiance
 		Original,
 	}
 
-	public class ThemeService : Notificator
+	public class ThemeService : INotifyPropertyChanged
 	{
 		#region singleton members
 
@@ -194,5 +195,14 @@ namespace MetroRadiance
 			return Uri.TryCreate(uri, UriKind.Absolute, out result) ? result : null;
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			if (this.PropertyChanged != null)
+			{
+				this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
 	}
 }
