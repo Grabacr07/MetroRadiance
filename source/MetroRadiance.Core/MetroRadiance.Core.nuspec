@@ -6,7 +6,7 @@
         <version>$version$</version>
         <authors>$author$</authors>
         <owners>$author$</owners>
-        <licenseUrl>https://github.com/Grabacr07/MetroRadiance/blob/master/LICENSE</licenseUrl>
+        <licenseUrl>https://github.com/Grabacr07/MetroRadiance/blob/master/LICENSE.txt</licenseUrl>
         <projectUrl>https://github.com/Grabacr07/MetroRadiance</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>$description$</description>
