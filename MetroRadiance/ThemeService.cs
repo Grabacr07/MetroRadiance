@@ -28,12 +28,7 @@ namespace MetroRadiance
 	{
 		#region singleton members
 
-		private static readonly ThemeService current = new ThemeService();
-
-		public static ThemeService Current
-		{
-			get { return current; }
-		}
+		public static ThemeService Current { get; } = new ThemeService();
 
 		#endregion
 
@@ -141,7 +136,7 @@ namespace MetroRadiance
 				this.dispatcher.Invoke(() =>
 				{
 					var uri = CreateThemeResourceUri(theme);
-					var dic = new ResourceDictionary { Source = uri };
+					var dic = new ResourceDictionary { Source = uri, };
 
 					dic.Keys.OfType<string>()
 						.Where(key => this.appTheme.Contains(key))
@@ -183,14 +178,14 @@ namespace MetroRadiance
 
 		private static Uri CreateThemeResourceUri(Theme theme)
 		{
-			var uri = string.Format(@"pack://application:,,,/MetroRadiance;component/Themes/{0}.xaml", theme);
+			var uri = $@"pack://application:,,,/MetroRadiance;component/Themes/{theme}.xaml";
 			Uri result;
 			return Uri.TryCreate(uri, UriKind.Absolute, out result) ? result : null;
 		}
 
 		private static Uri CreateAccentResourceUri(Accent accent)
 		{
-			var uri = string.Format(@"pack://application:,,,/MetroRadiance;component/Themes/Accents/{0}.xaml", accent);
+			var uri = $@"pack://application:,,,/MetroRadiance;component/Themes/Accents/{accent}.xaml";
 			Uri result;
 			return Uri.TryCreate(uri, UriKind.Absolute, out result) ? result : null;
 		}
@@ -199,10 +194,7 @@ namespace MetroRadiance
 
 		protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			if (this.PropertyChanged != null)
-			{
-				this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

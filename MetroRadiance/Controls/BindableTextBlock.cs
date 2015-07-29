@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,8 +15,8 @@ namespace MetroRadiance.Controls
 
 		public DataTemplateCollection TextTemplates
 		{
-			get { return (DataTemplateCollection)GetValue(TextTemplatesProperty); }
-			set { SetValue(TextTemplatesProperty, value); }
+			get { return (DataTemplateCollection)this.GetValue(TextTemplatesProperty); }
+			set { this.SetValue(TextTemplatesProperty, value); }
 		}
 		public static readonly DependencyProperty TextTemplatesProperty =
 			DependencyProperty.Register("TextTemplates", typeof(DataTemplateCollection), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnNeedUpdate));
@@ -28,8 +27,8 @@ namespace MetroRadiance.Controls
 
 		public IEnumerable<object> TextSource
 		{
-			get { return (IEnumerable<object>)GetValue(TextSourceProperty); }
-			set { SetValue(TextSourceProperty, value); }
+			get { return (IEnumerable<object>)this.GetValue(TextSourceProperty); }
+			set { this.SetValue(TextSourceProperty, value); }
 		}
 		public static readonly DependencyProperty TextSourceProperty =
 			DependencyProperty.Register("TextSource", typeof(IEnumerable<object>), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, OnNeedUpdate));
@@ -37,9 +36,7 @@ namespace MetroRadiance.Controls
 		private static void OnNeedUpdate(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var instance = d as BindableTextBlock;
-			if (instance == null) return;
-
-			instance.Update();
+			instance?.Update();
 		}
 
 		#endregion
@@ -47,8 +44,8 @@ namespace MetroRadiance.Controls
 
 		public BindableTextBlock()
 		{
-			TextTemplates = new DataTemplateCollection();
-			Loaded += (sender, e) => Update();
+			this.TextTemplates = new DataTemplateCollection();
+			this.Loaded += (sender, e) => this.Update();
 		}
 
 		private IEnumerable<InlineHolder> CreateTemplateInstance(IEnumerable<object> textSourcePart)
@@ -57,7 +54,7 @@ namespace MetroRadiance.Controls
 			{
 				InlineHolder result;
 
-				var template = TextTemplates.FirstOrDefault(dt => (Type)dt.DataType == o.GetType());
+				var template = this.TextTemplates.FirstOrDefault(dt => (Type)dt.DataType == o.GetType());
 				if (template == null)
 				{
 					result = new InlineHolder { Inlines = new InlineSimpleCollection(new Inline[] { new Run(o.ToString()) }) };
@@ -80,11 +77,11 @@ namespace MetroRadiance.Controls
 		{
 			this.Inlines.Clear();
 
-			if (TextSource == null) return;
+			if (this.TextSource == null) return;
 
-			foreach (var inline in CreateTemplateInstance(TextSource).SelectMany(inlineHolder => inlineHolder.Inlines))
+			foreach (var inline in this.CreateTemplateInstance(this.TextSource).SelectMany(inlineHolder => inlineHolder.Inlines))
 			{
-				Inlines.Add(inline);
+				this.Inlines.Add(inline);
 			}
 		}
 
@@ -93,7 +90,8 @@ namespace MetroRadiance.Controls
 	[ContentProperty("Inlines")]
 	public class InlineHolder : FrameworkElement
 	{
-		public InlineHolder() { Inlines = new InlineSimpleCollection(); }
+		public InlineHolder() {
+			this.Inlines = new InlineSimpleCollection(); }
 
 		public InlineSimpleCollection Inlines { get; set; }
 	}
@@ -106,7 +104,7 @@ namespace MetroRadiance.Controls
 		}
 		public InlineSimpleCollection(IEnumerable<Inline> source)
 		{
-			AddRange(source);
+			this.AddRange(source);
 		}
 	}
 }

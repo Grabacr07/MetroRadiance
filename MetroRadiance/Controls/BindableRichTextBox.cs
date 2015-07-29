@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,8 +21,8 @@ namespace MetroRadiance.Controls
 
 		public DataTemplateCollection TextTemplates
 		{
-			get { return (DataTemplateCollection)GetValue(TextTemplatesProperty); }
-			set { SetValue(TextTemplatesProperty, value); }
+			get { return (DataTemplateCollection)this.GetValue(TextTemplatesProperty); }
+			set { this.SetValue(TextTemplatesProperty, value); }
 		}
 
 		public static readonly DependencyProperty TextTemplatesProperty =
@@ -35,8 +34,8 @@ namespace MetroRadiance.Controls
 
 		public IEnumerable<object> TextSource
 		{
-			get { return (IEnumerable<object>)GetValue(TextSourceProperty); }
-			set { SetValue(TextSourceProperty, value); }
+			get { return (IEnumerable<object>)this.GetValue(TextSourceProperty); }
+			set { this.SetValue(TextSourceProperty, value); }
 		}
 		public static readonly DependencyProperty TextSourceProperty =
 			DependencyProperty.Register("TextSource", typeof(IEnumerable<object>), typeof(BindableRichTextBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, OnNeedUpdate));
@@ -44,9 +43,7 @@ namespace MetroRadiance.Controls
 		private static void OnNeedUpdate(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var instance = d as BindableRichTextBox;
-			if (instance == null) return;
-
-			instance.Update();
+			instance?.Update();
 		}
 
 		#endregion
@@ -54,8 +51,8 @@ namespace MetroRadiance.Controls
 
 		public BindableRichTextBox()
 		{
-			TextTemplates = new DataTemplateCollection();
-			Loaded += (sender, e) => Update();
+			this.TextTemplates = new DataTemplateCollection();
+			this.Loaded += (sender, e) => this.Update();
 		}
 
 		private IEnumerable<BlockHolder> CreateTemplateInstance(IEnumerable<object> textSourcePart)
@@ -64,7 +61,7 @@ namespace MetroRadiance.Controls
 			{
 				BlockHolder result;
 
-				var template = TextTemplates.FirstOrDefault(dt => (Type)dt.DataType == o.GetType());
+				var template = this.TextTemplates.FirstOrDefault(dt => (Type)dt.DataType == o.GetType());
 				if (template == null)
 				{
 					var paragraph = new Paragraph();
@@ -90,7 +87,7 @@ namespace MetroRadiance.Controls
 
 			if (this.TextSource == null) return;
 
-			foreach (var block in this.CreateTemplateInstance(TextSource).SelectMany(holder => holder.Blocks))
+			foreach (var block in this.CreateTemplateInstance(this.TextSource).SelectMany(holder => holder.Blocks))
 			{
 				this.Document.Blocks.Add(block);
 			}
@@ -101,7 +98,8 @@ namespace MetroRadiance.Controls
 	[ContentProperty("Blocks")]
 	public class BlockHolder : FrameworkElement
 	{
-		public BlockHolder() { Blocks = new BlockSimpleCollection(); }
+		public BlockHolder() {
+			this.Blocks = new BlockSimpleCollection(); }
 
 		public BlockSimpleCollection Blocks { get; set; }
 	}
@@ -111,7 +109,7 @@ namespace MetroRadiance.Controls
 		public DataTemplateCollection() { }
 		public DataTemplateCollection(IEnumerable<DataTemplate> source)
 		{
-			AddRange(source);
+			this.AddRange(source);
 		}
 	}
 
@@ -120,7 +118,7 @@ namespace MetroRadiance.Controls
 		public BlockSimpleCollection() { }
 		public BlockSimpleCollection(IEnumerable<Block> source)
 		{
-			AddRange(source);
+			this.AddRange(source);
 		}
 	}
 }

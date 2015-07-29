@@ -20,7 +20,7 @@ namespace MetroRadiance.Core
 		public static Dpi? GetSystemDpi(this Visual visual)
 		{
 			var source = PresentationSource.FromVisual(visual);
-			if (source != null && source.CompositionTarget != null)
+			if (source?.CompositionTarget != null)
 			{
 				return new Dpi(
 					(uint)(Dpi.Default.X * source.CompositionTarget.TransformToDevice.M11),

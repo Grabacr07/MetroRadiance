@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,12 +20,12 @@ namespace MetroRadiance.Controls
 
 		public bool IsActive
 		{
-			get { return (bool)GetValue(IsActiveProperty); }
-			set { SetValue(IsActiveProperty, value); }
+			get { return (bool)this.GetValue(IsActiveProperty); }
+			set { this.SetValue(IsActiveProperty, value); }
 		}
 
 		public static readonly DependencyProperty IsActiveProperty =
-			DependencyProperty.Register("IsActive", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChangedCallback));
+			DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChangedCallback));
 
 		private static void IsActiveChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
@@ -39,12 +38,12 @@ namespace MetroRadiance.Controls
 
 		public int EllipseDiameter
 		{
-			get { return (int)GetValue(EllipseDiameterProperty); }
-			set { SetValue(EllipseDiameterProperty, value); }
+			get { return (int)this.GetValue(EllipseDiameterProperty); }
+			set { this.SetValue(EllipseDiameterProperty, value); }
 		}
 
 		public static readonly DependencyProperty EllipseDiameterProperty =
-			DependencyProperty.Register("EllipseDiameter", typeof(int), typeof(ProgressRing), new PropertyMetadata(3));
+			DependencyProperty.Register(nameof(EllipseDiameter), typeof(int), typeof(ProgressRing), new PropertyMetadata(3));
 
 		#endregion
 
@@ -52,12 +51,12 @@ namespace MetroRadiance.Controls
 
 		public Thickness EllipseOffset
 		{
-			get { return (Thickness)GetValue(EllipseOffsetProperty); }
-			set { SetValue(EllipseOffsetProperty, value); }
+			get { return (Thickness)this.GetValue(EllipseOffsetProperty); }
+			set { this.SetValue(EllipseOffsetProperty, value); }
 		}
 
 		public static readonly DependencyProperty EllipseOffsetProperty =
-			DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(new Thickness(0, 7, 0, 0)));
+			DependencyProperty.Register(nameof(EllipseOffset), typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(new Thickness(0, 7, 0, 0)));
 
 		#endregion
 
@@ -65,12 +64,12 @@ namespace MetroRadiance.Controls
 
 		public int MaxSideLength
 		{
-			get { return (int)GetValue(MaxSideLengthProperty); }
-			set { SetValue(MaxSideLengthProperty, value); }
+			get { return (int)this.GetValue(MaxSideLengthProperty); }
+			set { this.SetValue(MaxSideLengthProperty, value); }
 		}
 
 		public static readonly DependencyProperty MaxSideLengthProperty =
-			DependencyProperty.Register("MaxSideLength", typeof(int), typeof(ProgressRing), new PropertyMetadata(20));
+			DependencyProperty.Register(nameof(MaxSideLength), typeof(int), typeof(ProgressRing), new PropertyMetadata(20));
 
 		#endregion
 

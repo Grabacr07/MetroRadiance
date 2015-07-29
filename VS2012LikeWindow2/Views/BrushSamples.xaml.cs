@@ -22,7 +22,7 @@ namespace VS2012LikeWindow2.Views
 	{
 		public BrushSamples()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 	}
 }

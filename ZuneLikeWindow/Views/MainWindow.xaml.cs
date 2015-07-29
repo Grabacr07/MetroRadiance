@@ -22,7 +22,7 @@ namespace ZuneLikeWindow.Views
 	{
 		public MainWindow()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 
 			this.MouseLeftButtonDown += (sender, e) => this.DragMove();
 		}

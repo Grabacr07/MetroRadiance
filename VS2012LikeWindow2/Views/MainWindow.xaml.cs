@@ -24,7 +24,7 @@ namespace VS2012LikeWindow2.Views
 	{
 		public MainWindow()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 
 		private void OpenFileDialog(object sender, RoutedEventArgs e)

@@ -14,18 +14,12 @@ namespace MetroRadiance.Core
 	{
 		public static readonly Dpi Default = new Dpi(96, 96);
 
-		public uint X { get; private set; }
-		public uint Y { get; private set; }
+		public uint X { get; }
+		public uint Y { get; }
 
-		public double ScaleX
-		{
-			get { return this.X / (double)Default.X; }
-		}
+		public double ScaleX => this.X / (double)Default.X;
 
-		public double ScaleY
-		{
-			get { return this.Y / (double)Default.Y; }
-		}
+		public double ScaleY => this.Y / (double)Default.Y;
 
 		public Dpi(uint x, uint y)
 			: this()

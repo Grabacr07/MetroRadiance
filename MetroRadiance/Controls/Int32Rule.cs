@@ -56,12 +56,12 @@ namespace MetroRadiance.Controls
 
 			if (this.Min.HasValue && number < this.Min)
 			{
-				return new ValidationResult(false, string.Format("{0} 以上の数値を入力してください。", this.Min));
+				return new ValidationResult(false, $"{this.Min} 以上の数値を入力してください。");
 			}
 
 			if (this.Max.HasValue && this.Max < number)
 			{
-				return new ValidationResult(false, string.Format("{0} 以下の数値を入力してください。", this.Max));
+				return new ValidationResult(false, $"{this.Max} 以下の数値を入力してください。");
 			}
 
 			return new ValidationResult(true, null);

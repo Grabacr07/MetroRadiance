@@ -13,15 +13,9 @@ namespace MetroRadiance.Chrome.Behaviors
 	{
 		private GlowWindow left, right, top, bottom;
 
-		private bool IsNotNull
-		{
-			get { return this.left != null && this.right != null && this.top != null && this.bottom != null; }
-		}
+		private bool IsNotNull => this.left != null && this.right != null && this.top != null && this.bottom != null;
 
-		internal Window Window
-		{
-			get { return this.AssociatedObject; }
-		}
+		internal Window Window => this.AssociatedObject;
 
 		#region Mode 依存関係プロパティ
 
@@ -35,7 +29,7 @@ namespace MetroRadiance.Chrome.Behaviors
 
 		private static void ModeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var instance = (MetroChromeBehavior)d;
+			//var instance = (MetroChromeBehavior)d;
 		}
 
 		#endregion

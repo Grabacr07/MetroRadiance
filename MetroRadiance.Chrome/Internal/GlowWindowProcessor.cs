@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MetroRadiance.Core;
 using MetroRadiance.Core.Win32;
 
 namespace MetroRadiance.Chrome.Internal

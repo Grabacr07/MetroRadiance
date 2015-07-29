@@ -109,7 +109,7 @@ namespace MetroRadiance.Core.Win32
 		/// An application sends the WM_WININICHANGE message to all top-level windows after making a change to the WIN.INI file. The SystemParametersInfo function sends this message after an application uses the function to change a setting in WIN.INI.
 		/// Note  The WM_WININICHANGE message is provided only for compatibility with earlier versions of the system. Applications should use the WM_SETTINGCHANGE message.
 		/// </summary>
-		SETTINGCHANGE = WM.WININICHANGE,
+		SETTINGCHANGE = WININICHANGE,
 		/// <summary>
 		/// The WM_DEVMODECHANGE message is sent to all top-level windows whenever the user changes device-mode settings. 
 		/// </summary>

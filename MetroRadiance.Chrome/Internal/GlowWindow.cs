@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +20,9 @@ namespace MetroRadiance.Chrome.Internal
 	{
 		static GlowWindow()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(GlowWindow), new FrameworkPropertyMetadata(typeof(GlowWindow)));
+			DefaultStyleKeyProperty.OverrideMetadata(
+				typeof(GlowWindow),
+				new FrameworkPropertyMetadata(typeof(GlowWindow)));
 		}
 
 		private static Dpi? systemDpi;
@@ -43,7 +44,7 @@ namespace MetroRadiance.Chrome.Internal
 		}
 
 		public static readonly DependencyProperty IsGlowingProperty =
-			DependencyProperty.Register("IsGlowing", typeof(bool), typeof(GlowWindow), new UIPropertyMetadata(true));
+			DependencyProperty.Register(nameof(IsGlowing), typeof(bool), typeof(GlowWindow), new UIPropertyMetadata(true));
 
 		#endregion
 
@@ -56,7 +57,7 @@ namespace MetroRadiance.Chrome.Internal
 		}
 
 		public static readonly DependencyProperty OrientationProperty =
-			DependencyProperty.Register("Orientation", typeof(Orientation), typeof(GlowWindow), new UIPropertyMetadata(Orientation.Horizontal));
+			DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(GlowWindow), new UIPropertyMetadata(Orientation.Horizontal));
 
 		#endregion
 
@@ -69,7 +70,7 @@ namespace MetroRadiance.Chrome.Internal
 		}
 
 		public static readonly DependencyProperty ActiveGlowBrushProperty =
-			DependencyProperty.Register("ActiveGlowBrush", typeof(Brush), typeof(GlowWindow), new UIPropertyMetadata(null));
+			DependencyProperty.Register(nameof(ActiveGlowBrush), typeof(Brush), typeof(GlowWindow), new UIPropertyMetadata(null));
 
 		#endregion
 
@@ -82,7 +83,7 @@ namespace MetroRadiance.Chrome.Internal
 		}
 
 		public static readonly DependencyProperty InactiveGlowBrushProperty =
-			DependencyProperty.Register("InactiveGlowBrush", typeof(Brush), typeof(GlowWindow), new UIPropertyMetadata(null));
+			DependencyProperty.Register(nameof(InactiveGlowBrush), typeof(Brush), typeof(GlowWindow), new UIPropertyMetadata(null));
 
 		#endregion
 
@@ -94,7 +95,7 @@ namespace MetroRadiance.Chrome.Internal
 			set { this.SetValue(ChromeModeProperty, value); }
 		}
 		public static readonly DependencyProperty ChromeModeProperty =
-			DependencyProperty.Register("ChromeMode", typeof(ChromeMode), typeof(GlowWindow), new UIPropertyMetadata(ChromeMode.VisualStudio2013));
+			DependencyProperty.Register(nameof(ChromeMode), typeof(ChromeMode), typeof(GlowWindow), new UIPropertyMetadata(ChromeMode.VisualStudio2013));
 
 		#endregion
 
@@ -120,13 +121,13 @@ namespace MetroRadiance.Chrome.Internal
 
 			this.ownerState = this.WindowState;
 
-			var bindingActive = new Binding("ActiveBrush") { Source = behavior, };
+			var bindingActive = new Binding(nameof(behavior.ActiveBrush)) { Source = behavior, };
 			this.SetBinding(ActiveGlowBrushProperty, bindingActive);
 
-			var bindingInactive = new Binding("InactiveBrush") { Source = behavior, };
+			var bindingInactive = new Binding(nameof(behavior.InactiveBrush)) { Source = behavior, };
 			this.SetBinding(InactiveGlowBrushProperty, bindingInactive);
 
-			var bindingChromeMode = new Binding("Mode") { Source = behavior, };
+			var bindingChromeMode = new Binding(nameof(behavior.Mode)) { Source = behavior, };
 			this.SetBinding(ChromeModeProperty, bindingChromeMode);
 
 			this.owner.ContentRendered += (sender, args) =>
@@ -157,16 +158,15 @@ namespace MetroRadiance.Chrome.Internal
 				this.SetWindowStyle();
 				source.AddHook(this.WndProc);
 			}
+
+			this.Owner = this.owner;
 		}
 
 		protected override void OnClosed(EventArgs e)
 		{
 			base.OnClosed(e);
 			var source = PresentationSource.FromVisual(this) as HwndSource;
-			if (source != null)
-			{
-				source.RemoveHook(this.WndProc);
-			}
+			source?.RemoveHook(this.WndProc);
 			this.closed = true;
 		}
 
@@ -185,8 +185,8 @@ namespace MetroRadiance.Chrome.Internal
 					&& SystemParameters.MinimizeAnimation)
 				{
 					// 最小化から復帰 && 最小化アニメーションが有効の場合
-					// アニメーションが完了しウィンドウが表示されるまで遅延させる (それがだいたい 280 ミリ秒くらい)
-					await Task.Delay(280);
+					// アニメーションが完了しウィンドウが表示されるまで遅延させる (それがだいたい 250 ミリ秒くらい)
+					await Task.Delay(250);
 				}
 
 				this.Visibility = Visibility.Visible;
@@ -202,7 +202,6 @@ namespace MetroRadiance.Chrome.Internal
 		{
 			if (this.ownerHandle == IntPtr.Zero)
 			{
-				this.Owner = this.owner;
 				this.ownerHandle = new WindowInteropHelper(this.owner).Handle;
 			}
 
@@ -222,11 +221,11 @@ namespace MetroRadiance.Chrome.Internal
 		{
 			var wsex = this.handle.GetWindowLongEx();
 			wsex |= WSEX.TOOLWINDOW;
-			handle.SetWindowLongEx(wsex);
+			this.handle.SetWindowLongEx(wsex);
 
 			var cs = this.handle.GetClassLong(ClassLongFlags.GclStyle);
 			cs |= ClassStyles.DblClks;
-			handle.SetClassLong(ClassLongFlags.GclStyle, cs);
+			this.handle.SetClassLong(ClassLongFlags.GclStyle, cs);
 		}
 
 

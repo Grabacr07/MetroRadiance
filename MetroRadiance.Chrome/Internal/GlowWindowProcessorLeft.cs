@@ -11,20 +11,11 @@ namespace MetroRadiance.Chrome.Internal
 {
 	internal class GlowWindowProcessorLeft : GlowWindowProcessor
 	{
-		public override Orientation Orientation
-		{
-			get { return Orientation.Vertical; }
-		}
+		public override Orientation Orientation => Orientation.Vertical;
 
-		public override HorizontalAlignment HorizontalAlignment
-		{
-			get { return HorizontalAlignment.Right; }
-		}
+		public override HorizontalAlignment HorizontalAlignment => HorizontalAlignment.Right;
 
-		public override VerticalAlignment VerticalAlignment
-		{
-			get { return VerticalAlignment.Stretch; }
-		}
+		public override VerticalAlignment VerticalAlignment => VerticalAlignment.Stretch;
 
 		public override double GetLeft(double ownerLeft, double ownerWidth)
 		{
