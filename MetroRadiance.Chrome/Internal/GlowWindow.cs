@@ -106,6 +106,7 @@ namespace MetroRadiance.Chrome.Internal
 			this.WindowStyle = WindowStyle.None;
 			this.AllowsTransparency = true;
 			this.ShowActivated = false;
+			this.ShowInTaskbar = false;
 			this.Visibility = Visibility.Collapsed;
 			this.ResizeMode = ResizeMode.NoResize;
 			this.WindowStartupLocation = WindowStartupLocation.Manual;
@@ -201,6 +202,7 @@ namespace MetroRadiance.Chrome.Internal
 		{
 			if (this.ownerHandle == IntPtr.Zero)
 			{
+				this.Owner = this.owner;
 				this.ownerHandle = new WindowInteropHelper(this.owner).Handle;
 			}
 
@@ -218,16 +220,8 @@ namespace MetroRadiance.Chrome.Internal
 
 		private void SetWindowStyle()
 		{
-			var ws = this.handle.GetWindowLong();
-			ws ^= WS.SYSMENU;
-			ws ^= WS.OVERLAPPED;
-			ws |= WS.POPUP;
-
 			var wsex = this.handle.GetWindowLongEx();
-			wsex ^= WSEX.APPWINDOW;
 			wsex |= WSEX.TOOLWINDOW;
-
-			handle.SetWindowLong(ws);
 			handle.SetWindowLongEx(wsex);
 
 			var cs = this.handle.GetClassLong(ClassLongFlags.GclStyle);
