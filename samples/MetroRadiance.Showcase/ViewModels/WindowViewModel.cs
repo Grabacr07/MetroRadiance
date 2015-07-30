@@ -150,7 +150,7 @@ namespace VS2012LikeWindow2.ViewModels
 
 		public WindowViewModel()
 		{
-			this.Title = "Visual Studio Style Window";
+			this.Title = "MetroRadiance Showcase";
 		}
 
 		public void ChangePurple()
