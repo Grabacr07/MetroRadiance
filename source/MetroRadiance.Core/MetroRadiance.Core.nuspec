@@ -13,8 +13,4 @@
         <language>ja-JP</language>
         <tags>WPF</tags>
     </metadata>
-    <files>
-        <file src="bin\Release\MetroRadiance.Core.dll" target="lib\net45\MetroRadiance.Core.dll" />
-        <file src="bin\Release\MetroRadiance.Core.xml" target="lib\net45\MetroRadiance.Core.xml" />
-    </files>
 </package>
