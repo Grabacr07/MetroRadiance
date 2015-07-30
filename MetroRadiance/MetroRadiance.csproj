@@ -86,6 +86,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.Slider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+			<DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.ToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
