@@ -132,11 +132,13 @@ namespace MetroRadiance.Chrome.Internal
 
 			this.owner.ContentRendered += (sender, args) =>
 			{
+				if (this.closed) return;
 				this.Show();
 				this.Update();
 			};
 			this.owner.StateChanged += (sender, args) =>
 			{
+				if (this.closed) return;
 				this.Update();
 				this.ownerState = this.owner.WindowState;
 			};
