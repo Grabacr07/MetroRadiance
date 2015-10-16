@@ -30,7 +30,7 @@ namespace VS2012LikeWindow2.Views
 		private void OpenFileDialog(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog();
-			if ((bool)dialog.ShowDialog())
+			if (dialog.ShowDialog() ?? false)
 			{
 
 			}
