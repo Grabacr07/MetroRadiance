@@ -71,7 +71,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlowingChrome.cs" />
     <Compile Include="ChromeMode.cs" />
+    <Compile Include="ExternalWindow.cs" />
     <Compile Include="Internal\GlowWindow.cs" />
     <Compile Include="Internal\GlowWindowProcessor.cs" />
     <Compile Include="Internal\GlowWindowProcessorBottom.cs" />
@@ -79,7 +81,10 @@
     <Compile Include="Internal\GlowWindowProcessorRight.cs" />
     <Compile Include="Internal\GlowWindowProcessorTop.cs" />
     <Compile Include="Behaviors\MetroChromeBehavior.cs" />
-    <Compile Include="IWindow.cs" />
+    <Compile Include="Internal\IChromeSettings.cs" />
+    <Compile Include="Internal\IWindow.cs" />
+    <Compile Include="Internal\WindowWrapper.cs" />
+    <Compile Include="NotifyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +103,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="MetroRadiance.Chrome.nuspec" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,21 +116,23 @@
       <Name>MetroRadiance.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <None Include="assemblies\ChromeHook.InjectDll32.exe">
+    <Analyzer Include="..\packages\NotifyPropertyChangedGenerator.1.1.0.1\analyzers\dotnet\cs\NotifyPropertyChangedGenerator.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChromeHook.InjectDll32.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assemblies\ChromeHook32.dll">
+    <None Include="ChromeHook32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assemblies\ChromeHook64.dll">
+    <None Include="ChromeHook64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assemblies\ChromeHookCLR32.dll">
+    <None Include="ChromeHookCLR32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assemblies\ChromeHookCLR64.dll">
+    <None Include="ChromeHookCLR64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

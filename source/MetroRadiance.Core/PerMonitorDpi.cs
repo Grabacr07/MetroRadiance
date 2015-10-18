@@ -31,14 +31,25 @@ namespace MetroRadiance.Core
 		/// 現在の <see cref="HwndSource"/> が描画されているモニターの DPI 設定値を取得します。
 		/// </summary>
 		/// <param name="hwndSource">DPI を取得する対象の Win32 ウィンドウを特定する <see cref="HwndSource"/> オブジェクト。</param>
-		/// <param name="dpiType">DPI の種類。規定値は <see cref="MonitorDpiType.Default"/> (<see cref="MonitorDpiType.EffectiveDpi"/> と同値) です。</param>
+		/// <param name="dpiType">DPI の種類。既定値は <see cref="MonitorDpiType.Default"/> (<see cref="MonitorDpiType.EffectiveDpi"/> と同値) です。</param>
 		/// <returns><paramref name="hwndSource"/> が描画されているモニターの DPI 設定値。サポートされていないシステムの場合は <see cref="Dpi.Default"/>。</returns>
 		public static Dpi GetDpi(this HwndSource hwndSource, MonitorDpiType dpiType = MonitorDpiType.Default)
+		{
+			return GetDpi(hwndSource.Handle, dpiType);
+		}
+
+		/// <summary>
+		/// 指定したハンドルのウィンドウが描画されているモニターの DPI 設定値を取得します。
+		/// </summary>
+		/// <param name="hWnd">DPI を取得する対象の Win32 ウィンドウを示すウィンドウ ハンドル。</param>
+		/// <param name="dpiType">DPI の種類。既定値は <see cref="MonitorDpiType.Default"/> (<see cref="MonitorDpiType.EffectiveDpi"/> と同値) です。</param>
+		/// <returns><paramref name="hWnd"/> のウィンドウが描画されているモニターの DPI 設定値。サポートされていないシステムの場合は <see cref="Dpi.Default"/>。</returns>
+		public static Dpi GetDpi(IntPtr hWnd, MonitorDpiType dpiType = MonitorDpiType.Default)
 		{
 			if (!IsSupported) return Dpi.Default;
 
 			var hmonitor = NativeMethods.MonitorFromWindow(
-				hwndSource.Handle,
+				hWnd,
 				MonitorDefaultTo.MONITOR_DEFAULTTONEAREST);
 
 			uint dpiX = 1, dpiY = 1;

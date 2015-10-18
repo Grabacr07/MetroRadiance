@@ -9,13 +9,11 @@ using MetroRadiance.Chrome.Internal;
 
 namespace MetroRadiance.Chrome.Behaviors
 {
-	public class MetroChromeBehavior : Behavior<Window>
+	public class MetroChromeBehavior : Behavior<Window>, IChromeSettings
 	{
 		private GlowWindow left, right, top, bottom;
 
 		private bool IsNotNull => this.left != null && this.right != null && this.top != null && this.bottom != null;
-
-		internal Window Window => this.AssociatedObject;
 
 		#region Mode 依存関係プロパティ
 
@@ -25,12 +23,14 @@ namespace MetroRadiance.Chrome.Behaviors
 			set { this.SetValue(ModeProperty, value); }
 		}
 		public static readonly DependencyProperty ModeProperty =
-			DependencyProperty.Register("Mode", typeof(ChromeMode), typeof(MetroChromeBehavior), new UIPropertyMetadata(ChromeMode.VisualStudio2013, ModeChangedCallback));
+			DependencyProperty.Register(nameof(Mode), typeof(ChromeMode), typeof(MetroChromeBehavior), new UIPropertyMetadata(ChromeMode.VisualStudio2013, ModeChangedCallback));
 
 		private static void ModeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			//var instance = (MetroChromeBehavior)d;
 		}
+
+		ChromeMode IChromeSettings.ChromeMode => this.Mode;
 
 		#endregion
 
@@ -42,7 +42,7 @@ namespace MetroRadiance.Chrome.Behaviors
 			set { this.SetValue(ActiveBrushProperty, value); }
 		}
 		public static readonly DependencyProperty ActiveBrushProperty =
-			DependencyProperty.Register("ActiveBrush", typeof(Brush), typeof(MetroChromeBehavior), new UIPropertyMetadata(null));
+			DependencyProperty.Register(nameof(ActiveBrush), typeof(Brush), typeof(MetroChromeBehavior), new UIPropertyMetadata(null));
 
 		#endregion
 
@@ -54,7 +54,7 @@ namespace MetroRadiance.Chrome.Behaviors
 			set { this.SetValue(InactiveBrushProperty, value); }
 		}
 		public static readonly DependencyProperty InactiveBrushProperty =
-			DependencyProperty.Register("InactiveBrush", typeof(Brush), typeof(MetroChromeBehavior), new UIPropertyMetadata(null));
+			DependencyProperty.Register(nameof(InactiveBrush), typeof(Brush), typeof(MetroChromeBehavior), new UIPropertyMetadata(null));
 
 		#endregion
 
@@ -63,10 +63,11 @@ namespace MetroRadiance.Chrome.Behaviors
 		{
 			base.OnAttached();
 
-			this.left = new GlowWindow(this, new GlowWindowProcessorLeft());
-			this.right = new GlowWindow(this, new GlowWindowProcessorRight());
-			this.top = new GlowWindow(this, new GlowWindowProcessorTop());
-			this.bottom = new GlowWindow(this, new GlowWindowProcessorBottom());
+			var wrapper = new WindowWrapper(this.AssociatedObject);
+			this.left = new GlowWindow(wrapper, this, new GlowWindowProcessorLeft());
+			this.right = new GlowWindow(wrapper, this, new GlowWindowProcessorRight());
+			this.top = new GlowWindow(wrapper, this, new GlowWindowProcessorTop());
+			this.bottom = new GlowWindow(wrapper, this, new GlowWindowProcessorBottom());
 		}
 
 		public void Update()

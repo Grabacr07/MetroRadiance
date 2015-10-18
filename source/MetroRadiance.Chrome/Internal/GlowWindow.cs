@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
-using MetroRadiance.Chrome.Behaviors;
 using MetroRadiance.Core;
 using MetroRadiance.Core.Win32;
 
@@ -31,8 +30,7 @@ namespace MetroRadiance.Chrome.Internal
 		private readonly GlowWindowProcessor processor;
 		private bool closed;
 
-		private readonly Window owner;
-		private IntPtr ownerHandle;
+		private readonly IWindow owner;
 		private WindowState ownerState;
 
 		#region IsGlowing 依存関係プロパティ
@@ -99,11 +97,12 @@ namespace MetroRadiance.Chrome.Internal
 
 		#endregion
 
-		internal GlowWindow(MetroChromeBehavior behavior, GlowWindowProcessor processor)
+		internal GlowWindow(IWindow window, IChromeSettings settings, GlowWindowProcessor processor)
 		{
-			this.owner = behavior.Window;
+			this.owner = window;
 			this.processor = processor;
 
+			this.Title = processor.GetType().Name.Replace("Processor", "");
 			this.WindowStyle = WindowStyle.None;
 			this.AllowsTransparency = true;
 			this.ShowActivated = false;
@@ -121,13 +120,13 @@ namespace MetroRadiance.Chrome.Internal
 
 			this.ownerState = this.WindowState;
 
-			var bindingActive = new Binding(nameof(behavior.ActiveBrush)) { Source = behavior, };
+			var bindingActive = new Binding(nameof(settings.ActiveBrush)) { Source = settings, };
 			this.SetBinding(ActiveGlowBrushProperty, bindingActive);
 
-			var bindingInactive = new Binding(nameof(behavior.InactiveBrush)) { Source = behavior, };
+			var bindingInactive = new Binding(nameof(settings.InactiveBrush)) { Source = settings, };
 			this.SetBinding(InactiveGlowBrushProperty, bindingInactive);
 
-			var bindingChromeMode = new Binding(nameof(behavior.Mode)) { Source = behavior, };
+			var bindingChromeMode = new Binding(nameof(settings.ChromeMode)) { Source = settings, };
 			this.SetBinding(ChromeModeProperty, bindingChromeMode);
 
 			this.owner.ContentRendered += (sender, args) =>
@@ -161,7 +160,11 @@ namespace MetroRadiance.Chrome.Internal
 				source.AddHook(this.WndProc);
 			}
 
-			this.Owner = this.owner;
+			var wrapper = this.owner as WindowWrapper;
+			if (wrapper != null)
+			{
+				this.Owner = wrapper.Window;
+			}
 		}
 
 		protected override void OnClosed(EventArgs e)
@@ -202,11 +205,6 @@ namespace MetroRadiance.Chrome.Internal
 
 		private void UpdateCore()
 		{
-			if (this.ownerHandle == IntPtr.Zero)
-			{
-				this.ownerHandle = new WindowInteropHelper(this.owner).Handle;
-			}
-
 			this.IsGlowing = this.owner.IsActive;
 
 			var dpi = systemDpi ?? (systemDpi = this.GetSystemDpi()) ?? Dpi.Default;
@@ -215,7 +213,7 @@ namespace MetroRadiance.Chrome.Internal
 			var width = (int)Math.Round(this.processor.GetWidth(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);
 			var height = (int)Math.Round(this.processor.GetHeight(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
 
-			NativeMethods.SetWindowPos(this.handle, this.ownerHandle, left, top, width, height, SWP.NOACTIVATE);
+			NativeMethods.SetWindowPos(this.handle, this.owner.Handle, left, top, width, height, SWP.NOACTIVATE);
 		}
 
 
@@ -249,7 +247,7 @@ namespace MetroRadiance.Chrome.Internal
 				var ptScreen = lParam.ToPoint();
 
 				NativeMethods.PostMessage(
-					this.ownerHandle,
+					this.owner.Handle,
 					(uint)WM.NCLBUTTONDOWN,
 					(IntPtr)this.processor.GetHitTestValue(ptScreen, this.ActualWidth, this.ActualHeight),
 					IntPtr.Zero);
@@ -271,11 +269,11 @@ namespace MetroRadiance.Chrome.Internal
 			{
 				if (this.processor.GetType() == typeof(GlowWindowProcessorTop))
 				{
-					NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTTOP, IntPtr.Zero);
+					NativeMethods.SendMessage(this.owner.Handle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTTOP, IntPtr.Zero);
 				}
 				else if (this.processor.GetType() == typeof(GlowWindowProcessorBottom))
 				{
-					NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
+					NativeMethods.SendMessage(this.owner.Handle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
 				}
 			}
 

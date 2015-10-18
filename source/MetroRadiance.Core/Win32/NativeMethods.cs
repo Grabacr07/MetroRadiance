@@ -40,6 +40,9 @@ namespace MetroRadiance.Core.Win32
 		[DllImport("user32.dll")]
 		public static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
+		[DllImport("user32.dll")]
+		public static extern bool GetClientRect(IntPtr hWnd, out RECT rect);
+
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern bool PostMessage(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -82,5 +85,26 @@ namespace MetroRadiance.Core.Win32
 
 		[DllImport("SHCore.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
 		public static extern void GetDpiForMonitor(IntPtr hmonitor, MonitorDpiType dpiType, ref uint dpiX, ref uint dpiY);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetActiveWindow();
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetActiveWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public static extern bool IsZoomed(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public static extern bool IsIconic(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public static extern bool IsWindowVisible(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetParent(IntPtr hWnd, IntPtr hWndNewParent);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetParent(IntPtr hWnd);
 	}
 }

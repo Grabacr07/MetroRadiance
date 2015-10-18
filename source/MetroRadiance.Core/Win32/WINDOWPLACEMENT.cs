@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MetroRadiance.Core.Win32
 {
@@ -50,6 +51,11 @@ namespace MetroRadiance.Core.Win32
 			this.Top = top;
 			this.Right = right;
 			this.Bottom = bottom;
+		}
+
+		public static implicit operator Rect(RECT rect)
+		{
+			return new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
 		}
 	}
 

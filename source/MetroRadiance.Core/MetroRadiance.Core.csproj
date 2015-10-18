@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="Win32\ClassLongFlags.cs" />
     <Compile Include="Win32\ClassStyles.cs" />
+    <Compile Include="Win32\DWMWINDOWATTRIBUTE.cs" />
     <Compile Include="Win32\GWL.cs" />
     <Compile Include="Win32\HitTestValues.cs" />
     <Compile Include="Win32\MonitorDefaultTo.cs" />

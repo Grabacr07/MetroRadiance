@@ -5,22 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MetroRadiance.Chrome;
+using MetroRadiance.Core.Win32;
 using Microsoft.Win32;
 
 namespace VS2012LikeWindow2.Views
 {
-	/// <summary>
-	/// MainWindow.xaml の相互作用ロジック
-	/// </summary>
-	public partial class MainWindow
+	partial class MainWindow
 	{
 		public MainWindow()
 		{
@@ -40,14 +32,30 @@ namespace VS2012LikeWindow2.Views
 		{
 			this.Hide();
 
-			await this.Countdown();
+			await Task.Delay(2500);
 
 			this.Visibility = Visibility.Visible;
 		}
 
-		private Task Countdown()
+		protected override void OnContentRendered(EventArgs e)
 		{
-			return Task.Factory.StartNew(() => Thread.Sleep(2500));
+			base.OnContentRendered(e);
+			this.SetGlowingForActiveWindow();
+		}
+
+		private async void SetGlowingForActiveWindow()
+		{
+			//await Task.Delay(2500);
+
+			//var hWnd = NativeMethods.GetActiveWindow();
+			var hWnd = new IntPtr(0x02310A08);
+			var chrome = new GlowingChrome(hWnd)
+			{
+				ActiveBrush = new SolidColorBrush(Colors.DeepSkyBlue),
+				InactiveBrush = new SolidColorBrush(Colors.Salmon),
+				ChromeMode = ChromeMode.VisualStudio2013,
+			};
+			chrome.Show();
 		}
 	}
 }
