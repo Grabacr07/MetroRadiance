@@ -49,19 +49,10 @@ namespace MetroRadiance.Chrome
 			else
 			{
 				this.window = new ExternalWindow(this.hWnd);
-				this.left = new GlowWindow(this.window, this, new GlowWindowProcessorLeft());
-				this.right = new GlowWindow(this.window, this, new GlowWindowProcessorRight());
-				this.top = new GlowWindow(this.window, this, new GlowWindowProcessorTop());
-				this.bottom = new GlowWindow(this.window, this, new GlowWindowProcessorBottom());
-
-				this.left.Show();
-				this.left.Update();
-				this.right.Show();
-				this.right.Update();
-				this.top.Show();
-				this.top.Update();
-				this.bottom.Show();
-				this.bottom.Update();
+				this.left = new GlowWindow(this.window, this, new GlowWindowProcessorLeft(), true);
+				this.right = new GlowWindow(this.window, this, new GlowWindowProcessorRight(), true);
+				this.top = new GlowWindow(this.window, this, new GlowWindowProcessorTop(), true);
+				this.bottom = new GlowWindow(this.window, this, new GlowWindowProcessorBottom(), true);
 			}
 		}
 

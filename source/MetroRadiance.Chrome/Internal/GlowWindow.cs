@@ -97,7 +97,7 @@ namespace MetroRadiance.Chrome.Internal
 
 		#endregion
 
-		internal GlowWindow(IWindow window, IChromeSettings settings, GlowWindowProcessor processor)
+		internal GlowWindow(IWindow window, IChromeSettings settings, GlowWindowProcessor processor, bool initialShow = false)
 		{
 			this.owner = window;
 			this.processor = processor;
@@ -129,12 +129,6 @@ namespace MetroRadiance.Chrome.Internal
 			var bindingChromeMode = new Binding(nameof(settings.ChromeMode)) { Source = settings, };
 			this.SetBinding(ChromeModeProperty, bindingChromeMode);
 
-			this.owner.ContentRendered += (sender, args) =>
-			{
-				if (this.closed) return;
-				this.Show();
-				this.Update();
-			};
 			this.owner.StateChanged += (sender, args) =>
 			{
 				if (this.closed) return;
@@ -146,6 +140,21 @@ namespace MetroRadiance.Chrome.Internal
 			this.owner.Activated += (sender, args) => this.Update();
 			this.owner.Deactivated += (sender, args) => this.Update();
 			this.owner.Closed += (sender, args) => this.Close();
+
+			if (initialShow)
+			{
+				this.Show();
+				this.Update();
+			}
+			else
+			{
+				this.owner.ContentRendered += (sender, args) =>
+				{
+					if (this.closed) return;
+					this.Show();
+					this.Update();
+				};
+			}
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
