@@ -32,10 +32,23 @@ namespace MetroRadiance
 
 		#endregion
 
-		private Dispatcher dispatcher;
-		private ResourceDictionary appTheme;
-		private ResourceDictionary appAccent;
+		private static readonly UriTemplate themeTemplate = new UriTemplate(@"Themes/{theme}.xaml");
+		private static readonly UriTemplate accentTemplate = new UriTemplate(@"Themes/Accents/{accent}.xaml");
+		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component");
+
+		private static readonly IReadOnlyDictionary<Accent, ResourceDictionary> accentDictionaries = new Dictionary<Accent, ResourceDictionary>
+		{
+			{ Accent.Blue, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Blue), } },
+			{ Accent.Purple, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Purple), } },
+			{ Accent.Orange, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Orange), } },
+		};
+
 		private bool initialized;
+		private Dispatcher dispatcher;
+		private ResourceDictionary currentAccentDictionary;
+
+		private readonly List<ResourceDictionary> themeResources = new List<ResourceDictionary>();
+		private readonly List<ResourceDictionary> accentResources = new List<ResourceDictionary>();
 
 		#region Theme 変更通知プロパティ
 
@@ -75,120 +88,164 @@ namespace MetroRadiance
 
 		#endregion
 
-
 		private ThemeService() { }
 
 		public void Initialize(Application app, Theme theme, Accent accent)
 		{
-			this.dispatcher = app.Dispatcher;
+			this.InitializeCore(app, theme, accentDictionaries[accent]);
 
-			var accentUri = CreateAccentResourceUri(accent);
-			if (accentUri != null)
-			{
-				var accentResource = app.Resources.MergedDictionaries.FirstOrDefault(x => Uri.Compare(
-					x.Source,
-					accentUri,
-					UriComponents.AbsoluteUri,
-					UriFormat.Unescaped,
-					StringComparison.InvariantCultureIgnoreCase) == 0);
-
-				if (accentResource == null)
-				{
-					accentResource = new ResourceDictionary { Source = accentUri };
-					app.Resources.MergedDictionaries.Add(accentResource);
-				}
-
-				this.Initialize(app, theme, accentResource);
-			}
+			this.Theme = theme;
+			this.Accent = accent;
 		}
 
 		public void Initialize(Application app, Theme theme, ResourceDictionary accent)
 		{
-			this.dispatcher = app.Dispatcher;
+			this.InitializeCore(app, theme, this.currentAccentDictionary);
 
-			var themeUri = CreateThemeResourceUri(theme);
-			if (themeUri != null)
-			{
-				this.appTheme = app.Resources.MergedDictionaries.FirstOrDefault(x => Uri.Compare(
-					x.Source,
-					themeUri,
-					UriComponents.AbsoluteUri,
-					UriFormat.Unescaped,
-					StringComparison.InvariantCultureIgnoreCase) == 0);
-
-				if (this.appTheme == null)
-				{
-					this.appTheme = new ResourceDictionary { Source = themeUri };
-					app.Resources.MergedDictionaries.Add(this.appTheme);
-				}
-			}
-
-			this.appAccent = accent;
-
-			this.initialized = (this.appTheme != null && this.appAccent != null);
+			this.Theme = theme;
+			this.Accent = Accent.Original;
 		}
 
+		private void InitializeCore(Application app, Theme theme, ResourceDictionary accent)
+		{
+			this.dispatcher = app.Dispatcher;
+
+			this.currentAccentDictionary = accent;
+			this.Register(app.Resources, theme, this.currentAccentDictionary);
+
+			this.initialized = true;
+		}
+
+		public IDisposable Register(ResourceDictionary rd)
+		{
+			return this.Register(rd, this.Theme, this.currentAccentDictionary);
+		}
+
+		internal IDisposable Register(ResourceDictionary rd, Theme theme, ResourceDictionary accentDic)
+		{
+			var themeDic = new ResourceDictionary { Source = CreateThemeResourceUri(theme), };
+			var targetThemeDic = rd.MergedDictionaries.FirstOrDefault(x => CheckThemeResourceUri(x.Source));
+			if (targetThemeDic == null)
+			{
+				rd.MergedDictionaries.Add(themeDic);
+			}
+			else
+			{
+				foreach (var key in themeDic.Keys.OfType<string>().Where(x => targetThemeDic.Contains(x)))
+				{
+					targetThemeDic[key] = themeDic[key];
+				}
+			}
+			this.themeResources.Add(targetThemeDic);
+
+			var targetAccentDic = rd.MergedDictionaries.FirstOrDefault(x => CheckAccentResourceUri(x.Source));
+			if (targetAccentDic == null)
+			{
+				rd.MergedDictionaries.Add(new ResourceDictionary { Source = accentDic.Source });
+			}
+			else
+			{
+				foreach (var key in accentDic.Keys.OfType<string>().Where(x => targetAccentDic.Contains(x)))
+				{
+					targetAccentDic[key] = accentDic[key];
+				}
+			}
+			this.accentResources.Add(targetAccentDic);
+
+			// Unregister したいときは戻り値の IDisposable を Dispose() してほしい
+			return Disposable.Create(() =>
+			{
+				this.themeResources.Remove(targetThemeDic);
+				this.accentResources.Remove(targetAccentDic);
+			});
+		}
 
 		public void ChangeTheme(Theme theme)
 		{
-			if (this.initialized && this.Theme != theme)
+			if (!this.initialized || this.Theme == theme) return;
+
+			this.dispatcher.Invoke(() =>
 			{
-				this.dispatcher.Invoke(() =>
+				var uri = CreateThemeResourceUri(theme);
+				var dic = new ResourceDictionary { Source = uri, };
+
+				foreach (var key in dic.Keys.OfType<string>())
 				{
-					var uri = CreateThemeResourceUri(theme);
-					var dic = new ResourceDictionary { Source = uri, };
+					foreach (var resource in this.themeResources.Where(x => x.Contains(key)))
+					{
+						resource[key] = dic[key];
+					}
+				}
+			});
 
-					dic.Keys.OfType<string>()
-						.Where(key => this.appTheme.Contains(key))
-						.ForEach(key => this.appTheme[key] = dic[key]);
-				});
-
-				this.Theme = theme;
-			}
+			this.Theme = theme;
 		}
 
 		public void ChangeAccent(Accent accent)
 		{
-			var uri = CreateAccentResourceUri(accent);
-			if (uri != null)
-			{
-				this.dispatcher.Invoke(() =>
-				{
-					var resource = new ResourceDictionary { Source = uri };
-					this.ChangeAccentCore(resource);
-				});
-				this.Accent = accent;
-			}
+			if (!this.initialized || this.Accent == accent) return;
+
+			this.dispatcher.Invoke(() => this.ChangeAccentCore(accentDictionaries[accent]));
+			this.Accent = accent;
 		}
 
-		public void ChangeAccent(ResourceDictionary resource)
+		public void ChangeAccent(ResourceDictionary accent)
 		{
-			this.dispatcher.Invoke(() => this.ChangeAccentCore(resource));
+			if (!this.initialized) return;
+
+			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
 			this.Accent = Accent.Original;
 		}
 
-		private void ChangeAccentCore(ResourceDictionary resource)
+		private void ChangeAccentCore(ResourceDictionary dic)
 		{
-			resource.Keys.OfType<string>()
-				.Where(key => this.appAccent.Contains(key))
-				.ForEach(key => this.appAccent[key] = resource[key]);
+			this.currentAccentDictionary = dic;
+			foreach (var key in dic.Keys.OfType<string>())
+			{
+				foreach (var resource in this.accentResources.Where(x => x.Contains(key)))
+				{
+					resource[key] = dic[key];
+				}
+			}
 		}
-
-
 
 		private static Uri CreateThemeResourceUri(Theme theme)
 		{
-			var uri = $@"pack://application:,,,/MetroRadiance;component/Themes/{theme}.xaml";
-			Uri result;
-			return Uri.TryCreate(uri, UriKind.Absolute, out result) ? result : null;
+			var param = new Dictionary<string, string>
+			{
+				{ "theme", theme.ToString() },
+			};
+			return themeTemplate.BindByName(templateBaseUri, param);
 		}
 
 		private static Uri CreateAccentResourceUri(Accent accent)
 		{
-			var uri = $@"pack://application:,,,/MetroRadiance;component/Themes/Accents/{accent}.xaml";
-			Uri result;
-			return Uri.TryCreate(uri, UriKind.Absolute, out result) ? result : null;
+			var param = new Dictionary<string, string>
+			{
+				{ "accent", accent.ToString() },
+			};
+			return accentTemplate.BindByName(templateBaseUri, param);
 		}
+
+		/// <summary>
+		/// 指定した <see cref="Uri"/> がテーマのリソースを指す URI かどうかをチェックします。
+		/// </summary>
+		/// <returns><paramref name="uri"/> がテーマのリソースを指す URI の場合は true、それ以外の場合は false。</returns>
+		private static bool CheckThemeResourceUri(Uri uri)
+		{
+			return themeTemplate.Match(templateBaseUri, uri) != null;
+		}
+
+		/// <summary>
+		/// 指定した <see cref="Uri"/> がアクセント カラーのリソースを指す URI かどうかをチェックします。
+		/// </summary>
+		/// <returns><paramref name="uri"/> がアクセント カラーのリソースを指す URI の場合は true、それ以外の場合は false。</returns>
+		private static bool CheckAccentResourceUri(Uri uri)
+		{
+			return accentTemplate.Match(templateBaseUri, uri) != null;
+		}
+
+		#region INotifyPropertyChanged 
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -196,5 +253,7 @@ namespace MetroRadiance
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		#endregion
 	}
 }

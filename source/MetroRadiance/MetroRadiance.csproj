@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\assemblies\System.Windows.Interactivity.dll</HintPath>
@@ -214,8 +215,10 @@
     <Compile Include="Controls\ResizeGrip.cs" />
     <Compile Include="Controls\SystemButtons.cs" />
     <Compile Include="Controls\TabView.cs" />
+    <Compile Include="Controls\ThemeHelper.cs" />
     <Compile Include="Controls\WindowAction.cs" />
     <Compile Include="Converters\WindowStateToVisibilityConverter.cs" />
+    <Compile Include="Internal\Disposable.cs" />
     <Compile Include="Internal\InternalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
