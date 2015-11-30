@@ -12,9 +12,10 @@
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Dark.xaml" />
-				<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Themes/Accents/Blue.xaml" />
+				<ResourceDictionary Source="./Resources.xaml" />
 			</ResourceDictionary.MergedDictionaries>
+
+			<BooleanToVisibilityConverter x:Key="VisibilityConverter" />
 		</ResourceDictionary>
 	</UserControl.Resources>
 

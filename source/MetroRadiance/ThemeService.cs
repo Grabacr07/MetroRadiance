@@ -123,11 +123,14 @@ namespace MetroRadiance
 
 		internal IDisposable Register(ResourceDictionary rd, Theme theme, ResourceDictionary accentDic)
 		{
+			var allDictionaries = EnumerateDictionaries(rd).ToArray();
+
 			var themeDic = new ResourceDictionary { Source = CreateThemeResourceUri(theme), };
-			var targetThemeDic = rd.MergedDictionaries.FirstOrDefault(x => CheckThemeResourceUri(x.Source));
+			var targetThemeDic = allDictionaries.FirstOrDefault(x => CheckThemeResourceUri(x.Source));
 			if (targetThemeDic == null)
 			{
-				rd.MergedDictionaries.Add(themeDic);
+				targetThemeDic = themeDic;
+				rd.MergedDictionaries.Add(targetThemeDic);
 			}
 			else
 			{
@@ -138,10 +141,11 @@ namespace MetroRadiance
 			}
 			this.themeResources.Add(targetThemeDic);
 
-			var targetAccentDic = rd.MergedDictionaries.FirstOrDefault(x => CheckAccentResourceUri(x.Source));
+			var targetAccentDic = allDictionaries.FirstOrDefault(x => CheckAccentResourceUri(x.Source));
 			if (targetAccentDic == null)
 			{
-				rd.MergedDictionaries.Add(new ResourceDictionary { Source = accentDic.Source });
+				targetAccentDic = new ResourceDictionary { Source = accentDic.Source };
+				rd.MergedDictionaries.Add(targetAccentDic);
 			}
 			else
 			{
@@ -244,6 +248,25 @@ namespace MetroRadiance
 		{
 			return accentTemplate.Match(templateBaseUri, uri) != null;
 		}
+
+		private static IEnumerable<ResourceDictionary> EnumerateDictionaries(ResourceDictionary dictionary)
+		{
+			if (dictionary.MergedDictionaries.Count == 0)
+			{
+				yield break;
+			}
+
+			foreach (var mergedDictionary in dictionary.MergedDictionaries)
+			{
+				yield return mergedDictionary;
+
+				foreach (var other in EnumerateDictionaries(mergedDictionary))
+				{
+					yield return other;
+				}
+			}
+		}
+
 
 		#region INotifyPropertyChanged 
 
