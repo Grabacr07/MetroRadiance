@@ -3,10 +3,22 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 			 mc:Ignorable="d"
 			 d:DesignWidth="300"
 			 FontFamily="Segoe UI Light"
-			 FontSize="14">
+			 FontSize="14"
+			 metro:ThemeHelper.HasThemeResources="True">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="./Resources.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+
+			<BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+		</ResourceDictionary>
+	</UserControl.Resources>
+
 	<Border Padding="4">
 		<StackPanel>
 			<TextBlock Text="Border &amp; Background Brushes"
