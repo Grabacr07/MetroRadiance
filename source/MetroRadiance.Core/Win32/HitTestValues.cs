@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MetroRadiance.Core.Win32
+namespace MetroRadiance.Win32
 {
 	public enum HitTestValues
 	{

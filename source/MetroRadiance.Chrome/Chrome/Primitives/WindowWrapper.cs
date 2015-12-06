@@ -1,16 +1,31 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace MetroRadiance.Chrome.Internal
+namespace MetroRadiance.Chrome.Primitives
 {
-	internal class WindowWrapper : IWindow
+	public class WindowWrapper : IWindow
 	{
-		public Window Window { get; }
+		private static readonly Dictionary<Window, WindowWrapper> _wrappers = new Dictionary<Window, WindowWrapper>();
 
+		public static WindowWrapper Create(Window window)
+		{
+			WindowWrapper wrapper;
+			if (!_wrappers.TryGetValue(window, out wrapper))
+			{
+				wrapper = new WindowWrapper(window);
+				_wrappers.Add(window, wrapper);
+				window.Closed += (sender, args) => _wrappers.Remove(window);
+			}
+
+			return wrapper;
+		}
+		
+
+		public Window Window { get; }
 		public IntPtr Handle { get; private set; }
 		public double Left => this.Window.Left;
 		public double Top => this.Window.Top;
@@ -53,7 +68,7 @@ namespace MetroRadiance.Chrome.Internal
 		}
 		public event EventHandler SizeChanged;
 
-		public WindowWrapper(Window window)
+		private WindowWrapper(Window window)
 		{
 			this.Window = window;
 			this.Window.SourceInitialized += (sender, args) =>

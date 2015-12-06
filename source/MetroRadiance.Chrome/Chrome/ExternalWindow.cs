@@ -5,9 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using ChromeHookCLR;
-using MetroRadiance.Chrome.Internal;
-using MetroRadiance.Core;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome
 {
@@ -39,7 +37,9 @@ namespace MetroRadiance.Chrome
 			? Visibility.Visible
 			: Visibility.Hidden;
 
+#pragma warning disable 0067
 		public event EventHandler ContentRendered;
+#pragma warning restore 0067
 		public event EventHandler LocationChanged;
 		public event EventHandler SizeChanged;
 		public event EventHandler StateChanged;

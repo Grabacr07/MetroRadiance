@@ -7,8 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
-using MetroRadiance.Core;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Chrome.Primitives;
+using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Internal
 {
@@ -110,10 +110,6 @@ namespace MetroRadiance.Chrome.Internal
 			this.Visibility = Visibility.Collapsed;
 			this.ResizeMode = ResizeMode.NoResize;
 			this.WindowStartupLocation = WindowStartupLocation.Manual;
-			this.Left = processor.GetLeft(this.owner.Left, this.owner.ActualWidth);
-			this.Top = processor.GetTop(this.owner.Top, this.owner.ActualHeight);
-			this.Width = processor.GetWidth(this.owner.Left, this.owner.ActualWidth);
-			this.Height = processor.GetHeight(this.owner.Top, this.owner.ActualHeight);
 			this.Orientation = processor.Orientation;
 			this.HorizontalContentAlignment = processor.HorizontalAlignment;
 			this.VerticalContentAlignment = processor.VerticalAlignment;
@@ -217,10 +213,18 @@ namespace MetroRadiance.Chrome.Internal
 			this.IsGlowing = this.owner.IsActive;
 
 			var dpi = systemDpi ?? (systemDpi = this.GetSystemDpi()) ?? Dpi.Default;
-			var left = (int)Math.Round(this.processor.GetLeft(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);
-			var top = (int)Math.Round(this.processor.GetTop(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
-			var width = (int)Math.Round(this.processor.GetWidth(this.owner.Left, this.owner.ActualWidth) * dpi.ScaleX);
-			var height = (int)Math.Round(this.processor.GetHeight(this.owner.Top, this.owner.ActualHeight) * dpi.ScaleY);
+			var ownerLeft = this.owner.Left.DpiRoundX(dpi);
+			var ownerTop = this.owner.Top.DpiRoundY(dpi);
+			var ownerWidth = this.owner.ActualWidth.DpiRoundX(dpi);
+			var ownerHeight = this.owner.ActualHeight.DpiRoundY(dpi);
+			
+			var glowWidth = this.ActualWidth.DpiRoundX(dpi);
+			var glowHeight = this.ActualHeight.DpiRoundY(dpi);
+
+			var left = this.processor.GetLeft(ownerLeft, ownerWidth, new GlowWindowProcessor.Size());
+			var top = this.processor.GetTop(ownerTop, ownerHeight, new GlowWindowProcessor.Size());
+			var width = this.processor.GetWidth(ownerLeft, ownerWidth, new GlowWindowProcessor.Size());
+			var height = this.processor.GetHeight(ownerTop, ownerHeight, new GlowWindowProcessor.Size());
 
 			NativeMethods.SetWindowPos(this.handle, this.owner.Handle, left, top, width, height, SWP.NOACTIVATE);
 		}

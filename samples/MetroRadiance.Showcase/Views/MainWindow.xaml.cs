@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using MetroRadiance.Chrome;
-using MetroRadiance.Core.Win32;
 using Microsoft.Win32;
 
 namespace VS2012LikeWindow2.Views
@@ -37,11 +36,11 @@ namespace VS2012LikeWindow2.Views
 			this.Visibility = Visibility.Visible;
 		}
 
-		protected override void OnContentRendered(EventArgs e)
-		{
-			base.OnContentRendered(e);
-			this.SetGlowingForActiveWindow();
-		}
+		//protected override void OnContentRendered(EventArgs e)
+		//{
+		//	base.OnContentRendered(e);
+		//	this.SetGlowingForActiveWindow();
+		//}
 
 		private async void SetGlowingForActiveWindow()
 		{

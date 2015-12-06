@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Internal
 {
@@ -54,7 +54,8 @@ namespace MetroRadiance.Chrome.Internal
 		/// </summary>
 		/// <param name="ownerLeft">アタッチ先ウィンドウの左端座標。</param>
 		/// <param name="ownerWidth">アタッチ先ウィンドウの現在の横幅。</param>
-		public abstract double GetLeft(double ownerLeft, double ownerWidth);
+		/// <param name="glowSize">GlowWindow のサイズ。</param>
+		public abstract int GetLeft(int ownerLeft, int ownerWidth, Size glowSize);
 
 		/// <summary>
 		/// 派生クラスでオーバーライドされると、<see cref="GlowWindow"/>
@@ -62,7 +63,8 @@ namespace MetroRadiance.Chrome.Internal
 		/// </summary>
 		/// <param name="ownerTop">アタッチ先ウィンドウの上端座標。</param>
 		/// <param name="ownerHeight">アタッチ先ウィンドウの現在の縦幅。</param>
-		public abstract double GetTop(double ownerTop, double ownerHeight);
+		/// <param name="glowSize">GlowWindow のサイズ。</param>
+		public abstract int GetTop(int ownerTop, int ownerHeight, Size glowSize);
 
 		/// <summary>
 		/// 派生クラスでオーバーライドされると、<see cref="GlowWindow"/>
@@ -70,7 +72,8 @@ namespace MetroRadiance.Chrome.Internal
 		/// </summary>
 		/// <param name="ownerLeft">アタッチ先ウィンドウの左端座標。</param>
 		/// <param name="ownerWidth">アタッチ先ウィンドウの現在の横幅。</param>
-		public abstract double GetWidth(double ownerLeft, double ownerWidth);
+		/// <param name="glowSize">GlowWindow のサイズ。</param>
+		public abstract int GetWidth(int ownerLeft, int ownerWidth, Size glowSize);
 
 		/// <summary>
 		/// 派生クラスでオーバーライドされると、<see cref="GlowWindow"/>
@@ -78,7 +81,8 @@ namespace MetroRadiance.Chrome.Internal
 		/// </summary>
 		/// <param name="ownerTop">アタッチ先ウィンドウの上端座標。</param>
 		/// <param name="ownerHeight">アタッチ先ウィンドウの現在の縦幅。</param>
-		public abstract double GetHeight(double ownerTop, double ownerHeight);
+		/// <param name="glowSize">GlowWindow のサイズ。</param>
+		public abstract int GetHeight(int ownerTop, int ownerHeight, Size glowSize);
 
 		/// <summary>
 		/// 派生クラスでオーバーライドされると、<paramref name="point"/> 座標でのヒットテスト結果を返します。
@@ -97,5 +101,12 @@ namespace MetroRadiance.Chrome.Internal
 		/// <param name="actualHeight">発光ウィンドウの現在の高さ。</param>
 		/// <returns>マウスカーソル。</returns>
 		public abstract Cursor GetCursor(Point point, double actualWidht, double actualHeight);
+
+
+		public struct Size
+		{
+			public int Width { get; set; }
+			public int Height { get; set; }
+		}
 	}
 }

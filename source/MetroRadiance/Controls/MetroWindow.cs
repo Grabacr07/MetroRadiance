@@ -8,10 +8,9 @@ using System.Windows;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Shell;
-using MetroRadiance.Chrome.Behaviors;
-using MetroRadiance.Core;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Chrome;
+using MetroRadiance.Win32;
+using WindowChrome = System.Windows.Shell.WindowChrome;
 
 namespace MetroRadiance.Controls
 {

@@ -14,10 +14,21 @@
 					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
+					  BorderThickness=".99"
+					  BorderBrush="{DynamicResource AccentBrushKey}"
 					  WindowState="{Binding WindowState}"
 					  IsRestoringWindowPlacement="True"
 					  UseLayoutRounding="True"
-					  TextOptions.TextFormattingMode="Display">
+					  TextOptions.TextFormattingMode="Display"
+					  chrome:WindowChrome.Instance="{x:Static chrome:WindowChrome.Default}">
+
+	<ContentControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/MetroRadiance.Chrome;component/Themes/Generic.WindowChrome.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</ContentControl.Resources>
 
 	<!--<controls:MetroWindow.MetroChromeBehavior>
 		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"

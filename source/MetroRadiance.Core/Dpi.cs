@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MetroRadiance.Core
+namespace MetroRadiance
 {
 	/// <summary>
 	/// モニターの DPI (dots per inch) を表します。

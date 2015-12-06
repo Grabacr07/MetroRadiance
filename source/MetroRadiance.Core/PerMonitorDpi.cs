@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Interop;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Win32;
 
-namespace MetroRadiance.Core
+namespace MetroRadiance
 {
 	/// <summary>
 	/// Windows 8.1 の Per-Monitor DPI 機能へアクセスします。

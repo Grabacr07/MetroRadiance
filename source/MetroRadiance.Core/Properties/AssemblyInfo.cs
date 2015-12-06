@@ -3,6 +3,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Markup;
 
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
@@ -31,6 +32,7 @@ using System.Windows;
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
 
+[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/core", "MetroRadiance")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //

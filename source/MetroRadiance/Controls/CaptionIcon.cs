@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Win32;
 
 namespace MetroRadiance.Controls
 {

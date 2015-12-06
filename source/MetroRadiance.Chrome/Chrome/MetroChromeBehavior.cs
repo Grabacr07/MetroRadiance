@@ -6,8 +6,9 @@ using System.Windows;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 using MetroRadiance.Chrome.Internal;
+using MetroRadiance.Chrome.Primitives;
 
-namespace MetroRadiance.Chrome.Behaviors
+namespace MetroRadiance.Chrome
 {
 	public class MetroChromeBehavior : Behavior<Window>, IChromeSettings
 	{
@@ -63,7 +64,7 @@ namespace MetroRadiance.Chrome.Behaviors
 		{
 			base.OnAttached();
 
-			var wrapper = new WindowWrapper(this.AssociatedObject);
+			var wrapper = WindowWrapper.Create(this.AssociatedObject);
 			this.left = new GlowWindow(wrapper, this, new GlowWindowProcessorLeft());
 			this.right = new GlowWindow(wrapper, this, new GlowWindowProcessorRight());
 			this.top = new GlowWindow(wrapper, this, new GlowWindowProcessorTop());

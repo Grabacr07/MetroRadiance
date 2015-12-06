@@ -32,7 +32,7 @@ using System.Windows.Markup;
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
 
-[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/chrome", "MetroRadiance.Chrome.Behaviors")]
+[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/chrome", "MetroRadiance.Chrome")]
 
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:

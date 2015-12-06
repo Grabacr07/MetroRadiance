@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MetroRadiance.Core.Win32;
+using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Internal
 {
@@ -17,24 +17,24 @@ namespace MetroRadiance.Chrome.Internal
 
 		public override VerticalAlignment VerticalAlignment => VerticalAlignment.Bottom;
 
-		public override double GetLeft(double ownerLeft, double ownerWidth)
+		public override int GetLeft(int ownerLeft, int ownerWidth, Size glowSize)
 		{
 			return ownerLeft;
 		}
 
-		public override double GetTop(double ownerTop, double ownerHeight)
+		public override int GetTop(int ownerTop, int ownerHeight, Size glowSize)
 		{
-			return ownerTop - GlowSize;
+			return ownerTop - glowSize.Height;
 		}
 
-		public override double GetWidth(double ownerLeft, double ownerWidth)
+		public override int GetWidth(int ownerLeft, int ownerWidth, Size glowSize)
 		{
 			return ownerWidth;
 		}
 
-		public override double GetHeight(double ownerTop, double ownerHeight)
+		public override int GetHeight(int ownerTop, int ownerHeight, Size glowSize)
 		{
-			return GlowSize;
+			return glowSize.Height;
 		}
 
 		public override HitTestValues GetHitTestValue(Point point, double actualWidht, double actualHeight)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MetroRadiance.Chrome.Internal
+namespace MetroRadiance.Chrome
 {
 	internal interface IWindow
 	{

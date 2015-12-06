@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MetroRadiance.Core.Win32
+namespace MetroRadiance.Win32
 {
 	public static class NativeExtensions
 	{

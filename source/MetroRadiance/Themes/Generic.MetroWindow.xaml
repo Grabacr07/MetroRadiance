@@ -24,13 +24,13 @@
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
 		<Setter Property="WindowChrome"
 				Value="{StaticResource DefaultChrome}" />
-		<Setter Property="MetroChromeBehavior">
+		<!--<Setter Property="MetroChromeBehavior">
 			<Setter.Value>
 				<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
 											InactiveBrush="{DynamicResource BorderBrushKey}"
 											Mode="VisualStudio2013" />
 			</Setter.Value>
-		</Setter>
+		</Setter>-->
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:MetroWindow}">
