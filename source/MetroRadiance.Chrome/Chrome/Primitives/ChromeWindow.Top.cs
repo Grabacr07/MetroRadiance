@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Primitives
 {
-	public class TopChromeWindow : ChromeWindow
+	internal class TopChromeWindow : ChromeWindow
 	{
+		public TopChromeWindow()
+		{
+			this.SizeToContent = SizeToContent.Height;
+		}
+
 		protected override int GetLeft(Dpi dpi)
 		{
 			return this.Owner.Left.DpiRoundX(dpi) - this.Offset.Left.DpiRoundX(dpi);
@@ -25,7 +31,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override int GetHeight(Dpi dpi)
 		{
-			return this.GetContentSizeOrDefault(x => x.Height).DpiRoundY(dpi);
+			return this.GetContentSizeOrDefault(x => x.ActualHeight).DpiRoundY(dpi);
 		}
 
 		protected override IntPtr? WndProcOverride(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

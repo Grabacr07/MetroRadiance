@@ -37,7 +37,7 @@ namespace MetroRadiance.Controls
 		/// <summary>
 		/// このウィンドウが表示されているモニターの現在の DPI。
 		/// </summary>
-		internal Dpi currentDpi;
+		internal Dpi CurrentDpi { get; set; }
 
 		private HwndSource source;
 		private FrameworkElement resizeGrip;
@@ -74,36 +74,7 @@ namespace MetroRadiance.Controls
 			DependencyProperty.Register("WindowChrome", typeof(WindowChrome), typeof(MetroWindow), new UIPropertyMetadata(null));
 
 		#endregion
-
-		#region MetroChromeBehavior 依存関係プロパティ
-
-		/// <summary>
-		/// ウィンドウの枠を光らせるための <see cref="MetroChromeBehavior"/> を取得または設定します。
-		/// </summary>
-		public MetroChromeBehavior MetroChromeBehavior
-		{
-			get { return (MetroChromeBehavior)this.GetValue(MetroChromeBehaviorProperty); }
-			set { this.SetValue(MetroChromeBehaviorProperty, value); }
-		}
-		public static readonly DependencyProperty MetroChromeBehaviorProperty =
-			DependencyProperty.Register("MetroChromeBehavior", typeof(MetroChromeBehavior), typeof(MetroWindow), new UIPropertyMetadata(null, MetroChromeBehaviorChangedCallback));
-
-		private static void MetroChromeBehaviorChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var instance = (MetroWindow)d;
-			var oldBehavior = (MetroChromeBehavior)e.OldValue;
-			var newBehavior = (MetroChromeBehavior)e.NewValue;
-
-			if (Equals(oldBehavior, newBehavior)) return;
-
-			var behaviors = Interaction.GetBehaviors(instance);
-
-			if (oldBehavior != null) behaviors.Remove(oldBehavior);
-			if (newBehavior != null) behaviors.Add((Behavior)newBehavior.Clone());
-		}
-
-		#endregion
-
+		
 		#region IsRestoringWindowPlacement 依存関係プロパティ
 
 		/// <summary>
@@ -177,13 +148,13 @@ namespace MetroRadiance.Controls
 			this.systemDpi = this.GetSystemDpi() ?? Dpi.Default;
 			if (PerMonitorDpi.IsSupported)
 			{
-				this.currentDpi = this.source.GetDpi();
-				this.ChangeDpi(this.currentDpi);
+				this.CurrentDpi = this.source.GetDpi();
+				this.ChangeDpi(this.CurrentDpi);
 				this.source.AddHook(this.WndProc);
 			}
 			else
 			{
-				this.currentDpi = this.systemDpi;
+				this.CurrentDpi = this.systemDpi;
 			}
 
 			if (this.WindowSettings == null)
@@ -297,10 +268,10 @@ namespace MetroRadiance.Controls
 				? Transform.Identity
 				: new ScaleTransform((double)dpi.X / this.systemDpi.X, (double)dpi.Y / this.systemDpi.Y);
 
-			this.Width = this.Width * dpi.X / this.currentDpi.X;
-			this.Height = this.Height * dpi.Y / this.currentDpi.Y;
+			this.Width = this.Width * dpi.X / this.CurrentDpi.X;
+			this.Height = this.Height * dpi.Y / this.CurrentDpi.Y;
 
-			this.currentDpi = dpi;
+			this.CurrentDpi = dpi;
 		}
 	}
 }

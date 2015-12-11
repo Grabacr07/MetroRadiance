@@ -34,7 +34,7 @@ namespace MetroRadiance.Chrome
 		}
 
 		#endregion
-		
+
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
@@ -60,12 +60,12 @@ namespace MetroRadiance.Chrome
 			var options = new[]
 			{
 				// Offset, Opacity
-				Tuple.Create(1.0, 0.00),
-				Tuple.Create(0.6, 0.02),
-				Tuple.Create(0.4, 0.08),
-				Tuple.Create(0.2, 0.16),
-				Tuple.Create(0.1, 0.24),
-				Tuple.Create(0.0, 0.32),
+				Tuple.Create(1.0, 0.005),
+				Tuple.Create(0.6, 0.020),
+				Tuple.Create(0.4, 0.080),
+				Tuple.Create(0.2, 0.160),
+				Tuple.Create(0.1, 0.260),
+				Tuple.Create(0.0, 0.360),
 			};
 
 			foreach (var tuple in options)
@@ -101,7 +101,10 @@ namespace MetroRadiance.Chrome
 			}
 
 			double opacity;
-			if (!double.TryParse(parameter.ToString(), out opacity)) return color;
+			if (!double.TryParse(parameter.ToString(), out opacity))
+			{
+				return color;
+			}
 
 			color.A = (byte)(color.A * opacity);
 			return color;

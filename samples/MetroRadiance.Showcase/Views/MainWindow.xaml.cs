@@ -36,25 +36,21 @@ namespace VS2012LikeWindow2.Views
 			this.Visibility = Visibility.Visible;
 		}
 
-		//protected override void OnContentRendered(EventArgs e)
-		//{
-		//	base.OnContentRendered(e);
-		//	this.SetGlowingForActiveWindow();
-		//}
+		protected override void OnContentRendered(EventArgs e)
+		{
+			base.OnContentRendered(e);
+			this.SetGlowingForActiveWindow();
+		}
 
 		private async void SetGlowingForActiveWindow()
 		{
 			//await Task.Delay(2500);
 
 			//var hWnd = NativeMethods.GetActiveWindow();
-			var hWnd = new IntPtr(0x02310A08);
-			var chrome = new GlowingChrome(hWnd)
-			{
-				ActiveBrush = new SolidColorBrush(Colors.DeepSkyBlue),
-				InactiveBrush = new SolidColorBrush(Colors.Salmon),
-				ChromeMode = ChromeMode.VisualStudio2013,
-			};
-			chrome.Show();
+			var hWnd = new IntPtr(0x00430AEE);
+			var external = new ExternalWindow(hWnd);
+			var chrome = new WindowChrome();
+			chrome.Attach(external);
 		}
 	}
 }

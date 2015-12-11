@@ -12,7 +12,7 @@ using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Primitives
 {
-	public abstract class ChromeWindow : Window
+	internal abstract class ChromeWindow : Window
 	{
 		static ChromeWindow()
 		{
@@ -40,7 +40,7 @@ namespace MetroRadiance.Chrome.Primitives
 		public Thickness Offset { get; set; } = new Thickness(DefaultSize);
 
 
-		internal ChromeWindow()
+		protected ChromeWindow()
 		{
 			this.Title = nameof(ChromeWindow);
 			this.WindowStyle = WindowStyle.None;
@@ -69,6 +69,8 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public void Attach(ExternalWindow window)
 		{
+			this.Background = Brushes.OrangeRed;
+
 			this.Attach(window, true);
 		}
 

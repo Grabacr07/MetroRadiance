@@ -73,7 +73,7 @@ namespace MetroRadiance.Controls
 					{
 						this.isSystemMenuOpened = true;
 						var point = this.PointToScreen(new Point(0, this.ActualHeight));
-						SystemCommands.ShowSystemMenu(window, new Point(point.X / window.currentDpi.ScaleX, point.Y / window.currentDpi.ScaleY));
+						SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
 					}
 					else
 					{
@@ -97,7 +97,7 @@ namespace MetroRadiance.Controls
 			}
 
 			var point = this.PointToScreen(e.GetPosition(this));
-			SystemCommands.ShowSystemMenu(window, new Point(point.X / window.currentDpi.ScaleX, point.Y / window.currentDpi.ScaleY));
+			SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
 		}
 
 		protected override void OnMouseLeave(MouseEventArgs e)

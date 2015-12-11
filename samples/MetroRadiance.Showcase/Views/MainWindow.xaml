@@ -19,16 +19,25 @@
 					  WindowState="{Binding WindowState}"
 					  IsRestoringWindowPlacement="True"
 					  UseLayoutRounding="True"
-					  TextOptions.TextFormattingMode="Display"
-					  chrome:WindowChrome.Instance="{x:Static chrome:WindowChrome.Default}">
+					  TextOptions.TextFormattingMode="Display">
 
-	<ContentControl.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/MetroRadiance.Chrome;component/Themes/Generic.WindowChrome.xaml" />
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</ContentControl.Resources>
+	<chrome:WindowChrome.Instance>
+		<chrome:WindowChrome>
+			<chrome:WindowChrome.Top>
+				<Grid>
+					<Border Background="DarkRed"
+							Padding="24,3"
+							Margin="8,0"
+							HorizontalAlignment="Right">
+						<TextBlock Text="光るやつに何かつける"
+								   Foreground="White" />
+					</Border>
+					<chrome:GlowingEdge Position="Top"
+										VerticalAlignment="Bottom" />
+				</Grid>
+			</chrome:WindowChrome.Top>
+		</chrome:WindowChrome>
+	</chrome:WindowChrome.Instance>
 
 	<!--<controls:MetroWindow.MetroChromeBehavior>
 		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
