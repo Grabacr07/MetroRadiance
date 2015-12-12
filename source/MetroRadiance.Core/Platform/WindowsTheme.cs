@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -19,6 +20,7 @@ namespace MetroRadiance.Platform
 		/// <summary>
 		/// Windows のアクセント カラーが変更されると発生します。
 		/// </summary>
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public static event EventHandler<Color> AccentColorChanged
 		{
 			add { AddListener(value); }
@@ -42,6 +44,19 @@ namespace MetroRadiance.Platform
 		public static Color GetColorFromInt64(long color)
 		{
 			return Color.FromArgb((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
+		}
+
+		/// <summary>
+		/// Windows のアクセント カラーが変更されたときに通知を受け取るメソッドを登録します。
+		/// </summary>
+		/// <param name="callback">Windows のアクセント カラーが変更されたときに通知を受け取るメソッド。</param>
+		/// <returns>通知の購読を解除するときに使用する <see cref="IDisposable"/> オブジェクト。</returns>
+		public static IDisposable RegisterAccentColorListener(Action<Color> callback)
+		{
+			EventHandler<Color> handler = (sender, color) => callback?.Invoke(color);
+			AccentColorChanged += handler;
+
+			return new AnonymousDisposable(() => AccentColorChanged -= handler);
 		}
 
 		private static void AddListener(EventHandler<Color> listener)
@@ -97,6 +112,21 @@ namespace MetroRadiance.Platform
 				}
 
 				return base.WindowProc(hwnd, msg, wParam, lParam, ref handled);
+			}
+		}
+
+		private class AnonymousDisposable : IDisposable
+		{
+			private readonly Action _disposeAction;
+
+			public AnonymousDisposable(Action disposeAction)
+			{
+				this._disposeAction = disposeAction;
+			}
+
+			public void Dispose()
+			{
+				this._disposeAction?.Invoke();
 			}
 		}
 	}

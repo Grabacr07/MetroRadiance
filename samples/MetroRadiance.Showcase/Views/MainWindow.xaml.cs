@@ -44,13 +44,13 @@ namespace VS2012LikeWindow2.Views
 
 		private async void SetGlowingForActiveWindow()
 		{
-			//await Task.Delay(2500);
+			////await Task.Delay(2500);
 
-			//var hWnd = NativeMethods.GetActiveWindow();
-			var hWnd = new IntPtr(0x00430AEE);
-			var external = new ExternalWindow(hWnd);
-			var chrome = new WindowChrome();
-			chrome.Attach(external);
+			////var hWnd = NativeMethods.GetActiveWindow();
+			//var hWnd = new IntPtr(0x015E0D0C);
+			//var external = new ExternalWindow(hWnd);
+			//var chrome = new WindowChrome();
+			//chrome.Attach(external);
 		}
 	}
 }

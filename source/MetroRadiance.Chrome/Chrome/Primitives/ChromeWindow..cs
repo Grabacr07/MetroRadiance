@@ -71,7 +71,9 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public void Attach(ExternalWindow window)
 		{
-			this.Background = Brushes.OrangeRed;
+			var disposable = WindowsTheme.RegisterAccentColorListener(x => this.Background = new SolidColorBrush(x));
+			this.Closed += (sender, e) => disposable.Dispose();
+			this.Background = new SolidColorBrush(WindowsTheme.GetAccentColor());
 
 			this.Attach(window, true);
 		}
