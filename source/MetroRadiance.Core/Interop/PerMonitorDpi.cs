@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Interop;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop.Win32;
 
-namespace MetroRadiance
+namespace MetroRadiance.Interop
 {
 	/// <summary>
 	/// Windows 8.1 の Per-Monitor DPI 機能へアクセスします。
@@ -16,14 +16,14 @@ namespace MetroRadiance
 		/// Per-Monitor DPI 機能をサポートしているかどうかを示す値を取得します。
 		/// </summary>
 		/// <returns>
-		/// 動作しているオペレーティング システムが Windows 8.1 (NT 6.3) の場合は true、それ以外の場合は false。
+		/// 動作しているオペレーティング システムが Windows 8.1 (NT 6.3)、もしくは Windows 10 (10.0.x) の場合は true、それ以外の場合は false。
 		/// </returns>
 		public static bool IsSupported
 		{
 			get
 			{
 				var version = Environment.OSVersion.Version;
-				return version.Major == 6 && version.Minor == 3;
+				return (version.Major == 6 && version.Minor == 3) || version.Major == 10;
 			}
 		}
 
@@ -48,12 +48,12 @@ namespace MetroRadiance
 		{
 			if (!IsSupported) return Dpi.Default;
 
-			var hmonitor = NativeMethods.MonitorFromWindow(
+			var hmonitor = User32.MonitorFromWindow(
 				hWnd,
 				MonitorDefaultTo.MONITOR_DEFAULTTONEAREST);
 
 			uint dpiX = 1, dpiY = 1;
-			NativeMethods.GetDpiForMonitor(hmonitor, dpiType, ref dpiX, ref dpiY);
+			SHCore.GetDpiForMonitor(hmonitor, dpiType, ref dpiX, ref dpiY);
 
 			return new Dpi(dpiX, dpiY);
 		}

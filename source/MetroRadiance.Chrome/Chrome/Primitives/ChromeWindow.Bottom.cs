@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Chrome.Primitives
 {
@@ -36,9 +37,9 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override IntPtr? WndProcOverride(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.LBUTTONDBLCLK)
+			if (msg == (int)WindowsMessages.WM_LBUTTONDBLCLK)
 			{
-				NativeMethods.SendMessage(this.Owner.Handle, WM.NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
+				User32.SendMessage(this.Owner.Handle, WindowsMessages.WM_NCLBUTTONDBLCLK, (IntPtr)HitTestValues.HTBOTTOM, IntPtr.Zero);
 			}
 
 			return null;

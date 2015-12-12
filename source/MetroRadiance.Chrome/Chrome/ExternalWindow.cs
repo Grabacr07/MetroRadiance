@@ -5,23 +5,25 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using ChromeHookCLR;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
+using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome
 {
 	public class ExternalWindow : IWindow, IDisposable
 	{
-		private static IChromeHookService serviceInstance;
-		private readonly IChromeHook external;
-		private Rect rect;
+		private static IChromeHookService _serviceInstance;
+		private readonly IChromeHook _external;
+		private Rect _rect;
 
 		public IntPtr Handle { get; }
 
-		public double Left => this.rect.X;
-		public double Top => this.rect.Y;
+		public double Left => this._rect.X;
+		public double Top => this._rect.Y;
 
-		public double ActualWidth => this.rect.Width;
-		public double ActualHeight => this.rect.Height;
+		public double ActualWidth => this._rect.Width;
+		public double ActualHeight => this._rect.Height;
 
 		public bool IsActive => true;
 
@@ -33,7 +35,7 @@ namespace MetroRadiance.Chrome
 		// 本当なら☝にしたいけど、別プロセスウィンドウに Resize メッセージ飛ばせないっぽいから保留
 		public ResizeMode ResizeMode => ResizeMode.NoResize;
 
-		public Visibility Visibility => NativeMethods.IsWindowVisible(this.Handle)
+		public Visibility Visibility => User32.IsWindowVisible(this.Handle)
 			? Visibility.Visible
 			: Visibility.Hidden;
 
@@ -51,29 +53,29 @@ namespace MetroRadiance.Chrome
 		{
 			this.Handle = hWnd;
 
-			if (serviceInstance == null)
+			if (_serviceInstance == null)
 			{
-				serviceInstance = ServiceFactory.CreateInstance();
+				_serviceInstance = ServiceFactory.CreateInstance();
 			}
 
-			this.external = serviceInstance.Register(hWnd);
-			this.external.StateChanged += this.ExternalOnStateChanged;
-			this.external.SizeChanged += this.ExternalOnSizeChanged;
-			this.external.WindowMoved += this.ExternalOnWindowMoved;
-			this.external.Activated += this.ExternalOnActivated;
-			this.external.Deactivated += this.ExternalOnDeactivated;
-			this.external.Closed += this.ExternalOnClosed;
+			this._external = _serviceInstance.Register(hWnd);
+			this._external.StateChanged += this.ExternalOnStateChanged;
+			this._external.SizeChanged += this.ExternalOnSizeChanged;
+			this._external.WindowMoved += this.ExternalOnWindowMoved;
+			this._external.Activated += this.ExternalOnActivated;
+			this._external.Deactivated += this.ExternalOnDeactivated;
+			this._external.Closed += this.ExternalOnClosed;
 
-			this.rect = this.GetExtendFrameBounds();
+			this._rect = this.GetExtendFrameBounds();
 			//this.IsActive = NativeMethods.GetActiveWindow() == this.Handle;
 			this.WindowState = WindowState.Normal;
-			if (NativeMethods.IsIconic(hWnd)) this.WindowState = WindowState.Minimized;
-			if (NativeMethods.IsZoomed(hWnd)) this.WindowState = WindowState.Maximized;
+			if (User32.IsIconic(hWnd)) this.WindowState = WindowState.Minimized;
+			if (User32.IsZoomed(hWnd)) this.WindowState = WindowState.Maximized;
 		}
 
 		public bool Activate()
 		{
-			return NativeMethods.SetActiveWindow(this.Handle) != IntPtr.Zero;
+			return User32.SetActiveWindow(this.Handle) != IntPtr.Zero;
 		}
 
 		private void ExternalOnStateChanged(IChromeHook sender, int state)
@@ -96,13 +98,13 @@ namespace MetroRadiance.Chrome
 
 		private void ExternalOnSizeChanged(IChromeHook sender, Size newSize)
 		{
-			this.rect = this.GetExtendFrameBounds();
+			this._rect = this.GetExtendFrameBounds();
 			this.SizeChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void ExternalOnWindowMoved(IChromeHook sender, Point newLocation)
 		{
-			this.rect = this.GetExtendFrameBounds();
+			this._rect = this.GetExtendFrameBounds();
 			this.LocationChanged?.Invoke(this, EventArgs.Empty);
 		}
 
@@ -120,23 +122,19 @@ namespace MetroRadiance.Chrome
 
 		private void ExternalOnClosed(IChromeHook sender)
 		{
-			this.external.Dispose();
+			this._external.Dispose();
 			this.Closed?.Invoke(this, EventArgs.Empty);
 		}
 
 		public void Dispose()
 		{
-			this.external.Dispose();
+			this._external.Dispose();
 		}
-
-
-		[DllImport("dwmapi.dll")]
-		private static extern void DwmGetWindowAttribute(IntPtr hWnd, DWMWINDOWATTRIBUTE dwAttribute, [Out] out RECT pvAttribute, int cbAttribute);
-
+		
 		private Rect GetExtendFrameBounds()
 		{
 			RECT frameBounds;
-			DwmGetWindowAttribute(this.Handle, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out frameBounds, Marshal.SizeOf(typeof(RECT)));
+			Dwmapi.DwmGetWindowAttribute(this.Handle, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out frameBounds, Marshal.SizeOf(typeof(RECT)));
 
 			var dpi = PerMonitorDpi.GetDpi(this.Handle);
 			var l = frameBounds.Left * dpi.ScaleX;

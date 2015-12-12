@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome.Primitives
 {
-	public class WindowWrapper : IWindow
+	internal class WindowWrapper : IWindow
 	{
 		private static readonly Dictionary<Window, WindowWrapper> _wrappers = new Dictionary<Window, WindowWrapper>();
 

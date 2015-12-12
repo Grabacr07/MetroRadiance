@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Controls
 {

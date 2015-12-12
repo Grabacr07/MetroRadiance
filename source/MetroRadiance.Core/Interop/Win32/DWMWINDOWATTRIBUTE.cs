@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 // ReSharper disable InconsistentNaming
 
-namespace MetroRadiance.Win32
+namespace MetroRadiance.Interop.Win32
 {
 	public enum DWMWINDOWATTRIBUTE
 	{

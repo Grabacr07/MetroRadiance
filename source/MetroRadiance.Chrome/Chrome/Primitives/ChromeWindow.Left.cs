@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MetroRadiance.Interop;
 
 namespace MetroRadiance.Chrome.Primitives
 {

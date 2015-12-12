@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Controls
 {
@@ -48,7 +48,7 @@ namespace MetroRadiance.Controls
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.NCLBUTTONDOWN)
+			if (msg == (int)WindowsMessages.WM_NCLBUTTONDOWN)
 			{
 				this.isSystemMenuOpened = false;
 			}

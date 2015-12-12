@@ -7,8 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
+using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
+using MetroRadiance.Platform;
 using MetroRadiance.Properties;
-using MetroRadiance.Win32;
 
 namespace MetroRadiance.Chrome.Primitives
 {
@@ -165,7 +167,7 @@ namespace MetroRadiance.Chrome.Primitives
 			var width = this.GetWidth(dpi);
 			var height = this.GetHeight(dpi);
 
-			NativeMethods.SetWindowPos(this._handle, this.Owner.Handle, left, top, width, height, SWP.NOACTIVATE);
+			User32.SetWindowPos(this._handle, this.Owner.Handle, left, top, width, height, SetWindowPosFlags.SWP_NOACTIVATE);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -178,13 +180,13 @@ namespace MetroRadiance.Chrome.Primitives
 			this._source = source;
 			this._source.AddHook(this.WndProc);
 			this._systemDpi = PerMonitorDpi.IsSupported ? (Dpi?)null : (this.GetSystemDpi() ?? Dpi.Default);
-
-			var wndStyle = source.Handle.GetWindowLongEx();
-			var gclStyle = source.Handle.GetClassLong(ClassLongFlags.GclStyle);
-
 			this._handle = source.Handle;
-			this._handle.SetWindowLongEx(wndStyle | WSEX.TOOLWINDOW);
-			this._handle.SetClassLong(ClassLongFlags.GclStyle, gclStyle | ClassStyles.DblClks);
+
+			var wndStyle = User32.GetWindowLongEx(source.Handle);
+			var gclStyle = User32.GetClassLong(source.Handle, ClassLongPtrIndex.GCL_STYLE);
+
+			User32.SetWindowLongEx(this._handle, wndStyle | WindowExStyles.WS_EX_TOOLWINDOW);
+			User32.SetClassLong(this._handle, ClassLongPtrIndex.GCL_STYLE, gclStyle | WindowClassStyles.CS_DBLCLKS);
 
 			var wrapper = this.Owner as WindowWrapper;
 			if (wrapper != null)
@@ -272,7 +274,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.MOUSEACTIVATE)
+			if (msg == (int)WindowsMessages.WM_MOUSEACTIVATE)
 			{
 				handled = true;
 				return new IntPtr(3);
@@ -288,7 +290,7 @@ namespace MetroRadiance.Chrome.Primitives
 				this.Owner.Activate();
 			}
 
-			NativeMethods.PostMessage(this.Owner.Handle, (uint)WM.NCLBUTTONDOWN, (IntPtr)mode, IntPtr.Zero);
+			User32.PostMessage(this.Owner.Handle, (uint)WindowsMessages.WM_NCLBUTTONDOWN, (IntPtr)mode, IntPtr.Zero);
 		}
 	}
 }

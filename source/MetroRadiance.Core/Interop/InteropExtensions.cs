@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace MetroRadiance
+namespace MetroRadiance.Interop
 {
 	public static class Extensions
 	{

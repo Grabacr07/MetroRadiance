@@ -49,46 +49,34 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpi.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="MonitorDpiType.cs" />
-    <Compile Include="PerMonitorDpi.cs" />
+    <Compile Include="Interop\Dpi.cs" />
+    <Compile Include="Interop\InteropExtensions.cs" />
+    <Compile Include="Interop\MonitorDpiType.cs" />
+    <Compile Include="Interop\PerMonitorDpi.cs" />
+    <Compile Include="Interop\Win32\SHCore.cs" />
+    <Compile Include="Platform\IWindow.cs" />
+    <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Win32\ClassLongFlags.cs" />
-    <Compile Include="Win32\ClassStyles.cs" />
-    <Compile Include="Win32\DWMWINDOWATTRIBUTE.cs" />
-    <Compile Include="Win32\GWL.cs" />
-    <Compile Include="Win32\HitTestValues.cs" />
-    <Compile Include="Win32\MonitorDefaultTo.cs" />
-    <Compile Include="Win32\NativeExtensions.cs" />
-    <Compile Include="Win32\NativeMethods.cs" />
-    <Compile Include="Win32\SW.cs" />
-    <Compile Include="Win32\SWP.cs" />
-    <Compile Include="Win32\WINDOWPLACEMENT.cs" />
-    <Compile Include="Win32\WM.cs" />
-    <Compile Include="Win32\WS.cs" />
-    <Compile Include="Win32\WSEX.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Compile Include="Platform\RawWindow.cs" />
+    <Compile Include="Platform\WindowsTheme.cs" />
+    <Compile Include="Interop\Win32\ClassLongPtrIndex.cs" />
+    <Compile Include="Interop\Win32\WindowClassStyles.cs" />
+    <Compile Include="Interop\Win32\Dwmapi.cs" />
+    <Compile Include="Interop\Win32\DWMWINDOWATTRIBUTE.cs" />
+    <Compile Include="Interop\Win32\WindowLongFlags.cs" />
+    <Compile Include="Interop\Win32\HitTestValues.cs" />
+    <Compile Include="Interop\Win32\MonitorDefaultTo.cs" />
+    <Compile Include="Interop\Win32\NativeExtensions.cs" />
+    <Compile Include="Interop\Win32\User32.cs" />
+    <Compile Include="Interop\Win32\ShowWindowFlags.cs" />
+    <Compile Include="Interop\Win32\SetWindowPosFlags.cs" />
+    <Compile Include="Interop\Win32\WINDOWPLACEMENT.cs" />
+    <Compile Include="Interop\Win32\WindowsMessages.cs" />
+    <Compile Include="Interop\Win32\WindowStyles.cs" />
+    <Compile Include="Interop\Win32\WindowExStyles.cs" />
     <None Include="MetroRadiance.Core.nuspec" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup />

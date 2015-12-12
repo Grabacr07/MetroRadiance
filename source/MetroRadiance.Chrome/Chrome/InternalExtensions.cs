@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetroRadiance.Interop;
 
 namespace MetroRadiance.Chrome
 {
@@ -23,7 +24,7 @@ namespace MetroRadiance.Chrome
 		}
 
 		/// <summary>
-		/// 現在の値が Auto の場合は <paramref name="default"/> を、それ以外の場合は現在の値を返します。
+		/// 現在の値が Auto の場合は <paramref name="@default"/> を、それ以外の場合は現在の値を返します。
 		/// </summary>
 		public static double SpecifiedOrDefault(this double value, double @default)
 		{

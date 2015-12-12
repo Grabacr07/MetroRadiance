@@ -68,10 +68,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Generic.WindowChrome.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,7 +82,6 @@
     <Compile Include="Chrome\Primitives\ChromeWindow.Right.cs" />
     <Compile Include="Chrome\ExternalWindow.cs" />
     <Compile Include="Chrome\InternalExtensions.cs" />
-    <Compile Include="Chrome\IWindow.cs" />
     <Compile Include="Chrome\Primitives\WindowWrapper.cs" />
     <Compile Include="NotifyAttribute.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow..cs" />

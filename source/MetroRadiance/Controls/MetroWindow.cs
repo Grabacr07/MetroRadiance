@@ -9,7 +9,8 @@ using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media;
 using MetroRadiance.Chrome;
-using MetroRadiance.Win32;
+using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
 using WindowChrome = System.Windows.Shell.WindowChrome;
 
 namespace MetroRadiance.Controls
@@ -170,9 +171,9 @@ namespace MetroRadiance.Controls
 					var placement = this.WindowSettings.Placement.Value;
 					placement.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
 					placement.flags = 0;
-					placement.showCmd = (placement.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : placement.showCmd);
+					placement.showCmd = placement.showCmd == ShowWindowFlags.SW_SHOWMINIMIZED ? ShowWindowFlags.SW_SHOWNORMAL : placement.showCmd;
 
-					NativeMethods.SetWindowPlacement(this.source.Handle, ref placement);
+					User32.SetWindowPlacement(this.source.Handle, ref placement);
 				}
 			}
 		}
@@ -212,7 +213,7 @@ namespace MetroRadiance.Controls
 			{
 				WINDOWPLACEMENT placement;
 				var hwnd = new WindowInteropHelper(this).Handle;
-				NativeMethods.GetWindowPlacement(hwnd, out placement);
+				User32.GetWindowPlacement(hwnd, out placement);
 
 				this.WindowSettings.Placement = this.IsRestoringWindowPlacement ? (WINDOWPLACEMENT?)placement : null;
 				this.WindowSettings.Save();
@@ -232,7 +233,7 @@ namespace MetroRadiance.Controls
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WM.NCHITTEST)
+			if (msg == (int)WindowsMessages.WM_NCHITTEST)
 			{
 				if (this.ResizeMode == ResizeMode.CanResizeWithGrip
 					&& this.WindowState == WindowState.Normal
@@ -249,7 +250,7 @@ namespace MetroRadiance.Controls
 					}
 				}
 			}
-			else if (msg == (int)WM.DPICHANGED)
+			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
 			{
 				var dpiX = wParam.ToLoWord();
 				var dpiY = wParam.ToHiWord();

@@ -4,7 +4,6 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/MetroRadiance.Chrome;component/Themes/Generic.GlowingEdge.xaml" />
 		<ResourceDictionary Source="/MetroRadiance.Chrome;component/Themes/Generic.ChromeWindow.xaml" />
-		<ResourceDictionary Source="/MetroRadiance.Chrome;component/Themes/Generic.WindowChrome.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
