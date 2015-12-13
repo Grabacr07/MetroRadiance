@@ -13,11 +13,12 @@
 		<language>ja-JP</language>
 		<tags>WPF</tags>
 		<dependencies>
-			<dependency id="MetroRadiance.Core" version="2.0.0.1-alpha" />
-			<dependency id="MetroRadiance.Chrome" version="2.0.0.1-alpha" />
+			<dependency id="MetroRadiance.Core" version="2.0.1-alpha" />
+			<dependency id="MetroRadiance.Chrome" version="2.0.1-alpha" />
 		</dependencies>
 	</metadata>
 	<files>
+		<file src="Install.ps1" target="tools\Install.ps1" />
 		<file src="bin\Release\ChromeHookService.dll" target="lib\net46\ChromeHookService.dll" />
 		<file src="bin\Release\ChromeHook32.dll" target="Content\ChromeHook32.dll" />
 		<file src="bin\Release\ChromeHook64.dll" target="Content\ChromeHook64.dll" />
