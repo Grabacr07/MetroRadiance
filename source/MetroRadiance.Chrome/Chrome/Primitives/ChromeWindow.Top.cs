@@ -17,17 +17,17 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override int GetLeft(Dpi dpi)
 		{
-			return this.Owner.Left.DpiRoundX(dpi) - this.Offset.Left.DpiRoundX(dpi);
+			return this.Owner.Left.DpiRoundX(dpi) - this.Offset.Left.DpiRoundX(this.CurrentDpi);
 		}
 
 		protected override int GetTop(Dpi dpi)
 		{
-			return this.Owner.Top.DpiRoundY(dpi) - this.GetHeight(dpi);
+			return this.Owner.Top.DpiRoundY(dpi) - this.GetHeight(this.CurrentDpi);
 		}
 
 		protected override int GetWidth(Dpi dpi)
 		{
-			return this.Owner.ActualWidth.DpiRoundX(dpi) + this.Offset.Left.DpiRoundX(dpi) + this.Offset.Right.DpiRoundX(dpi);
+			return this.Owner.ActualWidth.DpiRoundX(dpi) + this.Offset.Left.DpiRoundX(this.CurrentDpi) + this.Offset.Right.DpiRoundX(this.CurrentDpi);
 		}
 
 		protected override int GetHeight(Dpi dpi)

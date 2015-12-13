@@ -26,6 +26,10 @@
 				Value="0" />
 		<Setter Property="WindowChrome.WindowChrome"
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
+		<Setter Property="SnapsToDevicePixels"
+				Value="True" />
+		<Setter Property="UseLayoutRounding"
+				Value="True" />
 		<Setter Property="WindowChrome">
 			<Setter.Value>
 				<WindowChrome ResizeBorderThickness="1"
@@ -66,6 +70,8 @@
 		<Style.Triggers>
 			<Trigger Property="WindowState"
 					 Value="Maximized">
+				<Setter Property="BorderThickness"
+						Value="0" />
 				<Setter Property="Padding"
 						Value="8" />
 			</Trigger>

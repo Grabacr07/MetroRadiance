@@ -141,13 +141,13 @@ namespace MetroRadiance.Controls
 
 			this.source = PresentationSource.FromVisual(this) as HwndSource;
 			if (this.source == null) return;
+			this.source.AddHook(this.WndProc);
 
 			this.systemDpi = this.GetSystemDpi() ?? Dpi.Default;
 			if (PerMonitorDpi.IsSupported)
 			{
 				this.CurrentDpi = this.source.GetDpi();
 				this.ChangeDpi(this.CurrentDpi);
-				this.source.AddHook(this.WndProc);
 			}
 			else
 			{

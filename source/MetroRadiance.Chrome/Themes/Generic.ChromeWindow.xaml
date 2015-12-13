@@ -6,7 +6,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type cp:ChromeWindow}">
-					<ContentPresenter />
+					<ContentPresenter LayoutTransform="{TemplateBinding DpiScaleTransform}" />
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

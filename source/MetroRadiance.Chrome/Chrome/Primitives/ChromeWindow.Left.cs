@@ -16,7 +16,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override int GetLeft(Dpi dpi)
 		{
-			return this.Owner.Left.DpiRoundX(dpi) - this.GetWidth(dpi);
+			return this.Owner.Left.DpiRoundX(dpi) - this.GetWidth(this.CurrentDpi);
 		}
 
 		protected override int GetTop(Dpi dpi)

@@ -27,13 +27,12 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private HwndSource _source;
 		private IntPtr _handle;
+		private bool _sourceInitialized;
 		private bool _closed;
 		private WindowState _ownerPreviewState;
+		private Dpi _systemDpi;
 
-		/// <summary>WPF が認識しているシステム DPI。Per-Monitor DPI 対応プラットフォームで実行されている場合は null。</summary>
-		private Dpi? _systemDpi;
-
-		protected Dpi Dpi => this._systemDpi ?? PerMonitorDpi.GetDpi(this.Owner.Handle);
+		protected Dpi CurrentDpi { get; private set; }
 
 		internal new IWindow Owner { get; private set; }
 
@@ -41,7 +40,18 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public Thickness Offset { get; set; } = new Thickness(DefaultSize);
 
+		#region DpiScaleTransform dependency property
 
+		public static readonly DependencyProperty DpiScaleTransformProperty = DependencyProperty.Register(
+			nameof(DpiScaleTransform), typeof(Transform), typeof(ChromeWindow), new PropertyMetadata(Transform.Identity));
+
+		public Transform DpiScaleTransform
+		{
+			get { return (Transform)this.GetValue(DpiScaleTransformProperty); }
+			set { this.SetValue(DpiScaleTransformProperty, value); }
+		}
+
+		#endregion
 		protected ChromeWindow()
 		{
 			this.Title = nameof(ChromeWindow);
@@ -89,7 +99,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Owner.Activated += this.OwnerActivatedCallback;
 			this.Owner.Deactivated += this.OwnerDeactivatedCallback;
 			this.Owner.Closed += this.OwnerClosedCallback;
-			
+
 			if (initialShow)
 			{
 				this._ownerPreviewState = this.Owner.WindowState;
@@ -118,7 +128,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public void Update()
 		{
-			if (this.Owner == null || this._closed) return;
+			if (this.Owner == null || !this._sourceInitialized || this._closed) return;
 
 			if (this.Owner.Visibility == Visibility.Hidden)
 			{
@@ -163,11 +173,24 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void UpdateCore()
 		{
-			var dpi = this.Dpi;
-			var left = this.GetLeft(dpi);
-			var top = this.GetTop(dpi);
-			var width = this.GetWidth(dpi);
-			var height = this.GetHeight(dpi);
+			var positionDpi = this._systemDpi;
+
+			if (PerMonitorDpi.IsSupported)
+			{
+				var currentDpi = PerMonitorDpi.GetDpi(this.Owner.Handle);
+				if (currentDpi != this.CurrentDpi)
+				{
+					this.DpiScaleTransform = currentDpi == this._systemDpi
+						? Transform.Identity
+						: new ScaleTransform((double)currentDpi.X / this._systemDpi.X, (double)currentDpi.Y / this._systemDpi.Y);
+					this.CurrentDpi = currentDpi;
+				}
+			}
+
+			var left = this.GetLeft(positionDpi);
+			var top = this.GetTop(positionDpi);
+			var width = this.GetWidth(positionDpi);
+			var height = this.GetHeight(positionDpi);
 
 			User32.SetWindowPos(this._handle, this.Owner.Handle, left, top, width, height, SetWindowPosFlags.SWP_NOACTIVATE);
 		}
@@ -181,8 +204,9 @@ namespace MetroRadiance.Chrome.Primitives
 
 			this._source = source;
 			this._source.AddHook(this.WndProc);
-			this._systemDpi = PerMonitorDpi.IsSupported ? (Dpi?)null : (this.GetSystemDpi() ?? Dpi.Default);
 			this._handle = source.Handle;
+			this._systemDpi = this.GetSystemDpi() ?? Dpi.Default;
+			this.CurrentDpi = this._systemDpi;
 
 			var wndStyle = User32.GetWindowLongEx(source.Handle);
 			var gclStyle = User32.GetClassLong(source.Handle, ClassLongPtrIndex.GCL_STYLE);
@@ -195,6 +219,8 @@ namespace MetroRadiance.Chrome.Primitives
 			{
 				base.Owner = wrapper.Window;
 			}
+
+			this._sourceInitialized = true;
 		}
 
 		protected override void OnClosed(EventArgs e)
@@ -282,7 +308,28 @@ namespace MetroRadiance.Chrome.Primitives
 				return new IntPtr(3);
 			}
 
+			//if (msg == (int)WindowsMessages.WM_DPICHANGED)
+			//{
+			//	System.Diagnostics.Debug.WriteLine("WM_DPICHANGED: " + this.GetType().Name);
+
+			//	var dpiX = wParam.ToLoWord();
+			//	var dpiY = wParam.ToHiWord();
+			//	this.ChangeDpi(new Dpi(dpiX, dpiY));
+			//	handled = true;
+			//	return IntPtr.Zero;
+			//}
+
 			return this.WndProcOverride(hwnd, msg, wParam, lParam, ref handled) ?? IntPtr.Zero;
+		}
+		private void ChangeDpi(Dpi dpi)
+		{
+			if (!PerMonitorDpi.IsSupported) return;
+
+			this.DpiScaleTransform = dpi == this._systemDpi
+				? Transform.Identity
+				: new ScaleTransform((double)dpi.X / this._systemDpi.X, (double)dpi.Y / this._systemDpi.Y);
+
+			this.CurrentDpi = dpi;
 		}
 
 		internal void Resize(SizingMode mode)
