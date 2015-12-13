@@ -76,6 +76,7 @@
     <Compile Include="Interop\Win32\WindowsMessages.cs" />
     <Compile Include="Interop\Win32\WindowStyles.cs" />
     <Compile Include="Interop\Win32\WindowExStyles.cs" />
+    <Compile Include="Utilities\Disposable.cs" />
     <None Include="MetroRadiance.Core.nuspec" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

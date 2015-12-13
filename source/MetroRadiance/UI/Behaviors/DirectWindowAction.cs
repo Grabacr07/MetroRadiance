@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
-using MetroRadiance.Controls;
-using MetroRadiance.Internal;
+using MetroRadiance.UI.Controls;
+using MetroRadiance.Utilities;
 
-namespace MetroRadiance.Behaviors
+namespace MetroRadiance.UI.Behaviors
 {
 	internal class DirectWindowAction : TriggerAction<FrameworkElement>
 	{

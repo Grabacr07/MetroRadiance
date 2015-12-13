@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
 using MetroRadiance.Chrome;
 using MetroRadiance.Interop.Win32;
 using MetroRadiance.Platform;
@@ -46,10 +47,18 @@ namespace MetroRadiance.Showcase.Views
 			await Task.Delay(2500);
 
 			var hWnd = User32.GetForegroundWindow();
-			//var hWnd = new IntPtr(0x015E0D0C);
-			var external = new ExternalWindow(hWnd);
-			var chrome = new WindowChrome();
-			chrome.Attach(external);
+			var appHandles = Application.Current.Windows
+				.OfType<Window>()
+				.Select(x => PresentationSource.FromVisual(x) as HwndSource)
+				.Where(x => x != null)
+				.Select(x => x.Handle)
+				.ToArray();
+			if (appHandles.All(x => x != hWnd))
+			{
+				var external = new ExternalWindow(hWnd);
+				var chrome = new WindowChrome();
+				chrome.Attach(external);
+			}
 		}
 	}
 }

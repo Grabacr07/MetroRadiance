@@ -32,9 +32,9 @@ using System.Windows.Markup;
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
 
-//[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/behaviors", "MetroRadiance.Behaviors")]
-[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/controls", "MetroRadiance.Controls")]
-[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/converters", "MetroRadiance.Converters")]
+//[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/behaviors", "MetroRadiance.UI.Behaviors")]
+[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/controls", "MetroRadiance.UI.Controls")]
+[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/converters", "MetroRadiance.UI.Converters")]
 
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
@@ -47,5 +47,5 @@ using System.Windows.Markup;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.1")]
-[assembly: AssemblyInformationalVersion("2.0.1-alpha")]
+[assembly: AssemblyVersion("2.0.2")]
+[assembly: AssemblyInformationalVersion("2.0.2-alpha")]

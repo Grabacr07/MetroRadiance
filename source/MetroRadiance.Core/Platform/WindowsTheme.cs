@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using MetroRadiance.Interop.Win32;
+using MetroRadiance.Utilities;
 
 namespace MetroRadiance.Platform
 {
@@ -56,7 +57,7 @@ namespace MetroRadiance.Platform
 			EventHandler<Color> handler = (sender, color) => callback?.Invoke(color);
 			AccentColorChanged += handler;
 
-			return new AnonymousDisposable(() => AccentColorChanged -= handler);
+			return Disposable.Create(() => AccentColorChanged -= handler);
 		}
 
 		private static void AddListener(EventHandler<Color> listener)
@@ -112,21 +113,6 @@ namespace MetroRadiance.Platform
 				}
 
 				return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
-			}
-		}
-
-		private class AnonymousDisposable : IDisposable
-		{
-			private readonly Action _disposeAction;
-
-			public AnonymousDisposable(Action disposeAction)
-			{
-				this._disposeAction = disposeAction;
-			}
-
-			public void Dispose()
-			{
-				this._disposeAction?.Invoke();
 			}
 		}
 	}

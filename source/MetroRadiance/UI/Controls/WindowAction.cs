@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
 	/// ウィンドウ操作を示す識別子を定義します。

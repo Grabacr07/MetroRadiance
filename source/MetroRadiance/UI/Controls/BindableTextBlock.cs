@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Markup;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	public class BindableTextBlock : TextBlock
 	{

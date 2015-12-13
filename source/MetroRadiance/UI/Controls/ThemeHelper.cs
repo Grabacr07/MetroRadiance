@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	public static class ThemeHelper
 	{

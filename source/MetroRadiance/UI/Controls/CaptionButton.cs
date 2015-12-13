@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using MetroRadiance.Internal;
+using MetroRadiance.Utilities;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
 	/// ウィンドウのキャプション部分で使用するために最適化された <see cref="Button"/> コントロールを表します。

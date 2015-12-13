@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MetroRadiance.Converters
+namespace MetroRadiance.UI.Converters
 {
 	/// <summary>
 	/// <see cref="WindowState"/> 値が

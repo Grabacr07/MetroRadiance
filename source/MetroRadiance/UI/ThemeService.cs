@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using MetroRadiance.Internal;
+using MetroRadiance.Utilities;
 
-namespace MetroRadiance
+namespace MetroRadiance.UI
 {
 	public enum Theme
 	{

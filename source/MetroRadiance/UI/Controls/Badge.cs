@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	[TemplatePart(Name = PART_CountHost, Type = typeof(TextBlock))]
 	public class Badge : Control
 	{
-		// ReSharper disable InconsistentNaming
 		private const string PART_CountHost = "PART_CountHost";
-		// ReSharper restore InconsistentNaming
 
 		static Badge()
 		{
@@ -32,7 +29,7 @@ namespace MetroRadiance.Controls
 			set { this.SetValue(CountProperty, value); }
 		}
 		public static readonly DependencyProperty CountProperty =
-			DependencyProperty.Register("Count", typeof(int?), typeof(Badge), new UIPropertyMetadata(null, CountPropertyChangedCallback));
+			DependencyProperty.Register(nameof(Count), typeof(int?), typeof(Badge), new UIPropertyMetadata(null, CountPropertyChangedCallback));
 
 		private static void CountPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

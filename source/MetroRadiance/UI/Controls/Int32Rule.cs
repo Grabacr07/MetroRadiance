@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
 	/// 入力された値が有効な <see cref="Int32"/> 値かどうかを検証します。

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using MetroRadiance.Interop.Win32;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
 	/// ウィンドウをリサイズするためのグリップ コントロールを表します。

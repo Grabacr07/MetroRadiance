@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Livet;
+using MetroRadiance.UI;
 
 namespace MetroRadiance.Showcase.ViewModels
 {
@@ -170,7 +171,7 @@ namespace MetroRadiance.Showcase.ViewModels
 		{
 			var resource = new ResourceDictionary
 			{
-				Source = new Uri(@"pack://application:,,,/VS2012LikeWindow2;component/Themes/Accents/Red.xaml", UriKind.Absolute)
+				Source = new Uri(@"pack://application:,,,/MetroRadiance.Showcase;component/Themes/Accents/Red.xaml", UriKind.Absolute)
 			};
 			ThemeService.Current.ChangeAccent(resource);
 		}

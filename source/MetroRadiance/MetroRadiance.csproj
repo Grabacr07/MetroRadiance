@@ -197,34 +197,33 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\DirectWindowAction.cs" />
-    <Compile Include="Controls\Badge.cs" />
-    <Compile Include="Controls\BindableRichTextBox.cs" />
-    <Compile Include="Controls\BindableTextBlock.cs" />
-    <Compile Include="Controls\CaptionButton.cs" />
-    <Compile Include="Controls\CaptionButtonMode.cs" />
-    <Compile Include="Controls\CaptionIcon.cs" />
-    <Compile Include="Controls\ExpanderButton.cs" />
-    <Compile Include="Controls\Int32Rule.cs" />
-    <Compile Include="Controls\ITabItem.cs" />
-    <Compile Include="Controls\IWindowSettings.cs" />
-    <Compile Include="Controls\LinkButton.cs" />
-    <Compile Include="Controls\MetroWindow.cs" />
-    <Compile Include="Controls\ProgressRing.cs" />
-    <Compile Include="Controls\PromptComboBox.cs" />
-    <Compile Include="Controls\PromptTextBox.cs" />
-    <Compile Include="Controls\ResizeGrip.cs" />
-    <Compile Include="Controls\SystemButtons.cs" />
-    <Compile Include="Controls\TabView.cs" />
-    <Compile Include="Controls\ThemeHelper.cs" />
-    <Compile Include="Controls\WindowAction.cs" />
-    <Compile Include="Converters\WindowStateToVisibilityConverter.cs" />
-    <Compile Include="Internal\Disposable.cs" />
-    <Compile Include="Internal\InternalExtensions.cs" />
+    <Compile Include="UI\Behaviors\DirectWindowAction.cs" />
+    <Compile Include="UI\Controls\Badge.cs" />
+    <Compile Include="UI\Controls\BindableRichTextBox.cs" />
+    <Compile Include="UI\Controls\BindableTextBlock.cs" />
+    <Compile Include="UI\Controls\CaptionButton.cs" />
+    <Compile Include="UI\Controls\CaptionButtonMode.cs" />
+    <Compile Include="UI\Controls\CaptionIcon.cs" />
+    <Compile Include="UI\Controls\ExpanderButton.cs" />
+    <Compile Include="UI\Controls\Int32Rule.cs" />
+    <Compile Include="UI\Controls\ITabItem.cs" />
+    <Compile Include="UI\Controls\IWindowSettings.cs" />
+    <Compile Include="UI\Controls\LinkButton.cs" />
+    <Compile Include="UI\Controls\MetroWindow.cs" />
+    <Compile Include="UI\Controls\ProgressRing.cs" />
+    <Compile Include="UI\Controls\PromptComboBox.cs" />
+    <Compile Include="UI\Controls\PromptTextBox.cs" />
+    <Compile Include="UI\Controls\ResizeGrip.cs" />
+    <Compile Include="UI\Controls\SystemButtons.cs" />
+    <Compile Include="UI\Controls\TabView.cs" />
+    <Compile Include="UI\Controls\ThemeHelper.cs" />
+    <Compile Include="UI\Controls\WindowAction.cs" />
+    <Compile Include="UI\Converters\WindowStateToVisibilityConverter.cs" />
+    <Compile Include="Utilities\InternalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ThemeService.cs" />
+    <Compile Include="UI\ThemeService.cs" />
     <None Include="MetroRadiance.nuspec" />
     <AppDesigner Include="Properties\" />
     <Page Include="Styles\Controls.FocusVisualStyle.xaml">

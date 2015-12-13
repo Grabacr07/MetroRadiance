@@ -11,7 +11,7 @@ using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 using WindowChrome = System.Windows.Shell.WindowChrome;
 
-namespace MetroRadiance.Controls
+namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
 	/// Metro スタイル風のウィンドウを表します。

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using MetroRadiance.Controls;
+using MetroRadiance.UI.Controls;
 
-namespace MetroRadiance.Internal
+namespace MetroRadiance.Utilities
 {
 	internal static class InternalExtensions
 	{
@@ -50,11 +49,6 @@ namespace MetroRadiance.Internal
 		public static bool Compare(this string strA, string strB)
 		{
 			return string.Compare(strA, strB, StringComparison.OrdinalIgnoreCase) == 0;
-		}
-
-		public static void ForEach<T>(this IEnumerable<T> sequence, Action<T> action)
-		{
-			foreach (var item in sequence) action(item);
 		}
 	}
 }
