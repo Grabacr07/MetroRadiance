@@ -5,10 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media;
-using MetroRadiance.Chrome;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 using WindowChrome = System.Windows.Shell.WindowChrome;
@@ -21,9 +19,7 @@ namespace MetroRadiance.Controls
 	[TemplatePart(Name = PART_ResizeGrip, Type = typeof(FrameworkElement))]
 	public class MetroWindow : Window
 	{
-		// ReSharper disable InconsistentNaming
 		private const string PART_ResizeGrip = "PART_ResizeGrip";
-		// ReSharper restore InconsistentNaming
 
 		static MetroWindow()
 		{
@@ -224,10 +220,7 @@ namespace MetroRadiance.Controls
 		{
 			base.OnClosed(e);
 
-			if (this.source != null)
-			{
-				this.source.RemoveHook(this.WndProc);
-			}
+			this.source?.RemoveHook(this.WndProc);
 		}
 
 
@@ -265,7 +258,7 @@ namespace MetroRadiance.Controls
 		{
 			if (!PerMonitorDpi.IsSupported) return;
 
-			this.DpiScaleTransform = (dpi == this.systemDpi)
+			this.DpiScaleTransform = dpi == this.systemDpi
 				? Transform.Identity
 				: new ScaleTransform((double)dpi.X / this.systemDpi.X, (double)dpi.Y / this.systemDpi.Y);
 

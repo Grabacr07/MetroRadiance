@@ -9,7 +9,7 @@
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="BorderThickness"
-				Value="1" />
+				Value="0.99" />
 		<Setter Property="VerticalContentAlignment"
 				Value="Center" />
 		<Setter Property="FocusVisualStyle"

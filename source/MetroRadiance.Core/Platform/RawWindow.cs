@@ -7,7 +7,7 @@ using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Platform
 {
-	public class RawWindow
+	public abstract class RawWindow
 	{
 		public string Name { get; set; }
 
@@ -23,19 +23,19 @@ namespace MetroRadiance.Platform
 		protected void Show(HwndSourceParameters parameters)
 		{
 			this.Source = new HwndSource(parameters);
-			this.Source.AddHook(this.WindowProc);
+			this.Source.AddHook(this.WndProc);
 		}
 
 		public virtual void Close()
 		{
-			this.Source?.RemoveHook(this.WindowProc);
+			this.Source?.RemoveHook(this.WndProc);
 			this.Source?.Dispose();
 			this.Source = null;
 
 			User32.CloseWindow(this.Handle);
 		}
 
-		protected virtual IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			return IntPtr.Zero;
 		}

@@ -8,6 +8,8 @@
 				Value="{DynamicResource BorderBrushKey}" />
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
+		<Setter Property="BorderThickness"
+				Value="0.99" />
 		<Setter Property="Padding"
 				Value="8,2" />
 		<Setter Property="FocusVisualStyle"
@@ -55,7 +57,6 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
-
 
 	<Style x:Key="CircleButtonStyleKey"
 		   TargetType="{x:Type Button}">

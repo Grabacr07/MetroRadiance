@@ -13,9 +13,6 @@
 					  Height="300"
 					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
-					  Foreground="{DynamicResource ActiveForegroundBrushKey}"
-					  BorderThickness=".99"
-					  BorderBrush="{DynamicResource AccentBrushKey}"
 					  WindowState="{Binding WindowState}"
 					  IsRestoringWindowPlacement="True"
 					  UseLayoutRounding="True"
@@ -38,19 +35,6 @@
 			</chrome:WindowChrome.Top>
 		</chrome:WindowChrome>
 	</chrome:WindowChrome.Instance>
-
-	<!--<controls:MetroWindow.MetroChromeBehavior>
-		<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
-									InactiveBrush="{DynamicResource BorderBrushKey}"
-									Mode="Office2013" />
-	</controls:MetroWindow.MetroChromeBehavior>-->
-
-	<!--<WindowChrome.WindowChrome>
-		<WindowChrome CaptionHeight="0"
-					  ResizeBorderThickness="1"
-					  GlassFrameThickness="0"
-					  CornerRadius="0" />
-	</WindowChrome.WindowChrome>-->
 
 	<Window.DataContext>
 		<vm:WindowViewModel />

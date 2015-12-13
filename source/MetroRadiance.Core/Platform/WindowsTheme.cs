@@ -103,7 +103,7 @@ namespace MetroRadiance.Platform
 				this._callback = callback;
 			}
 
-			protected override IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+			protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 			{
 				if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
 				{
@@ -111,7 +111,7 @@ namespace MetroRadiance.Platform
 					this._callback(color);
 				}
 
-				return base.WindowProc(hwnd, msg, wParam, lParam, ref handled);
+				return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 			}
 		}
 

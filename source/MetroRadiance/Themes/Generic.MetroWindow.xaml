@@ -9,7 +9,7 @@
 	</ResourceDictionary.MergedDictionaries>
 
 	<WindowChrome x:Key="DefaultChrome"
-				  ResizeBorderThickness="0"
+				  ResizeBorderThickness="1"
 				  GlassFrameThickness="0"
 				  CornerRadius="0" />
 
@@ -18,19 +18,21 @@
 				Value="{DynamicResource ThemeBrushKey}" />
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
+		<Setter Property="BorderBrush"
+				Value="{DynamicResource AccentBrushKey}" />
+		<Setter Property="BorderThickness"
+				Value=".99" />
 		<Setter Property="Padding"
 				Value="0" />
 		<Setter Property="WindowChrome.WindowChrome"
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
-		<Setter Property="WindowChrome"
-				Value="{StaticResource DefaultChrome}" />
-		<!--<Setter Property="MetroChromeBehavior">
+		<Setter Property="WindowChrome">
 			<Setter.Value>
-				<chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
-											InactiveBrush="{DynamicResource BorderBrushKey}"
-											Mode="VisualStudio2013" />
+				<WindowChrome ResizeBorderThickness="1"
+							  GlassFrameThickness="0"
+							  CornerRadius="0" />
 			</Setter.Value>
-		</Setter>-->
+		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:MetroWindow}">
@@ -66,6 +68,11 @@
 					 Value="Maximized">
 				<Setter Property="Padding"
 						Value="8" />
+			</Trigger>
+			<Trigger Property="IsActive"
+					 Value="False">
+				<Setter Property="BorderBrush"
+						Value="{DynamicResource BorderBrushKey}" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>
