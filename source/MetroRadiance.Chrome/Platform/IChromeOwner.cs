@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace MetroRadiance.Platform
 {
-	internal interface IWindow
+	public interface IChromeOwner
 	{
 		IntPtr Handle { get; }
 
@@ -26,7 +26,7 @@ namespace MetroRadiance.Platform
 		event EventHandler Activated;
 		event EventHandler Deactivated;
 		event EventHandler Closed;
-		
+
 		bool Activate();
 	}
 }

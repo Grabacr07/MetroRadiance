@@ -18,7 +18,7 @@ namespace MetroRadiance.Interop.Win32
 		{
 			return (WindowExStyles)GetWindowLong(hWnd, (int)WindowLongFlags.GWL_EXSTYLE);
 		}
-		
+
 		[DllImport("user32.dll")]
 		public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
@@ -52,28 +52,28 @@ namespace MetroRadiance.Interop.Win32
 
 		public static WindowClassStyles GetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex)
 		{
-			return Environment.Is64BitProcess 
-				? (WindowClassStyles)GetClassLong64(hwnd, nIndex) 
+			return Environment.Is64BitProcess
+				? (WindowClassStyles)GetClassLong64(hwnd, nIndex)
 				: (WindowClassStyles)GetClassLong32(hwnd, nIndex);
 		}
 
-		[DllImport("user32.dll", EntryPoint="GetClassLong")]
+		[DllImport("user32.dll", EntryPoint = "GetClassLong")]
 		public static extern IntPtr GetClassLong32(IntPtr hwnd, ClassLongPtrIndex nIndex);
 
-		[DllImport("user32.dll", EntryPoint="GetClassLongPtr")]
+		[DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
 		public static extern IntPtr GetClassLong64(IntPtr hwnd, ClassLongPtrIndex nIndex);
 
 		public static WindowClassStyles SetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex, WindowClassStyles dwNewLong)
 		{
-			return Environment.Is64BitProcess 
-				? (WindowClassStyles)SetClassLong64(hwnd, nIndex, (IntPtr)dwNewLong) 
+			return Environment.Is64BitProcess
+				? (WindowClassStyles)SetClassLong64(hwnd, nIndex, (IntPtr)dwNewLong)
 				: (WindowClassStyles)SetClassLong32(hwnd, nIndex, (IntPtr)dwNewLong);
 		}
 
-		[DllImport("user32.dll", EntryPoint="SetClassLong")]
+		[DllImport("user32.dll", EntryPoint = "SetClassLong")]
 		public static extern IntPtr SetClassLong32(IntPtr hWnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong);
 
-		[DllImport("user32.dll", EntryPoint="SetClassLongPtr")]
+		[DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
 		public static extern IntPtr SetClassLong64(IntPtr hWnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong);
 
 
@@ -82,6 +82,9 @@ namespace MetroRadiance.Interop.Win32
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetActiveWindow();
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetForegroundWindow();
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr SetActiveWindow(IntPtr hWnd);

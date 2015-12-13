@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using MetroRadiance.Chrome.Primitives;
+using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome
 {
@@ -180,7 +181,7 @@ namespace MetroRadiance.Chrome
 			this._bottomWindow.Attach(window);
 		}
 
-		public void Attach(ExternalWindow window)
+		public void Attach(IChromeOwner window)
 		{
 			this.Detach();
 			this.AttachContent();

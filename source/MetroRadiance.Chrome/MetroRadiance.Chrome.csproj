@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetroRadiance</RootNamespace>
     <AssemblyName>MetroRadiance.Chrome</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,9 +35,6 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChromeHookService">
-      <HintPath>assemblies\ChromeHookService.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\assemblies\Microsoft.Expression.Interactions.dll</HintPath>
@@ -80,12 +78,11 @@
     <Compile Include="Chrome\Primitives\ChromeWindow.Top.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow.Left.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow.Right.cs" />
-    <Compile Include="Chrome\ExternalWindow.cs" />
     <Compile Include="Chrome\InternalExtensions.cs" />
     <Compile Include="Chrome\Primitives\WindowWrapper.cs" />
-    <Compile Include="NotifyAttribute.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow..cs" />
     <Compile Include="Chrome\SizingMode.cs" />
+    <Compile Include="Platform\IChromeOwner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -104,8 +101,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="MetroRadiance.Chrome.nuspec" />
-    <None Include="packages.config" />
+    <None Include="MetroRadiance.Chrome.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,29 +115,6 @@
       <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
       <Name>MetroRadiance.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\NotifyPropertyChangedGenerator.1.1.0.1\analyzers\dotnet\cs\NotifyPropertyChangedGenerator.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ChromeHook.InjectDll32.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ChromeHook32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ChromeHook64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ChromeHookCLR32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ChromeHookCLR64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ChromeHookService.dll" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

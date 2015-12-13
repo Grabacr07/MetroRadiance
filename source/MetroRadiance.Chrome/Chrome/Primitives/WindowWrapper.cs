@@ -8,7 +8,7 @@ using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome.Primitives
 {
-	internal class WindowWrapper : IWindow
+	internal class WindowWrapper : IChromeOwner
 	{
 		private static readonly Dictionary<Window, WindowWrapper> _wrappers = new Dictionary<Window, WindowWrapper>();
 

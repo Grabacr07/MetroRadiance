@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6B0A741-5BE0-479D-B813-E65672350057}</ProjectGuid>
+    <ProjectGuid>{35F4CDD9-E656-48C1-96F8-77CB63480E08}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetroRadiance</RootNamespace>
-    <AssemblyName>MetroRadiance.Core</AssemblyName>
+    <AssemblyName>MetroRadiance.Chrome.Externals</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -31,10 +31,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MetroRadiance.Core.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChromeHookService">
+      <HintPath>.\ChromeHookService.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -42,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -50,38 +52,58 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interop\Dpi.cs" />
-    <Compile Include="Interop\InteropExtensions.cs" />
-    <Compile Include="Interop\MonitorDpiType.cs" />
-    <Compile Include="Interop\PerMonitorDpi.cs" />
-    <Compile Include="Interop\Win32\SHCore.cs" />
-    <Compile Include="Platform\TransparentWindow.cs" />
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Platform\ExternalWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Platform\RawWindow.cs" />
-    <Compile Include="Platform\WindowsTheme.cs" />
-    <Compile Include="Interop\Win32\ClassLongPtrIndex.cs" />
-    <Compile Include="Interop\Win32\WindowClassStyles.cs" />
-    <Compile Include="Interop\Win32\Dwmapi.cs" />
-    <Compile Include="Interop\Win32\DWMWINDOWATTRIBUTE.cs" />
-    <Compile Include="Interop\Win32\WindowLongFlags.cs" />
-    <Compile Include="Interop\Win32\HitTestValues.cs" />
-    <Compile Include="Interop\Win32\MonitorDefaultTo.cs" />
-    <Compile Include="Interop\Win32\NativeExtensions.cs" />
-    <Compile Include="Interop\Win32\User32.cs" />
-    <Compile Include="Interop\Win32\ShowWindowFlags.cs" />
-    <Compile Include="Interop\Win32\SetWindowPosFlags.cs" />
-    <Compile Include="Interop\Win32\WINDOWPLACEMENT.cs" />
-    <Compile Include="Interop\Win32\WindowsMessages.cs" />
-    <Compile Include="Interop\Win32\WindowStyles.cs" />
-    <Compile Include="Interop\Win32\WindowExStyles.cs" />
-    <None Include="MetroRadiance.Core.nuspec" />
+    <None Include="MetroRadiance.Chrome.Externals.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ChromeHook.InjectDll32.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChromeHook32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChromeHook64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChromeHookCLR32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChromeHookCLR64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
+      <Project>{21b4ad15-d9fa-4873-bfad-1eeefbc6c264}</Project>
+      <Name>MetroRadiance.Chrome</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj">
+      <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
+      <Name>MetroRadiance.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

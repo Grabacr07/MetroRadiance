@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using MetroRadiance.Chrome;
+using MetroRadiance.Interop.Win32;
+using MetroRadiance.Platform;
 using Microsoft.Win32;
 
 namespace VS2012LikeWindow2.Views
@@ -39,18 +40,18 @@ namespace VS2012LikeWindow2.Views
 		protected override void OnContentRendered(EventArgs e)
 		{
 			base.OnContentRendered(e);
-			this.SetGlowingForActiveWindow();
+			SetGlowingForActiveWindow();
 		}
 
-		private async void SetGlowingForActiveWindow()
+		private static async void SetGlowingForActiveWindow()
 		{
-			////await Task.Delay(2500);
+			await Task.Delay(2500);
 
-			////var hWnd = NativeMethods.GetActiveWindow();
+			var hWnd = User32.GetForegroundWindow();
 			//var hWnd = new IntPtr(0x015E0D0C);
-			//var external = new ExternalWindow(hWnd);
-			//var chrome = new WindowChrome();
-			//chrome.Attach(external);
+			var external = new ExternalWindow(hWnd);
+			var chrome = new WindowChrome();
+			chrome.Attach(external);
 		}
 	}
 }

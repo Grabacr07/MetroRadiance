@@ -34,7 +34,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected Dpi CurrentDpi { get; private set; }
 
-		internal new IWindow Owner { get; private set; }
+		internal new IChromeOwner Owner { get; private set; }
 
 		internal SizingMode SizingMode { get; set; }
 
@@ -79,7 +79,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Attach(wrapper, initialShow);
 		}
 
-		public void Attach(ExternalWindow window)
+		public void Attach(IChromeOwner window)
 		{
 			var disposable = WindowsTheme.RegisterAccentColorListener(x => this.Background = new SolidColorBrush(x));
 			this.Closed += (sender, e) => disposable.Dispose();
@@ -88,7 +88,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Attach(window, true);
 		}
 
-		internal void Attach(IWindow window, bool initialShow)
+		internal void Attach(IChromeOwner window, bool initialShow)
 		{
 			this.Detach();
 

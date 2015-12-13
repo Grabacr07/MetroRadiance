@@ -7,11 +7,10 @@ using System.Windows;
 using ChromeHookCLR;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
-using MetroRadiance.Platform;
 
-namespace MetroRadiance.Chrome
+namespace MetroRadiance.Platform
 {
-	public class ExternalWindow : IWindow, IDisposable
+	public class ExternalWindow : IChromeOwner, IDisposable
 	{
 		private static IChromeHookService _serviceInstance;
 		private readonly IChromeHook _external;
