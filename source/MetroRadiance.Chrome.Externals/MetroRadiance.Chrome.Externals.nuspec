@@ -19,7 +19,7 @@
 	</metadata>
 	<files>
 		<file src="Install.ps1" target="tools\Install.ps1" />
-		<file src="bin\Release\ChromeHookService.dll" target="lib\net46\ChromeHookService.dll" />
+		<file src="bin\Release\ChromeHookService.dll" target="Content\ChromeHookService.dll" />
 		<file src="bin\Release\ChromeHook32.dll" target="Content\ChromeHook32.dll" />
 		<file src="bin\Release\ChromeHook64.dll" target="Content\ChromeHook64.dll" />
 		<file src="bin\Release\ChromeHookCLR32.dll" target="Content\ChromeHookCLR32.dll" />

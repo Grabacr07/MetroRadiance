@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Livet;
-using MetroRadiance;
-using VS2012LikeWindow2.Views;
 
-namespace VS2012LikeWindow2.ViewModels
+namespace MetroRadiance.Showcase.ViewModels
 {
 	internal class WindowViewModel : ViewModel
 	{

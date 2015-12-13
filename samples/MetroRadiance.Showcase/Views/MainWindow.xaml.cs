@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using MetroRadiance.Chrome;
@@ -10,7 +8,7 @@ using MetroRadiance.Interop.Win32;
 using MetroRadiance.Platform;
 using Microsoft.Win32;
 
-namespace VS2012LikeWindow2.Views
+namespace MetroRadiance.Showcase.Views
 {
 	partial class MainWindow
 	{

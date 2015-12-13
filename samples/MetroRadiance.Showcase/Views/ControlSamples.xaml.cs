@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VS2012LikeWindow2.Views
+namespace MetroRadiance.Showcase.Views
 {
 	partial class ControlSamples
 	{
