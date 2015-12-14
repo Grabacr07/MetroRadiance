@@ -24,26 +24,27 @@
 				Value=".99" />
 		<Setter Property="Padding"
 				Value="0" />
-		<Setter Property="WindowChrome.WindowChrome"
-				Value="{Binding RelativeSource={RelativeSource Self}, Path=WindowChrome}" />
 		<Setter Property="SnapsToDevicePixels"
 				Value="True" />
 		<Setter Property="UseLayoutRounding"
 				Value="True" />
-		<Setter Property="WindowChrome">
+		<Setter Property="WindowChrome.WindowChrome">
 			<Setter.Value>
 				<WindowChrome ResizeBorderThickness="1"
 							  GlassFrameThickness="0"
 							  CornerRadius="0" />
 			</Setter.Value>
 		</Setter>
+		<Setter Property="chrome:WindowChrome.Instance"
+				Value="{x:Static chrome:WindowChrome.Default}" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type controls:MetroWindow}">
 					<Border Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
-							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+							UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
 						<AdornerDecorator>
 							<Grid>
 								<ContentPresenter Margin="{TemplateBinding Padding}"

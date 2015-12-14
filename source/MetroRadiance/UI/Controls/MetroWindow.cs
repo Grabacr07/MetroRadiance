@@ -55,22 +55,6 @@ namespace MetroRadiance.UI.Controls
 			DependencyProperty.Register("DpiScaleTransform", typeof(Transform), typeof(MetroWindow), new UIPropertyMetadata(Transform.Identity));
 
 		#endregion
-
-		#region WindowChrome 依存関係プロパティ
-
-		/// <summary>
-		/// ウインドウの非クライアント領域のカスタマイズ方法を指定した <see cref="WindowChrome"/> を取得または設定します。
-		/// </summary>
-		public WindowChrome WindowChrome
-		{
-			get { return (WindowChrome)this.GetValue(WindowChromeProperty); }
-			set { this.SetValue(WindowChromeProperty, value); }
-		}
-
-		public static readonly DependencyProperty WindowChromeProperty =
-			DependencyProperty.Register("WindowChrome", typeof(WindowChrome), typeof(MetroWindow), new UIPropertyMetadata(null));
-
-		#endregion
 		
 		#region IsRestoringWindowPlacement 依存関係プロパティ
 
