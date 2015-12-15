@@ -227,6 +227,8 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			base.OnClosed(e);
 
+			if (!this._sourceInitialized) return;
+
 			this._source.RemoveHook(this.WndProc);
 			this._closed = true;
 		}
