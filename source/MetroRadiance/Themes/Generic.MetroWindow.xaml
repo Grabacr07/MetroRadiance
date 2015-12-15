@@ -8,11 +8,6 @@
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-	<WindowChrome x:Key="DefaultChrome"
-				  ResizeBorderThickness="1"
-				  GlassFrameThickness="0"
-				  CornerRadius="0" />
-
 	<Style TargetType="{x:Type controls:MetroWindow}">
 		<Setter Property="Background"
 				Value="{DynamicResource ThemeBrushKey}" />
