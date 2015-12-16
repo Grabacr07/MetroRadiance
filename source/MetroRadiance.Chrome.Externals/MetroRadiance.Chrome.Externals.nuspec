@@ -18,12 +18,11 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Install.ps1" target="tools\Install.ps1" />
-		<file src="bin\Release\ChromeHookService.dll" target="Content\ChromeHookService.dll" />
-		<file src="bin\Release\ChromeHook32.dll" target="Content\ChromeHook32.dll" />
-		<file src="bin\Release\ChromeHook64.dll" target="Content\ChromeHook64.dll" />
-		<file src="bin\Release\ChromeHookCLR32.dll" target="Content\ChromeHookCLR32.dll" />
-		<file src="bin\Release\ChromeHookCLR64.dll" target="Content\ChromeHookCLR64.dll" />
-		<file src="bin\Release\ChromeHook.InjectDll32.exe" target="Content\ChromeHook.InjectDll32.exe" />
+		<file src="bin\Release\ChromeHookService.dll" target="build\net46\ChromeHookService.dll" />
+		<file src="bin\Release\ChromeHook32.dll" target="build\net46\ChromeHook32.dll" />
+		<file src="bin\Release\ChromeHook64.dll" target="build\net46\ChromeHook64.dll" />
+		<file src="bin\Release\ChromeHookCLR32.dll" target="build\net46\ChromeHookCLR32.dll" />
+		<file src="bin\Release\ChromeHookCLR64.dll" target="build\net46\ChromeHookCLR64.dll" />
+		<file src="bin\Release\ChromeHook.InjectDll32.exe" target="build\net46\ChromeHook.InjectDll32.exe" />
 	</files>
 </package>

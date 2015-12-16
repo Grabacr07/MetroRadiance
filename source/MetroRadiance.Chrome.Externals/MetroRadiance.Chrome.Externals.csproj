@@ -62,7 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Install.ps1" />
     <None Include="MetroRadiance.Chrome.Externals.nuspec">
       <SubType>Designer</SubType>
     </None>
