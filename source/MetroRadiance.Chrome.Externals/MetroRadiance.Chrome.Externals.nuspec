@@ -18,6 +18,7 @@
 		</dependencies>
 	</metadata>
 	<files>
+		<file src="bin\Release\MetroRadiance.Chrome.Externals.target" target="build\MetroRadiance.Chrome.Externals.target" />
 		<file src="bin\Release\ChromeHookService.dll" target="build\net46\ChromeHookService.dll" />
 		<file src="bin\Release\ChromeHook32.dll" target="build\net46\ChromeHook32.dll" />
 		<file src="bin\Release\ChromeHook64.dll" target="build\net46\ChromeHook64.dll" />
