@@ -14,7 +14,7 @@
   </PropertyGroup>
   <Target Name="CopyNativeBinaries" DependsOnTargets="CopyFilesToOutputDirectory">
     <Copy SourceFiles="@(NativeBinary)"
-          DestinationFiles="@(NativeBinary->'$(OutDir)\%(Filename).%(Extension)')">
+          DestinationFiles="@(NativeBinary->'$(OutDir)\%(Filename)%(Extension)')">
       <Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
     </Copy>
   </Target>
