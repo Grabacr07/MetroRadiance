@@ -218,6 +218,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UI\ThemeService.cs" />
+    <Compile Include="Utilities\TypeForwardedTo.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeForwardedTo.tt</DependentUpon>
+    </Compile>
     <None Include="MetroRadiance.nuspec" />
     <AppDesigner Include="Properties\" />
     <Page Include="Styles\Controls.FocusVisualStyle.xaml">
@@ -231,7 +236,12 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Utilities\TypeForwardedTo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypeForwardedTo.g.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
       <Project>{21b4ad15-d9fa-4873-bfad-1eeefbc6c264}</Project>
@@ -241,6 +251,13 @@
       <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
       <Name>MetroRadiance.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RetroRadiance\RetroRadiance.csproj">
+      <Project>{7f898b3a-da17-4cab-b387-5629b5faca49}</Project>
+      <Name>RetroRadiance</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
