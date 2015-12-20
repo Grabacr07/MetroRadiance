@@ -25,7 +25,7 @@ namespace MetroRadiance.Platform
 		public double ActualWidth => this._rect.Width;
 		public double ActualHeight => this._rect.Height;
 
-		public bool IsActive => true;
+		public bool IsActive { get; private set; }
 
 		public WindowState WindowState { get; private set; }
 
@@ -67,7 +67,7 @@ namespace MetroRadiance.Platform
 			this._external.Closed += this.ExternalOnClosed;
 
 			this._rect = this.GetExtendFrameBounds();
-			//this.IsActive = NativeMethods.GetActiveWindow() == this.Handle;
+			this.IsActive = User32.GetForegroundWindow() == this.Handle;
 			this.WindowState = WindowState.Normal;
 			if (User32.IsIconic(hWnd)) this.WindowState = WindowState.Minimized;
 			if (User32.IsZoomed(hWnd)) this.WindowState = WindowState.Maximized;
@@ -110,13 +110,13 @@ namespace MetroRadiance.Platform
 
 		private void ExternalOnActivated(IChromeHook sender)
 		{
-			//this.IsActive = true;
+			this.IsActive = true;
 			this.Activated?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void ExternalOnDeactivated(IChromeHook sender)
 		{
-			//this.IsActive = false;
+			this.IsActive = false;
 			this.Deactivated?.Invoke(this, EventArgs.Empty);
 		}
 

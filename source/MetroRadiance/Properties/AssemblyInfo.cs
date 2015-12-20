@@ -47,5 +47,5 @@ using System.Windows.Markup;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.3")]
-[assembly: AssemblyInformationalVersion("2.0.3-alpha")]
+[assembly: AssemblyVersion("2.0.4")]
+[assembly: AssemblyInformationalVersion("2.0.4-alpha")]
