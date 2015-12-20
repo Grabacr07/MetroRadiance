@@ -341,7 +341,7 @@ namespace MetroRadiance.Chrome.Primitives
 				this.Owner.Activate();
 			}
 
-			User32.PostMessage(this.Owner.Handle, (uint)WindowsMessages.WM_NCLBUTTONDOWN, (IntPtr)mode, IntPtr.Zero);
+			this.Owner.Resize(mode);
 		}
 	}
 }

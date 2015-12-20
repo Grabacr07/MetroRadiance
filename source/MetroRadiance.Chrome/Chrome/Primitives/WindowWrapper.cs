@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using MetroRadiance.Interop.Win32;
 using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome.Primitives
@@ -81,5 +82,10 @@ namespace MetroRadiance.Chrome.Primitives
 		}
 
 		public bool Activate() => this.Window.Activate();
+
+		public void Resize(SizingMode sizingMode)
+		{
+			User32.PostMessage(this.Handle, (uint)WindowsMessages.WM_NCLBUTTONDOWN, (IntPtr)sizingMode, IntPtr.Zero);
+		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MetroRadiance.Chrome;
 
 namespace MetroRadiance.Platform
 {
@@ -28,5 +29,7 @@ namespace MetroRadiance.Platform
 		event EventHandler Closed;
 
 		bool Activate();
+
+		void Resize(SizingMode sizingMode);
 	}
 }

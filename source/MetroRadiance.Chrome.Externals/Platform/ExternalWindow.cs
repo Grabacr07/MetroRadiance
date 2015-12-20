@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using ChromeHookCLR;
+using MetroRadiance.Chrome;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 
@@ -142,6 +143,11 @@ namespace MetroRadiance.Platform
 			var h = (frameBounds.Bottom - frameBounds.Top) * dpi.ScaleY;
 
 			return new Rect(l, t, w, h);
+		}
+
+		public void Resize(SizingMode sizingMode)
+		{
+			User32.PostMessage(this.Handle, _serviceInstance.PseudoNcLButtonDownMessage, (IntPtr)sizingMode, IntPtr.Zero);
 		}
 	}
 }
