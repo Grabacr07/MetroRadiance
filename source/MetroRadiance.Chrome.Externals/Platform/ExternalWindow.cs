@@ -130,17 +130,17 @@ namespace MetroRadiance.Platform
 		{
 			this._external.Dispose();
 		}
-		
+
 		private Rect GetExtendFrameBounds()
 		{
 			RECT frameBounds;
 			Dwmapi.DwmGetWindowAttribute(this.Handle, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out frameBounds, Marshal.SizeOf(typeof(RECT)));
 
 			var dpi = PerMonitorDpi.GetDpi(this.Handle);
-			var l = frameBounds.Left * dpi.ScaleX;
-			var t = frameBounds.Top * dpi.ScaleY;
-			var w = (frameBounds.Right - frameBounds.Left) * dpi.ScaleX;
-			var h = (frameBounds.Bottom - frameBounds.Top) * dpi.ScaleY;
+			var l = frameBounds.Left * (1 / dpi.ScaleX);
+			var t = frameBounds.Top * (1 / dpi.ScaleY);
+			var w = (frameBounds.Right - frameBounds.Left) * (1 / dpi.ScaleX);
+			var h = (frameBounds.Bottom - frameBounds.Top) * (1 / dpi.ScaleY);
 
 			return new Rect(l, t, w, h);
 		}
