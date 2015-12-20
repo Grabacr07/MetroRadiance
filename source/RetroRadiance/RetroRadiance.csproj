@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7F898B3A-DA17-4CAB-B387-5629B5FACA49}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace></RootNamespace>
+    <AssemblyName>RetroRadiance</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.CheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.FocusVisualStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.PasswordBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.ToggleButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.Tooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\Blue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\Orange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Accents\Purple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.Badge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.BindableRichTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.CaptionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.CaptionIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.ExpanderButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.GlowWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.LinkButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.MetroWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.ProgressRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.PromptComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.PromptTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.ResizeGrip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.SystemButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.TabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MetroRadiance\Controls\Badge.cs" />
+    <Compile Include="MetroRadiance\Controls\BindableRichTextBox.cs" />
+    <Compile Include="MetroRadiance\Controls\BindableTextBlock.cs" />
+    <Compile Include="MetroRadiance\Controls\CaptionButton.cs" />
+    <Compile Include="MetroRadiance\Controls\CaptionButtonMode.cs" />
+    <Compile Include="MetroRadiance\Controls\CaptionIcon.cs" />
+    <Compile Include="MetroRadiance\Controls\ExpanderButton.cs" />
+    <Compile Include="MetroRadiance\Controls\Int32Rule.cs" />
+    <Compile Include="MetroRadiance\Controls\ITabItem.cs" />
+    <Compile Include="MetroRadiance\Controls\IWindowSettings.cs" />
+    <Compile Include="MetroRadiance\Controls\LinkButton.cs" />
+    <Compile Include="MetroRadiance\Controls\MetroWindow.cs" />
+    <Compile Include="MetroRadiance\Controls\ProgressRing.cs" />
+    <Compile Include="MetroRadiance\Controls\PromptComboBox.cs" />
+    <Compile Include="MetroRadiance\Controls\PromptTextBox.cs" />
+    <Compile Include="MetroRadiance\Controls\ResizeGrip.cs" />
+    <Compile Include="MetroRadiance\Controls\SystemButtons.cs" />
+    <Compile Include="MetroRadiance\Controls\TabView.cs" />
+    <Compile Include="MetroRadiance\Controls\ThemeHelper.cs" />
+    <Compile Include="MetroRadiance\Controls\WindowAction.cs" />
+    <Compile Include="MetroRadiance\Converters\WindowStateToVisibilityConverter.cs" />
+    <Compile Include="MetroRadiance\Internal\Disposable.cs" />
+    <Compile Include="MetroRadiance\Internal\InternalExtensions.cs" />
+    <Compile Include="MetroRadiance.Chrome\Behaviors\MetroChromeBehavior.cs" />
+    <Compile Include="MetroRadiance.Chrome\ChromeMode.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindow.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindowProcessor.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindowProcessorBottom.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindowProcessorLeft.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindowProcessorRight.cs" />
+    <Compile Include="MetroRadiance.Chrome\Internal\GlowWindowProcessorTop.cs" />
+    <Compile Include="MetroRadiance.Core\Dpi.cs" />
+    <Compile Include="MetroRadiance.Core\Extensions.cs" />
+    <Compile Include="MetroRadiance.Core\MonitorDpiType.cs" />
+    <Compile Include="MetroRadiance.Core\PerMonitorDpi.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\ClassLongFlags.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\ClassStyles.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\GWL.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\HitTestValues.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\MonitorDefaultTo.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\NativeExtensions.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\NativeMethods.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\SW.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\SWP.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\WINDOWPLACEMENT.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\WM.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\WS.cs" />
+    <Compile Include="MetroRadiance.Core\Win32\WSEX.cs" />
+    <Compile Include="MetroRadiance\Behaviors\DirectWindowAction.cs" />
+    <Compile Include="MetroRadiance\ThemeService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

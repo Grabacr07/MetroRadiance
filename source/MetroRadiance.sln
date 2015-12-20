@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroRadiance.Showcase", ".
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroRadiance.Chrome.Externals", "MetroRadiance.Chrome.Externals\MetroRadiance.Chrome.Externals.csproj", "{35F4CDD9-E656-48C1-96F8-77CB63480E08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroRadiance", "RetroRadiance\RetroRadiance.csproj", "{7F898B3A-DA17-4CAB-B387-5629B5FACA49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,14 @@ Global
 		{35F4CDD9-E656-48C1-96F8-77CB63480E08}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35F4CDD9-E656-48C1-96F8-77CB63480E08}.Release|x86.ActiveCfg = Release|Any CPU
 		{35F4CDD9-E656-48C1-96F8-77CB63480E08}.Release|x86.Build.0 = Release|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F898B3A-DA17-4CAB-B387-5629B5FACA49}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

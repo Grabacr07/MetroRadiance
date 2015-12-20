@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="pack://application:,,,/RetroRadiance;component/Styles/Colors.xaml" />
+
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.Badge.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.BindableRichTextBox.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.CaptionButton.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.CaptionIcon.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.ExpanderButton.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.LinkButton.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.MetroWindow.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.ProgressRing.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.PromptComboBox.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.PromptTextBox.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.SystemButtons.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.TabView.xaml" />
+		
+		<ResourceDictionary Source="/RetroRadiance;component/Themes/Generic.GlowWindow.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
