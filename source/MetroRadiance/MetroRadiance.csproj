@@ -35,7 +35,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release RETRO|AnyCPU' ">
-    <OutputPath>bin\Release %28with Retro%29\</OutputPath>
+    <OutputPath>bin\Release RETRO\</OutputPath>
     <DefineConstants>TRACE;RETRO</DefineConstants>
     <DocumentationFile>bin\Release\MetroRadiance.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -253,36 +253,20 @@
       <LastGenOutput>TypeForwardedTo.g.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <Choose>
-    <When Condition="'$(Configuration)' == 'Release RETRO'">
-      <ItemGroup>
-        <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
-          <Project>{21b4ad15-d9fa-4873-bfad-1eeefbc6c264}</Project>
-          <Name>MetroRadiance.Chrome</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj">
-          <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
-          <Name>MetroRadiance.Core</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\RetroRadiance\RetroRadiance.csproj">
-          <Project>{7f898b3a-da17-4cab-b387-5629b5faca49}</Project>
-          <Name>RetroRadiance</Name>
-        </ProjectReference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
-          <Project>{21b4ad15-d9fa-4873-bfad-1eeefbc6c264}</Project>
-          <Name>MetroRadiance.Chrome</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj">
-          <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
-          <Name>MetroRadiance.Core</Name>
-        </ProjectReference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
+  <ItemGroup>
+    <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
+      <Project>{21b4ad15-d9fa-4873-bfad-1eeefbc6c264}</Project>
+      <Name>MetroRadiance.Chrome</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj">
+      <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
+      <Name>MetroRadiance.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RetroRadiance\RetroRadiance.csproj" Condition="'$(Configuration)' == 'Release RETRO'">
+      <Project>{7f898b3a-da17-4cab-b387-5629b5faca49}</Project>
+      <Name>RetroRadiance</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
