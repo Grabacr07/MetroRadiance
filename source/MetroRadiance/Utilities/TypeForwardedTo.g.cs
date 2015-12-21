@@ -3,6 +3,8 @@
 // -------------------------------
 using System.Runtime.CompilerServices;
 #pragma warning disable 612
+
+#if RETRO
 [assembly: TypeForwardedTo(typeof(MetroRadiance.Theme))]	
 [assembly: TypeForwardedTo(typeof(MetroRadiance.Accent))]	
 [assembly: TypeForwardedTo(typeof(MetroRadiance.ThemeService))]	
@@ -54,3 +56,4 @@ using System.Runtime.CompilerServices;
 [assembly: TypeForwardedTo(typeof(MetroRadiance.Controls.TabView))]	
 [assembly: TypeForwardedTo(typeof(MetroRadiance.Controls.ThemeHelper))]	
 [assembly: TypeForwardedTo(typeof(MetroRadiance.Controls.WindowAction))]	
+#endif

@@ -10,6 +10,8 @@
 // -------------------------------
 using System.Runtime.CompilerServices;
 #pragma warning disable 612
+
+#if RETRO
 <#
 #pragma warning disable 612
 	var type = typeof(MetroRadiance.ThemeService);
@@ -28,3 +30,4 @@ using System.Runtime.CompilerServices;
 <#
 	}	
 #>
+#endif
