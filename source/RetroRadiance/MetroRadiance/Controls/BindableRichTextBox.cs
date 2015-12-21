@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,6 +10,8 @@ using System.Windows.Markup;
 
 namespace MetroRadiance.Controls
 {
+	[Obsolete]
+	[EditorBrowsable(EditorBrowsableState.Never)]
 	public class BindableRichTextBox : RichTextBox
 	{
 		static BindableRichTextBox()

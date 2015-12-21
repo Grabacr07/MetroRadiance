@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ using System.Windows.Controls;
 
 namespace MetroRadiance.Controls
 {
+	[Obsolete]
+	[EditorBrowsable(EditorBrowsableState.Never)]
 	[TemplatePart(Name = PART_CountHost, Type = typeof(TextBlock))]
 	public class Badge : Control
 	{

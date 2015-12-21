@@ -3,7 +3,7 @@
 					xmlns:controls="clr-namespace:MetroRadiance.Controls">
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/MetroRadiance;component/Styles/Icons.xaml" />
+		<ResourceDictionary Source="/RetroRadiance;component/Styles/Icons.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 	<Style TargetType="{x:Type controls:CaptionButton}">
