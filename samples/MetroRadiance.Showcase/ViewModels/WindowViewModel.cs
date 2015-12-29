@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Livet;
 using MetroRadiance.UI;
 
@@ -169,11 +170,7 @@ namespace MetroRadiance.Showcase.ViewModels
 
 		public void ChangeRed()
 		{
-			var resource = new ResourceDictionary
-			{
-				Source = new Uri(@"pack://application:,,,/MetroRadiance.Showcase;component/Themes/Accents/Red.xaml", UriKind.Absolute)
-			};
-			ThemeService.Current.ChangeAccent(resource);
+			ThemeService.Current.ChangeAccent(Colors.Red);
 		}
 
 

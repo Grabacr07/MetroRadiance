@@ -3,27 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
+using MetroRadiance.Media;
+using MetroRadiance.Platform;
 using MetroRadiance.Utilities;
 
 namespace MetroRadiance.UI
 {
-	public enum Theme
-	{
-		Dark,
-		Light,
-	}
-
-	public enum Accent
-	{
-		Purple,
-		Blue,
-		Orange,
-		Original,
-	}
-
 	public class ThemeService : INotifyPropertyChanged
 	{
 		#region singleton members
@@ -36,16 +24,8 @@ namespace MetroRadiance.UI
 		private static readonly UriTemplate accentTemplate = new UriTemplate(@"Themes/Accents/{accent}.xaml");
 		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component");
 
-		private static readonly IReadOnlyDictionary<Accent, ResourceDictionary> accentDictionaries = new Dictionary<Accent, ResourceDictionary>
-		{
-			{ Accent.Blue, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Blue), } },
-			{ Accent.Purple, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Purple), } },
-			{ Accent.Orange, new ResourceDictionary { Source = CreateAccentResourceUri(Accent.Orange), } },
-		};
-
 		private bool initialized;
 		private Dispatcher dispatcher;
-		private ResourceDictionary currentAccentDictionary;
 
 		private readonly List<ResourceDictionary> themeResources = new List<ResourceDictionary>();
 		private readonly List<ResourceDictionary> accentResources = new List<ResourceDictionary>();
@@ -92,40 +72,30 @@ namespace MetroRadiance.UI
 
 		public void Initialize(Application app, Theme theme, Accent accent)
 		{
-			this.InitializeCore(app, theme, accentDictionaries[accent]);
+			this.dispatcher = app.Dispatcher;
+
+			this.Register(app.Resources, theme, accent);
 
 			this.Theme = theme;
 			this.Accent = accent;
-		}
-
-		public void Initialize(Application app, Theme theme, ResourceDictionary accent)
-		{
-			this.InitializeCore(app, theme, this.currentAccentDictionary);
-
-			this.Theme = theme;
-			this.Accent = Accent.Original;
-		}
-
-		private void InitializeCore(Application app, Theme theme, ResourceDictionary accent)
-		{
-			this.dispatcher = app.Dispatcher;
-
-			this.currentAccentDictionary = accent;
-			this.Register(app.Resources, theme, this.currentAccentDictionary);
-
 			this.initialized = true;
+		}
+
+		public void Initialize(Application app, Theme theme, Color color)
+		{
+			this.Initialize(app, theme, Accent.FromColor(color));
 		}
 
 		public IDisposable Register(ResourceDictionary rd)
 		{
-			return this.Register(rd, this.Theme, this.currentAccentDictionary);
+			return this.Register(rd, this.Theme, this.Accent);
 		}
 
-		internal IDisposable Register(ResourceDictionary rd, Theme theme, ResourceDictionary accentDic)
+		internal IDisposable Register(ResourceDictionary rd, Theme theme, Accent accent)
 		{
 			var allDictionaries = EnumerateDictionaries(rd).ToArray();
 
-			var themeDic = new ResourceDictionary { Source = CreateThemeResourceUri(theme), };
+			var themeDic = GetThemeResource(theme);
 			var targetThemeDic = allDictionaries.FirstOrDefault(x => CheckThemeResourceUri(x.Source));
 			if (targetThemeDic == null)
 			{
@@ -141,10 +111,11 @@ namespace MetroRadiance.UI
 			}
 			this.themeResources.Add(targetThemeDic);
 
+			var accentDic = GetAccentResource(accent);
 			var targetAccentDic = allDictionaries.FirstOrDefault(x => CheckAccentResourceUri(x.Source));
 			if (targetAccentDic == null)
 			{
-				targetAccentDic = new ResourceDictionary { Source = accentDic.Source };
+				targetAccentDic = accentDic;
 				rd.MergedDictionaries.Add(targetAccentDic);
 			}
 			else
@@ -168,42 +139,47 @@ namespace MetroRadiance.UI
 		{
 			if (!this.initialized || this.Theme == theme) return;
 
-			this.dispatcher.Invoke(() =>
-			{
-				var uri = CreateThemeResourceUri(theme);
-				var dic = new ResourceDictionary { Source = uri, };
-
-				foreach (var key in dic.Keys.OfType<string>())
-				{
-					foreach (var resource in this.themeResources.Where(x => x.Contains(key)))
-					{
-						resource[key] = dic[key];
-					}
-				}
-			});
+			this.dispatcher.Invoke(() => this.ChangeThemeCore(theme));
 
 			this.Theme = theme;
+		}
+
+		private void ChangeThemeCore(Theme theme)
+		{
+			var dic = GetThemeResource(theme);
+
+			foreach (var key in dic.Keys.OfType<string>())
+			{
+				foreach (var resource in this.themeResources.Where(x => x.Contains(key)))
+				{
+					resource[key] = dic[key];
+				}
+			}
 		}
 
 		public void ChangeAccent(Accent accent)
 		{
 			if (!this.initialized || this.Accent == accent) return;
 
-			this.dispatcher.Invoke(() => this.ChangeAccentCore(accentDictionaries[accent]));
+			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
 			this.Accent = accent;
 		}
 
-		public void ChangeAccent(ResourceDictionary accent)
+		public void ChangeAccent(Color color)
 		{
 			if (!this.initialized) return;
 
+			var accent = Accent.FromColor(color);
+			if (this.Accent == accent) return;
+
 			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
-			this.Accent = Accent.Original;
+			this.Accent = accent;
 		}
 
-		private void ChangeAccentCore(ResourceDictionary dic)
+		private void ChangeAccentCore(Accent accent)
 		{
-			this.currentAccentDictionary = dic;
+			var dic = GetAccentResource(accent);
+
 			foreach (var key in dic.Keys.OfType<string>())
 			{
 				foreach (var resource in this.accentResources.Where(x => x.Contains(key)))
@@ -213,22 +189,46 @@ namespace MetroRadiance.UI
 			}
 		}
 
-		private static Uri CreateThemeResourceUri(Theme theme)
+		private static ResourceDictionary GetThemeResource(Theme theme)
 		{
-			var param = new Dictionary<string, string>
-			{
-				{ "theme", theme.ToString() },
-			};
-			return themeTemplate.BindByName(templateBaseUri, param);
+			var specified = theme.SyncToWindows
+				? WindowsTheme.IsDarkTheme ? Theme.Dark.Specified : Theme.Light.Specified
+				: theme.Specified;
+			if (specified == null) throw new ArgumentException($"Invalid theme value '{theme}'.");
+
+			var dic = new ResourceDictionary { Source = CreateThemeResourceUri(specified.Value), };
+			return dic;
 		}
 
-		private static Uri CreateAccentResourceUri(Accent accent)
+		private static ResourceDictionary GetAccentResource(Accent accent)
 		{
-			var param = new Dictionary<string, string>
+			if (accent.Specified != null)
 			{
-				{ "accent", accent.ToString() },
+				return new ResourceDictionary { Source = CreateAccentResourceUri(accent.Specified.Value), };
+			}
+
+			var color = accent.Color ?? WindowsTheme.GetAccentColor();
+			var hsv = color.ToHsv();
+			var dark = hsv;
+			var light = hsv;
+
+			dark.V *= 0.8;
+			light.S *= 0.6;
+
+			var activeColor = dark.ToRgb();
+			var highlightColor = light.ToRgb();
+
+			var dic = new ResourceDictionary
+			{
+				["AccentColorKey"] = color,
+				["AccentBrushKey"] = new SolidColorBrush(color),
+				["AccentActiveColorKey"] = activeColor,
+				["AccentActiveBrushKey"] = new SolidColorBrush(activeColor),
+				["AccentHighlightColorKey"] = highlightColor,
+				["AccentHighlightBrushKey"] = new SolidColorBrush(highlightColor),
 			};
-			return accentTemplate.BindByName(templateBaseUri, param);
+
+			return dic;
 		}
 
 		/// <summary>
@@ -247,6 +247,24 @@ namespace MetroRadiance.UI
 		private static bool CheckAccentResourceUri(Uri uri)
 		{
 			return accentTemplate.Match(templateBaseUri, uri) != null;
+		}
+
+		private static Uri CreateThemeResourceUri(Theme.SpecifiedColor theme)
+		{
+			var param = new Dictionary<string, string>
+			{
+				{ "theme", theme.ToString() },
+			};
+			return themeTemplate.BindByName(templateBaseUri, param);
+		}
+
+		private static Uri CreateAccentResourceUri(Accent.SpecifiedColor accent)
+		{
+			var param = new Dictionary<string, string>
+			{
+				{ "accent", accent.ToString() },
+			};
+			return accentTemplate.BindByName(templateBaseUri, param);
 		}
 
 		private static IEnumerable<ResourceDictionary> EnumerateDictionaries(ResourceDictionary dictionary)

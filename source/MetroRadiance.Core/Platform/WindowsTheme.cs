@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using MetroRadiance.Interop.Win32;
+using MetroRadiance.Media;
 using MetroRadiance.Utilities;
+using Microsoft.Win32;
 
 namespace MetroRadiance.Platform
 {
@@ -17,6 +19,26 @@ namespace MetroRadiance.Platform
 		private static event EventHandler<Color> _accentColorChanged;
 		private static readonly HashSet<EventHandler<Color>> _handlers = new HashSet<EventHandler<Color>>();
 		private static ListenerWindow _listenerWindow;
+		private static bool? _isDarkTheme;
+
+		/// <summary>
+		/// 現在実行されている Windows 10 が Dark Theme 設定になっているかどうかを示す値を取得します。
+		/// </summary>
+		public static bool IsDarkTheme
+		{
+			get
+			{
+				if (_isDarkTheme == null)
+				{
+					const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+					const string valueName = "AppsUseLightTheme";
+
+					_isDarkTheme = Registry.GetValue(keyName, valueName, null) as int? == 0;
+				}
+
+				return _isDarkTheme.Value;
+			}
+		}
 
 		/// <summary>
 		/// Windows のアクセント カラーが変更されると発生します。
@@ -39,12 +61,7 @@ namespace MetroRadiance.Platform
 
 			Dwmapi.DwmGetColorizationColor(out color, out opaque);
 
-			return GetColorFromInt64(color);
-		}
-
-		public static Color GetColorFromInt64(long color)
-		{
-			return Color.FromArgb((byte)(color >> 24), (byte)(color >> 16), (byte)(color >> 8), (byte)color);
+			return ColorHelper.GetColorFromInt64(color);
 		}
 
 		/// <summary>
@@ -108,7 +125,7 @@ namespace MetroRadiance.Platform
 			{
 				if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
 				{
-					var color = GetColorFromInt64((long)wParam);
+					var color = ColorHelper.GetColorFromInt64((long)wParam);
 					this._callback(color);
 				}
 

@@ -13,7 +13,7 @@ namespace MetroRadiance.Core
 	[DebuggerDisplay("X = {X} ({ScaleX}), Y = {Y} ({ScaleY})")]
 	[Obsolete]
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public struct Dpi
+	public struct Dpi : IEquatable<Dpi>
 	{
 		public static readonly Dpi Default = new Dpi(96, 96);
 

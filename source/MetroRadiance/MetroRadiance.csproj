@@ -202,6 +202,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\Accent.cs" />
     <Compile Include="UI\Behaviors\DirectWindowAction.cs" />
     <Compile Include="UI\Controls\Badge.cs" />
     <Compile Include="UI\Controls\BindableRichTextBox.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="UI\Controls\ThemeHelper.cs" />
     <Compile Include="UI\Controls\WindowAction.cs" />
     <Compile Include="UI\Converters\WindowStateToVisibilityConverter.cs" />
+    <Compile Include="UI\Theme.cs" />
     <Compile Include="Utilities\InternalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

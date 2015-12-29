@@ -49,6 +49,8 @@
     <Compile Include="Interop\MonitorDpiType.cs" />
     <Compile Include="Interop\PerMonitorDpi.cs" />
     <Compile Include="Interop\Win32\SHCore.cs" />
+    <Compile Include="Media\ColorHelper.cs" />
+    <Compile Include="Media\HsvColor.cs" />
     <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
