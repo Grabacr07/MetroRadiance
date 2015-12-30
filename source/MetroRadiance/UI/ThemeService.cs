@@ -12,6 +12,9 @@ using MetroRadiance.Utilities;
 
 namespace MetroRadiance.UI
 {
+	/// <summary>
+	/// MetroRadiance テーマ機能を提供します。
+	/// </summary>
 	public class ThemeService : INotifyPropertyChanged
 	{
 		#region singleton members
@@ -24,8 +27,8 @@ namespace MetroRadiance.UI
 		private static readonly UriTemplate accentTemplate = new UriTemplate(@"Themes/Accents/{accent}.xaml");
 		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component");
 
-		private bool initialized;
 		private Dispatcher dispatcher;
+		private IDisposable windowsColorListener;
 
 		private readonly List<ResourceDictionary> themeResources = new List<ResourceDictionary>();
 		private readonly List<ResourceDictionary> accentResources = new List<ResourceDictionary>();
@@ -34,6 +37,9 @@ namespace MetroRadiance.UI
 
 		private Theme _Theme;
 
+		/// <summary>
+		/// 現在設定されているテーマを取得します。
+		/// </summary>
 		public Theme Theme
 		{
 			get { return this._Theme; }
@@ -53,6 +59,9 @@ namespace MetroRadiance.UI
 
 		private Accent _Accent;
 
+		/// <summary>
+		/// 現在設定されているアクセントを取得します。
+		/// </summary>
 		public Accent Accent
 		{
 			get { return this._Accent; }
@@ -61,6 +70,7 @@ namespace MetroRadiance.UI
 				if (this._Accent != value)
 				{
 					this._Accent = value;
+					this.UpdateListener(value);
 					this.RaisePropertyChanged();
 				}
 			}
@@ -70,7 +80,7 @@ namespace MetroRadiance.UI
 
 		private ThemeService() { }
 
-		public void Initialize(Application app, Theme theme, Accent accent)
+		public void Register(Application app, Theme theme, Accent accent)
 		{
 			this.dispatcher = app.Dispatcher;
 
@@ -78,14 +88,13 @@ namespace MetroRadiance.UI
 
 			this.Theme = theme;
 			this.Accent = accent;
-			this.initialized = true;
 		}
 
-		public void Initialize(Application app, Theme theme, Color color)
-		{
-			this.Initialize(app, theme, Accent.FromColor(color));
-		}
-
+		/// <summary>
+		/// テーマまたはアクセントが変更されたときにリソースの書き換え対象とする <see cref="ResourceDictionary"/>
+		/// を登録します。このメソッドは、登録解除に使用する <see cref="IDisposable"/> オブジェクトを返します。
+		/// </summary>
+		/// <returns><paramref name="rd"/> をリソースの書き換え対象から外すときに使用する <see cref="IDisposable"/> オブジェクト。</returns>
 		public IDisposable Register(ResourceDictionary rd)
 		{
 			return this.Register(rd, this.Theme, this.Accent);
@@ -137,7 +146,7 @@ namespace MetroRadiance.UI
 
 		public void ChangeTheme(Theme theme)
 		{
-			if (!this.initialized || this.Theme == theme) return;
+			if (this.Theme == theme) return;
 
 			this.dispatcher.Invoke(() => this.ChangeThemeCore(theme));
 
@@ -159,17 +168,6 @@ namespace MetroRadiance.UI
 
 		public void ChangeAccent(Accent accent)
 		{
-			if (!this.initialized || this.Accent == accent) return;
-
-			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
-			this.Accent = accent;
-		}
-
-		public void ChangeAccent(Color color)
-		{
-			if (!this.initialized) return;
-
-			var accent = Accent.FromColor(color);
 			if (this.Accent == accent) return;
 
 			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
@@ -178,8 +176,16 @@ namespace MetroRadiance.UI
 
 		private void ChangeAccentCore(Accent accent)
 		{
-			var dic = GetAccentResource(accent);
+			this.ChangeAccentCore(GetAccentResource(accent));
+		}
 
+		private void ChangeAccentCore(Color color)
+		{
+			this.ChangeAccentCore(GetAccentResource(color));
+		}
+
+		private void ChangeAccentCore(ResourceDictionary dic)
+		{
 			foreach (var key in dic.Keys.OfType<string>())
 			{
 				foreach (var resource in this.accentResources.Where(x => x.Contains(key)))
@@ -191,6 +197,8 @@ namespace MetroRadiance.UI
 
 		private static ResourceDictionary GetThemeResource(Theme theme)
 		{
+			// Windows のテーマ設定 (Dark/Light) は現状ではレジストリ設定なので、
+			// アプリ起動中には変わらないという前提
 			var specified = theme.SyncToWindows
 				? WindowsTheme.IsDarkTheme ? Theme.Dark.Specified : Theme.Light.Specified
 				: theme.Specified;
@@ -202,12 +210,18 @@ namespace MetroRadiance.UI
 
 		private static ResourceDictionary GetAccentResource(Accent accent)
 		{
-			if (accent.Specified != null)
-			{
-				return new ResourceDictionary { Source = CreateAccentResourceUri(accent.Specified.Value), };
-			}
+			return accent.Specified != null
+				? new ResourceDictionary { Source = CreateAccentResourceUri(accent.Specified.Value), }
+				: GetAccentResource(accent.Color ?? WindowsTheme.GetAccentColor());
+		}
 
-			var color = accent.Color ?? WindowsTheme.GetAccentColor();
+		private static ResourceDictionary GetAccentResource(Color color)
+		{
+			// Windows のテーマがアルファ 255 以外の色を返してくるけど、
+			// HSV で Active と Highlight を作る過程でどうせ失われるし、
+			// 255 で上書きしていいんじゃね？ 感
+			color.A = 255;
+
 			var hsv = color.ToHsv();
 			var dark = hsv;
 			var light = hsv;
@@ -229,6 +243,24 @@ namespace MetroRadiance.UI
 			};
 
 			return dic;
+		}
+
+		private void UpdateListener(Accent accent)
+		{
+			if (accent == Accent.Windows)
+			{
+				if (this.windowsColorListener == null)
+				{
+					// アクセントが Windows 依存で、リスナーが未登録だったら購読する
+					this.windowsColorListener = WindowsTheme.RegisterAccentColorListener(x => this.ChangeAccentCore(x));
+				}
+			}
+			else if (this.windowsColorListener != null)
+			{
+				// アクセントが Windows 依存でないのにリスナーが登録されてたら解除する
+				this.windowsColorListener.Dispose();
+				this.windowsColorListener = null;
+			}
 		}
 
 		/// <summary>
@@ -285,7 +317,6 @@ namespace MetroRadiance.UI
 			}
 		}
 
-
 		#region INotifyPropertyChanged 
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -296,5 +327,13 @@ namespace MetroRadiance.UI
 		}
 
 		#endregion
+
+
+		[Obsolete("Register メソッドを使用してください。")]
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public void Initialize(Application app, Theme theme, Accent accent)
+		{
+			this.Register(app, theme, accent);
+		}
 	}
 }

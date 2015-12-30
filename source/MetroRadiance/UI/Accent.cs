@@ -92,7 +92,7 @@ namespace MetroRadiance.UI
 		public static Accent Windows { get; } = new Accent();
 
 		/// <summary>
-		/// 指定した <see cref="Color"/> 構造体を使用して、その色のアクセントを取得します。
+		/// 指定した <see cref="Color"/> 構造体を使用して、その色のアクセントを作成します。
 		/// </summary>
 		/// <param name="color">アクセントとして使用する色を示す <see cref="Color"/> 構造体。</param>
 		public static Accent FromColor(Color color) => new Accent(color);
@@ -105,7 +105,7 @@ namespace MetroRadiance.UI
 		}
 
 		/// <summary>
-		/// シリアライザー インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
+		/// シリアル化インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		// ReSharper disable once InconsistentNaming
@@ -116,7 +116,7 @@ namespace MetroRadiance.UI
 		}
 
 		/// <summary>
-		/// シリアライザー インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
+		/// シリアル化インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		// ReSharper disable once InconsistentNaming

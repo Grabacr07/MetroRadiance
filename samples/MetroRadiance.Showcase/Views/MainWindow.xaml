@@ -74,7 +74,7 @@
 		</Border>
 
 		<ScrollViewer Grid.Row="1"
-					  HorizontalScrollBarVisibility="Auto"
+					  HorizontalScrollBarVisibility="Disabled"
 					  VerticalScrollBarVisibility="Auto">
 			<StackPanel HorizontalAlignment="Center"
 						VerticalAlignment="Center">
@@ -137,6 +137,9 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
+				</WrapPanel>
+
+				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Red"
 							Width="100"
 							Height="30"
@@ -145,6 +148,17 @@
 							<i:EventTrigger EventName="Click">
 								<ei:CallMethodAction TargetObject="{Binding}"
 													 MethodName="ChangeRed" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
+					<Button Content="Windows"
+							Width="100"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeWindows" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>

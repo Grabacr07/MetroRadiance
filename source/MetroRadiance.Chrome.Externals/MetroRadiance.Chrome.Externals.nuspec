@@ -13,8 +13,8 @@
 		<language>ja-JP</language>
 		<tags>WPF</tags>
 		<dependencies>
-			<dependency id="MetroRadiance.Core" version="2.0.1-alpha" />
-			<dependency id="MetroRadiance.Chrome" version="2.0.1-alpha" />
+			<dependency id="MetroRadiance.Core" version="2.0.4-alpha" />
+			<dependency id="MetroRadiance.Chrome" version="2.0.4-alpha" />
 		</dependencies>
 	</metadata>
 	<files>

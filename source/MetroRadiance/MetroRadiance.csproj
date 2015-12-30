@@ -226,6 +226,7 @@
     <Compile Include="UI\Controls\WindowAction.cs" />
     <Compile Include="UI\Converters\WindowStateToVisibilityConverter.cs" />
     <Compile Include="UI\Theme.cs" />
+    <Compile Include="UI\ThemeExtensions.cs" />
     <Compile Include="Utilities\InternalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

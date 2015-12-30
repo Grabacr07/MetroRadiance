@@ -10,6 +10,9 @@ using MetroRadiance.Platform;
 
 namespace MetroRadiance.Chrome
 {
+	/// <summary>
+	/// ウィンドウにアタッチされ、四辺にカスタム UI を表示する機能を提供します。
+	/// </summary>
 	public class WindowChrome
 	{
 		private object _top = new GlowingEdge { Position = Dock.Top, };
@@ -170,6 +173,9 @@ namespace MetroRadiance.Chrome
 			this._bottomWindow = new BottomChromeWindow();
 		}
 
+		/// <summary>
+		/// 指定した WPF <see cref="Window"/> に、このクローム UI をアタッチします。
+		/// </summary>
 		public void Attach(Window window)
 		{
 			this.Detach();
@@ -181,6 +187,9 @@ namespace MetroRadiance.Chrome
 			this._bottomWindow.Attach(window);
 		}
 
+		/// <summary>
+		/// 指定したウィンドウに、このクローム UI をアタッチします。
+		/// </summary>
 		public void Attach(IChromeOwner window)
 		{
 			this.Detach();

@@ -11,6 +11,9 @@ using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Platform
 {
+	/// <summary>
+	/// 外部プロセスのウィンドウから、位置、サイズ、およびアクティブ状態のイベントを受信できるようにします。
+	/// </summary>
 	public class ExternalWindow : IChromeOwner, IDisposable
 	{
 		private static IChromeHookService _serviceInstance;
@@ -49,6 +52,11 @@ namespace MetroRadiance.Platform
 		public event EventHandler Deactivated;
 		public event EventHandler Closed;
 
+		/// <summary>
+		/// 外部プロセスで動作している Win32 ウィンドウのハンドルを指定して、<see cref="ExternalWindow"/>
+		/// クラスの新しいインスタンスを初期化します。
+		/// </summary>
+		/// <param name="hWnd">ウィンドウ ハンドル。</param>
 		public ExternalWindow(IntPtr hWnd)
 		{
 			this.Handle = hWnd;

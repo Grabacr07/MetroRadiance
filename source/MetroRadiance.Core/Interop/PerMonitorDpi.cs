@@ -8,7 +8,7 @@ using MetroRadiance.Interop.Win32;
 namespace MetroRadiance.Interop
 {
 	/// <summary>
-	/// Windows 8.1 の Per-Monitor DPI 機能へアクセスします。
+	/// Windows 8.1 の Per-Monitor DPI 機能へアクセスできるようにします。
 	/// </summary>
 	public static class PerMonitorDpi
 	{

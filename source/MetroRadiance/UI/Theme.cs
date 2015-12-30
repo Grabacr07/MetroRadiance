@@ -76,7 +76,7 @@ namespace MetroRadiance.UI
 		}
 
 		/// <summary>
-		/// インフラストラクチャ。シリアライザーが内部メンバーにアクセスできるようにします。
+		/// シリアル化インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
 		/// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		// ReSharper disable once InconsistentNaming

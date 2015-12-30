@@ -7,6 +7,9 @@ using MetroRadiance.Chrome;
 
 namespace MetroRadiance.Platform
 {
+	/// <summary>
+	/// <see cref="WindowChrome"/> がアタッチ先として使用するための、Win32 ウィンドウの機能を公開します。
+	/// </summary>
 	public interface IChromeOwner
 	{
 		IntPtr Handle { get; }

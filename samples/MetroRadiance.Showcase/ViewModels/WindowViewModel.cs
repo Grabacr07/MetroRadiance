@@ -170,9 +170,13 @@ namespace MetroRadiance.Showcase.ViewModels
 
 		public void ChangeRed()
 		{
-			ThemeService.Current.ChangeAccent(Colors.Red);
+			ThemeService.Current.ChangeAccent(Colors.Red.ToAccent());
 		}
 
+		public void ChangeWindows()
+		{
+			ThemeService.Current.ChangeAccent(Accent.Windows);
+		}
 
 		public void ChangeDarkTheme()
 		{
