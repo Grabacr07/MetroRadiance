@@ -69,7 +69,7 @@ namespace MetroRadiance.Media
 		}
 
 		/// <summary>
-		/// 現在の HSV 色空間の値を RGB 色空間に変換します。
+		/// 現在の HSV 色空間による色から RGB 色空間の <see cref="Color"/> 構造体を作成します。
 		/// </summary>
 		public Color ToRgb()
 		{

@@ -80,14 +80,24 @@ namespace MetroRadiance.UI
 
 		private ThemeService() { }
 
-		public void Register(Application app, Theme theme, Accent accent)
+		/// <summary>
+		/// テーマ機能を有効化します。テーマまたはアクセントが変更されたとき、<paramref name="app"/>
+		/// で指定した WPF アプリケーション内のテーマ関連リソースは自動的に書き換えられます。
+		/// </summary>
+		/// <param name="app">テーマ関連リソースを含む WPF アプリケーション。</param>
+		/// <param name="theme">初期値として使用するテーマ。</param>
+		/// <param name="accent">初期値として使用するアクセント。</param>
+		/// <returns><paramref name="app"/> をリソースの書き換え対象から外すときに使用する <see cref="IDisposable"/> オブジェクト。</returns>
+		public IDisposable Register(Application app, Theme theme, Accent accent)
 		{
 			this.dispatcher = app.Dispatcher;
 
-			this.Register(app.Resources, theme, accent);
+			var disposable = this.Register(app.Resources, theme, accent);
 
 			this.Theme = theme;
 			this.Accent = accent;
+
+			return disposable;
 		}
 
 		/// <summary>
@@ -148,8 +158,7 @@ namespace MetroRadiance.UI
 		{
 			if (this.Theme == theme) return;
 
-			this.dispatcher.Invoke(() => this.ChangeThemeCore(theme));
-
+			this.InvokeOnUIDispatcher(() => this.ChangeThemeCore(theme));
 			this.Theme = theme;
 		}
 
@@ -170,7 +179,7 @@ namespace MetroRadiance.UI
 		{
 			if (this.Accent == accent) return;
 
-			this.dispatcher.Invoke(() => this.ChangeAccentCore(accent));
+			this.InvokeOnUIDispatcher(() => this.ChangeAccentCore(accent));
 			this.Accent = accent;
 		}
 
@@ -217,11 +226,6 @@ namespace MetroRadiance.UI
 
 		private static ResourceDictionary GetAccentResource(Color color)
 		{
-			// Windows のテーマがアルファ 255 以外の色を返してくるけど、
-			// HSV で Active と Highlight を作る過程でどうせ失われるし、
-			// 255 で上書きしていいんじゃね？ 感
-			color.A = 255;
-
 			var hsv = color.ToHsv();
 			var dark = hsv;
 			var light = hsv;
@@ -315,6 +319,11 @@ namespace MetroRadiance.UI
 					yield return other;
 				}
 			}
+		}
+
+		private void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+		{
+			(this.dispatcher ?? Application.Current.Dispatcher).BeginInvoke(action, priority);
 		}
 
 		#region INotifyPropertyChanged 
