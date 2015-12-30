@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Markup;
@@ -10,6 +9,9 @@ using System.Windows.Markup;
 [assembly: AssemblyDescription("Modern WPF Themes")]
 [assembly: AssemblyCopyright("Copyright © 2014 Manato KAMEYA")]
 
+[assembly: ComVisible(false)]
+[assembly: Guid("9A055744-2C4E-465D-A8F2-AD26B43C5F50")]
+
 [assembly: ThemeInfo(
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
@@ -18,6 +20,5 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/controls", "MetroRadiance.UI.Controls")]
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/converters", "MetroRadiance.UI.Converters")]
 
-[assembly: AssemblyVersion("2.0.4")]
-[assembly: AssemblyInformationalVersion("2.0.4-alpha")]
-[assembly: ComVisible(false)]
+[assembly: AssemblyVersion("2.0.5")]
+[assembly: AssemblyInformationalVersion("2.0.5-alpha")]
