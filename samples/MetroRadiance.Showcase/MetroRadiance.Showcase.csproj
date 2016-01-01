@@ -104,6 +104,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HsvSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +121,9 @@
     </Compile>
     <Compile Include="Views\ControlSamples.xaml.cs">
       <DependentUpon>ControlSamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HsvSample.xaml.cs">
+      <DependentUpon>HsvSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

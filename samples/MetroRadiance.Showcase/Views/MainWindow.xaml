@@ -177,6 +177,7 @@
 							Click="OpenFileDialog" />
 				</WrapPanel>
 
+				<views:HsvSample />
 				<views:BrushSamples />
 				<views:ControlSamples />
 			</StackPanel>

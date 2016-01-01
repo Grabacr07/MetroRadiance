@@ -39,7 +39,7 @@ namespace MetroRadiance.Showcase.Views
 		protected override void OnContentRendered(EventArgs e)
 		{
 			base.OnContentRendered(e);
-			SetGlowingForActiveWindow();
+			//SetGlowingForActiveWindow();
 		}
 
 		private static async void SetGlowingForActiveWindow()

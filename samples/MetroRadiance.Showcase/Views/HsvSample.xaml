@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MetroRadiance.Showcase.Views.HsvSample"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 mc:Ignorable="d"
+			 d:DesignWidth="300"
+			 d:DesignHeight="300">
+	<Grid>
+		<StackPanel Margin="4">
+			<DockPanel Margin="4">
+				<TextBlock DockPanel.Dock="Right"
+						   Text="{Binding ElementName=hSlider, Path=Value}"
+						   Foreground="{DynamicResource ForegroundBrushKey}"
+						   Margin="8,0"
+						   Width="25" />
+				<Slider x:Name="hSlider"
+						x:FieldModifier="private"
+						Minimum="0"
+						Maximum="360"
+						TickFrequency="1" />
+			</DockPanel>
+			<DockPanel Margin="4">
+				<TextBlock DockPanel.Dock="Right"
+						   Text="{Binding ElementName=sSlider, Path=Value}"
+						   Foreground="{DynamicResource ForegroundBrushKey}"
+						   Margin="8,0"
+						   Width="25" />
+				<Slider x:Name="sSlider"
+						x:FieldModifier="private"
+						Minimum="0"
+						Maximum="100"
+						Value="100"
+						TickFrequency="1" />
+			</DockPanel>
+			<DockPanel Margin="4">
+				<TextBlock DockPanel.Dock="Right"
+						   Text="{Binding ElementName=vSlider, Path=Value}"
+						   Foreground="{DynamicResource ForegroundBrushKey}"
+						   Margin="8,0"
+						   Width="25" />
+				<Slider x:Name="vSlider"
+						x:FieldModifier="private"
+						Minimum="0"
+						Maximum="100"
+						Value="100"
+						TickFrequency="1" />
+			</DockPanel>
+
+			<Border x:Name="background"
+					x:FieldModifier="private"
+					Margin="4">
+				<TextBlock x:Name="foreground"
+						   x:FieldModifier="private"
+						   Text="Hoge"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Margin="16" />
+			</Border>
+		</StackPanel>
+	</Grid>
+</UserControl>
