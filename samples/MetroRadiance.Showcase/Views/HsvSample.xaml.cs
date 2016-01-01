@@ -29,11 +29,13 @@ namespace MetroRadiance.Showcase.Views
 
 			var hsv = HsvColor.FromHsv(h, s, v);
 			var c = hsv.ToRgb();
-			var w = hsv.V < 0.8;
+
+			var l = Luminosity.FromRgb(c);
+			var w = l <= 128;
 
 			this.background.Background = new SolidColorBrush(c);
 			this.foreground.Foreground = w ? Brushes.White : Brushes.Black;
-			this.foreground.Text = c.ToString();
+			this.foreground.Text = l + " " + c;
 		}
 	}
 }

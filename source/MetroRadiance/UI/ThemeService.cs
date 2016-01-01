@@ -236,6 +236,9 @@ namespace MetroRadiance.UI
 			var activeColor = dark.ToRgb();
 			var highlightColor = light.ToRgb();
 
+			var luminocity = Luminosity.FromRgb(color);
+			var foreground = luminocity < 128 ? Colors.White : Colors.Black;
+
 			var dic = new ResourceDictionary
 			{
 				["AccentColorKey"] = color,
@@ -244,6 +247,8 @@ namespace MetroRadiance.UI
 				["AccentActiveBrushKey"] = new SolidColorBrush(activeColor),
 				["AccentHighlightColorKey"] = highlightColor,
 				["AccentHighlightBrushKey"] = new SolidColorBrush(highlightColor),
+				["AccentForegroundColorKey"] = foreground,
+				["AccentForegroundBrushKey"] = new SolidColorBrush(foreground),
 			};
 
 			return dic;

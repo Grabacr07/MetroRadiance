@@ -18,6 +18,7 @@
 						x:FieldModifier="private"
 						Minimum="0"
 						Maximum="360"
+						IsSnapToTickEnabled="True"
 						TickFrequency="1" />
 			</DockPanel>
 			<DockPanel Margin="4">
@@ -31,6 +32,7 @@
 						Minimum="0"
 						Maximum="100"
 						Value="100"
+						IsSnapToTickEnabled="True"
 						TickFrequency="1" />
 			</DockPanel>
 			<DockPanel Margin="4">
@@ -44,6 +46,7 @@
 						Minimum="0"
 						Maximum="100"
 						Value="100"
+						IsSnapToTickEnabled="True"
 						TickFrequency="1" />
 			</DockPanel>
 

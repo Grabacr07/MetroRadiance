@@ -51,6 +51,7 @@
     <Compile Include="Interop\Win32\SHCore.cs" />
     <Compile Include="Media\ColorHelper.cs" />
     <Compile Include="Media\HsvColor.cs" />
+    <Compile Include="Media\Luminosity.cs" />
     <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
