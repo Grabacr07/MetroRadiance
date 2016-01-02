@@ -27,8 +27,6 @@ namespace MetroRadiance.Chrome
 
 		private static readonly HashSet<FrameworkElement> _sizingElements = new HashSet<FrameworkElement>();
 
-		public static WindowChrome Default => new WindowChrome();
-
 		#region Content wrappers
 
 		public object Left

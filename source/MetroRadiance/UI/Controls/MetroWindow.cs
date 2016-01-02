@@ -9,7 +9,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
-using WindowChrome = System.Windows.Shell.WindowChrome;
+using ShellChrome = System.Windows.Shell.WindowChrome;
+using MetroChrome = MetroRadiance.Chrome.WindowChrome;
 
 namespace MetroRadiance.UI.Controls
 {
@@ -40,6 +41,48 @@ namespace MetroRadiance.UI.Controls
 		private FrameworkElement resizeGrip;
 		private FrameworkElement captionBar;
 
+		#region ShellChrome 依存関係プロパティ
+
+		public static readonly DependencyProperty ShellChromeProperty = DependencyProperty.Register(
+			nameof(ShellChrome), typeof(ShellChrome), typeof(MetroWindow), new PropertyMetadata(null, HandleShellChromeChanged));
+
+		public ShellChrome ShellChrome
+		{
+			get { return (ShellChrome)this.GetValue(ShellChromeProperty); }
+			set { this.SetValue(ShellChromeProperty, value); }
+		}
+
+		private static void HandleShellChromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+		{
+			var chrome = (ShellChrome)args.NewValue;
+			var window = (Window)d;
+
+			ShellChrome.SetWindowChrome(window, chrome);
+		}
+
+		#endregion
+
+		#region MetroChrome 依存関係プロパティ
+
+		public static readonly DependencyProperty MetroChromeProperty = DependencyProperty.Register(
+			nameof(MetroChrome), typeof(MetroChrome), typeof(MetroWindow), new PropertyMetadata(null, HandleMetroChromeChanged));
+
+		public MetroChrome MetroChrome
+		{
+			get { return (MetroChrome)this.GetValue(MetroChromeProperty); }
+			set { this.SetValue(MetroChromeProperty, value); }
+		}
+
+		private static void HandleMetroChromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+		{
+			var chrome = (MetroChrome)args.NewValue;
+			var window = (Window)d;
+
+			MetroChrome.SetInstance(window, chrome);
+		}
+
+		#endregion
+
 		#region DpiScaleTransform 依存関係プロパティ
 
 		/// <summary>
@@ -55,7 +98,7 @@ namespace MetroRadiance.UI.Controls
 			DependencyProperty.Register("DpiScaleTransform", typeof(Transform), typeof(MetroWindow), new UIPropertyMetadata(Transform.Identity));
 
 		#endregion
-		
+
 		#region IsRestoringWindowPlacement 依存関係プロパティ
 
 		/// <summary>
@@ -112,12 +155,17 @@ namespace MetroRadiance.UI.Controls
 
 			instance.Loaded += (sender, args) =>
 			{
-				var chrome = WindowChrome.GetWindowChrome(window);
+				var chrome = ShellChrome.GetWindowChrome(window);
 				if (chrome != null) chrome.CaptionHeight = instance.ActualHeight;
 			};
 		}
 
 		#endregion
+
+		public MetroWindow()
+		{
+			this.MetroChrome = new MetroChrome();
+		}
 
 		protected override void OnSourceInitialized(EventArgs e)
 		{
@@ -169,7 +217,7 @@ namespace MetroRadiance.UI.Controls
 					? Visibility.Visible
 					: Visibility.Collapsed;
 
-				WindowChrome.SetIsHitTestVisibleInChrome(this.resizeGrip, true);
+				ShellChrome.SetIsHitTestVisibleInChrome(this.resizeGrip, true);
 			}
 		}
 
