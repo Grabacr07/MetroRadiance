@@ -251,10 +251,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Utilities\TypeForwardedTo.tt">
+    <None Include="Utilities\TypeForwardedTo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TypeForwardedTo.g.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetroRadiance.Chrome\MetroRadiance.Chrome.csproj">
