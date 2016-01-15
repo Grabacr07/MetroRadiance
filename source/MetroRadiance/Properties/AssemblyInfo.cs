@@ -20,5 +20,5 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/controls", "MetroRadiance.UI.Controls")]
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/converters", "MetroRadiance.UI.Converters")]
 
-[assembly: AssemblyVersion("2.0.6")]
-[assembly: AssemblyInformationalVersion("2.0.6-alpha")]
+[assembly: AssemblyVersion("2.0.7")]
+[assembly: AssemblyInformationalVersion("2.0.7-alpha")]
