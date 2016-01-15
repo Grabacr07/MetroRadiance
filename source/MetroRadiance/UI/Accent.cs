@@ -40,11 +40,6 @@ namespace MetroRadiance.UI
 
 		private Accent(Color color)
 		{
-			// Windows のテーマがアルファ チャネル 255 以外の色を返してくるけど、
-			// HSV で Active と Highlight 用の色を作る過程で結局失われるので、
-			// アルファ チャネルは 255 しかサポートしないようにしてしまおう感。
-			color.A = 255;
-
 			this.Color = color;
 			this.Specified = null;
 		}
