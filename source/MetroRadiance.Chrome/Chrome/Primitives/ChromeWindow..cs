@@ -23,7 +23,7 @@ namespace MetroRadiance.Chrome.Primitives
 				new FrameworkPropertyMetadata(typeof(ChromeWindow)));
 		}
 
-		public static double DefaultSize { get; set; } = 8.0;
+		public static double DefaultThickness { get; set; } = 8.0;
 
 		private HwndSource _source;
 		private IntPtr _handle;
@@ -38,7 +38,18 @@ namespace MetroRadiance.Chrome.Primitives
 
 		internal SizingMode SizingMode { get; set; }
 
-		public Thickness Offset { get; set; } = new Thickness(DefaultSize);
+		#region Thickness dependency property
+
+		public static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register(
+			nameof(Thickness), typeof(Thickness), typeof(ChromeWindow), new PropertyMetadata(new Thickness(DefaultThickness)));
+
+		public Thickness Thickness
+		{
+			get { return (Thickness)this.GetValue(ThicknessProperty); }
+			set { this.SetValue(ThicknessProperty, value); }
+		}
+
+		#endregion
 
 		#region DpiScaleTransform dependency property
 
@@ -52,6 +63,7 @@ namespace MetroRadiance.Chrome.Primitives
 		}
 
 		#endregion
+
 		protected ChromeWindow()
 		{
 			this.Title = nameof(ChromeWindow);
@@ -258,7 +270,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected double GetContentSizeOrDefault(Func<FrameworkElement, double> sizeSelector)
 		{
-			return this.GetContentValueOrDefault(sizeSelector, DefaultSize).SpecifiedOrDefault(DefaultSize);
+			return this.GetContentValueOrDefault(sizeSelector, DefaultThickness).SpecifiedOrDefault(DefaultThickness);
 		}
 
 		private void OwnerContentRenderedCallback(object sender, EventArgs eventArgs)

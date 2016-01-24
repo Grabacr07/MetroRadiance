@@ -28,7 +28,7 @@
 						<ControlTemplate TargetType="{x:Type chrome:GlowingEdge}">
 							<DockPanel>
 								<Border DockPanel.Dock="Right"
-										Width="{TemplateBinding Thickness}"
+										Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
 										Background="{TemplateBinding Background}" />
 								<Grid Width="8">
 									<Grid.Background>
@@ -66,9 +66,34 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type chrome:GlowingEdge}">
 							<DockPanel VerticalAlignment="Bottom">
-								<Border DockPanel.Dock="Bottom"
-										Height="{TemplateBinding Thickness}"
-										Background="{TemplateBinding Background}" />
+								<Grid DockPanel.Dock="Bottom"
+									  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Top}">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="8" />
+										<ColumnDefinition />
+										<ColumnDefinition Width="8" />
+									</Grid.ColumnDefinitions>
+									<Rectangle Grid.Column="0"
+											   Cursor="SizeNWSE"
+											   chrome:WindowChrome.SizingMode="TopLeft">
+										<Shape.Fill>
+											<LinearGradientBrush x:Name="PART_GradientBrush4"
+																 StartPoint="1,0"
+																 EndPoint="0,0" />
+										</Shape.Fill>
+									</Rectangle>
+									<Border Grid.Column="1"
+											Background="{TemplateBinding Background}" />
+									<Rectangle Grid.Column="2"
+											   Cursor="SizeNESW"
+											   chrome:WindowChrome.SizingMode="TopRight">
+										<Shape.Fill>
+											<LinearGradientBrush x:Name="PART_GradientBrush5"
+																 StartPoint="0,0"
+																 EndPoint="1,0" />
+										</Shape.Fill>
+									</Rectangle>
+								</Grid>
 								<Grid Height="8">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="8" />
@@ -98,18 +123,26 @@
 										</Grid.Background>
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="{StaticResource TiltedCursorMarginKey}" />
+											<ColumnDefinition Width="Auto" />
 											<ColumnDefinition />
+											<ColumnDefinition Width="Auto" />
 											<ColumnDefinition Width="{StaticResource TiltedCursorMarginKey}" />
 										</Grid.ColumnDefinitions>
 										<Rectangle Grid.Column="0"
+												   Grid.ColumnSpan="2"
 												   Cursor="SizeNWSE"
 												   chrome:WindowChrome.SizingMode="TopLeft"
 												   Fill="Transparent" />
-										<Rectangle Grid.Column="1"
+										<Border Grid.Column="1"
+												Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" />
+										<Rectangle Grid.Column="2"
 												   Cursor="SizeNS"
 												   chrome:WindowChrome.SizingMode="Top"
 												   Fill="Transparent" />
-										<Rectangle Grid.Column="2"
+										<Border Grid.Column="3"
+												Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" />
+										<Rectangle Grid.Column="3"
+												   Grid.ColumnSpan="2"
 												   Cursor="SizeNESW"
 												   chrome:WindowChrome.SizingMode="TopRight"
 												   Fill="Transparent" />
@@ -142,7 +175,7 @@
 						<ControlTemplate TargetType="{x:Type chrome:GlowingEdge}">
 							<DockPanel>
 								<Border DockPanel.Dock="Left"
-										Width="{TemplateBinding Thickness}"
+										Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
 										Background="{TemplateBinding Background}" />
 								<Grid Width="8">
 									<Grid.Background>
@@ -180,9 +213,34 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type chrome:GlowingEdge}">
 							<DockPanel VerticalAlignment="Top">
-								<Border DockPanel.Dock="Top"
-										Height="{TemplateBinding Thickness}"
-										Background="{TemplateBinding Background}" />
+								<Grid DockPanel.Dock="Top"
+									  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Bottom}">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="8" />
+										<ColumnDefinition />
+										<ColumnDefinition Width="8" />
+									</Grid.ColumnDefinitions>
+									<Rectangle Grid.Column="0"
+											   Cursor="SizeNESW"
+											   chrome:WindowChrome.SizingMode="BottomLeft">
+										<Shape.Fill>
+											<LinearGradientBrush x:Name="PART_GradientBrush4"
+																 StartPoint="1,0"
+																 EndPoint="0,0" />
+										</Shape.Fill>
+									</Rectangle>
+									<Border Grid.Column="1"
+											Background="{TemplateBinding Background}" />
+									<Rectangle Grid.Column="2"
+											   Cursor="SizeNWSE"
+											   chrome:WindowChrome.SizingMode="BottomRight">
+										<Shape.Fill>
+											<LinearGradientBrush x:Name="PART_GradientBrush5"
+																 StartPoint="0,0"
+																 EndPoint="1,0" />
+										</Shape.Fill>
+									</Rectangle>
+								</Grid>
 								<Grid Height="8">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="8" />
@@ -197,7 +255,7 @@
 										  HorizontalAlignment="Left"
 										  VerticalAlignment="Bottom"
 										  Stretch="Fill"
-										  Cursor="SizeNWSE"
+										  Cursor="SizeNESW"
 										  chrome:WindowChrome.SizingMode="TopLeft">
 										<Shape.Fill>
 											<RadialGradientBrush x:Name="PART_GradientBrush2" />
@@ -212,18 +270,26 @@
 										</Grid.Background>
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="{StaticResource TiltedCursorMarginKey}" />
+											<ColumnDefinition Width="Auto" />
 											<ColumnDefinition />
+											<ColumnDefinition Width="Auto" />
 											<ColumnDefinition Width="{StaticResource TiltedCursorMarginKey}" />
 										</Grid.ColumnDefinitions>
 										<Rectangle Grid.Column="0"
+												   Grid.ColumnSpan="2"
 												   Cursor="SizeNESW"
 												   chrome:WindowChrome.SizingMode="BottomLeft"
 												   Fill="Transparent" />
-										<Rectangle Grid.Column="1"
+										<Border Grid.Column="1"
+												Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" />
+										<Rectangle Grid.Column="2"
 												   Cursor="SizeNS"
 												   chrome:WindowChrome.SizingMode="Bottom"
 												   Fill="Transparent" />
-										<Rectangle Grid.Column="2"
+										<Border Grid.Column="3"
+												Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" />
+										<Rectangle Grid.Column="3"
+												   Grid.ColumnSpan="2"
 												   Cursor="SizeNWSE"
 												   chrome:WindowChrome.SizingMode="BottomRight"
 												   Fill="Transparent" />
@@ -236,7 +302,7 @@
 										  HorizontalAlignment="Right"
 										  VerticalAlignment="Bottom"
 										  Stretch="Fill"
-										  Cursor="SizeNESW"
+										  Cursor="SizeNWSE"
 										  chrome:WindowChrome.SizingMode="TopRight">
 										<Shape.Fill>
 											<RadialGradientBrush x:Name="PART_GradientBrush3" />

@@ -64,12 +64,23 @@ namespace MetroRadiance.Chrome
 		private static void BorderThicknessPropertyCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var instance = (WindowChrome)d;
+			var oldValue = (Thickness)e.OldValue;
 			var newValue = (Thickness)e.NewValue;
 
-			instance._top.Edge.Thickness = newValue.Top;
-			instance._left.Edge.Thickness = newValue.Left;
-			instance._right.Edge.Thickness = newValue.Right;
-			instance._bottom.Edge.Thickness = newValue.Bottom;
+			instance._top.Edge.BorderThickness = newValue;
+			instance._left.Edge.BorderThickness = newValue;
+			instance._right.Edge.BorderThickness = newValue;
+			instance._bottom.Edge.BorderThickness = newValue;
+
+			var thickness = new Thickness(
+				instance._left.Window.Thickness.Left - oldValue.Left + newValue.Left,
+				instance._left.Window.Thickness.Top - oldValue.Top + newValue.Top,
+				instance._left.Window.Thickness.Right - oldValue.Right + newValue.Right,
+				instance._left.Window.Thickness.Bottom - oldValue.Bottom + newValue.Bottom);
+			instance._top.Window.Thickness = thickness;
+			instance._left.Window.Thickness = thickness;
+			instance._right.Window.Thickness = thickness;
+			instance._bottom.Window.Thickness = thickness;
 		}
 
 		#endregion
@@ -247,7 +258,7 @@ namespace MetroRadiance.Chrome
 			{
 				this._customContentHost = new ContentControl();
 				this.Edge = new GlowingEdge { Position = position, };
-				
+
 				var grid = new Grid();
 				grid.Children.Add(this.Edge);
 				grid.Children.Add(this._customContentHost);
@@ -255,7 +266,6 @@ namespace MetroRadiance.Chrome
 				this.Window = window;
 				this.Window.Content = grid;
 			}
-
 		}
 	}
 }
