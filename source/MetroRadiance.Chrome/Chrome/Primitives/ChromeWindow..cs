@@ -24,7 +24,7 @@ namespace MetroRadiance.Chrome.Primitives
 				new FrameworkPropertyMetadata(typeof(ChromeWindow)));
 		}
 
-		public static double Thickness { get; set; } = 9.0;
+		public static double Thickness { get; set; } = 8.0;
 
 		private HwndSource _source;
 		private IntPtr _handle;

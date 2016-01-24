@@ -53,7 +53,7 @@ namespace MetroRadiance.Chrome
 		#region BorderThickness dependency property
 
 		public static readonly DependencyProperty BorderThicknessProperty = DependencyProperty.Register(
-			nameof(BorderThickness), typeof(Thickness), typeof(WindowChrome), new PropertyMetadata(default(Thickness), BorderThicknessPropertyCallback));
+			nameof(BorderThickness), typeof(Thickness), typeof(WindowChrome), new PropertyMetadata(new Thickness(.99), BorderThicknessPropertyCallback));
 
 		public Thickness BorderThickness
 		{
@@ -66,21 +66,7 @@ namespace MetroRadiance.Chrome
 			var instance = (WindowChrome)d;
 			var newValue = (Thickness)e.NewValue;
 
-			instance._top.Edge.BorderThickness = newValue;
-			instance._left.Edge.BorderThickness = newValue;
-			instance._right.Edge.BorderThickness = newValue;
-			instance._bottom.Edge.BorderThickness = newValue;
-
-			var thickness = new Thickness(
-				ChromeWindow.Thickness + newValue.Left,
-				ChromeWindow.Thickness + newValue.Top,
-				ChromeWindow.Thickness + newValue.Right,
-				ChromeWindow.Thickness + newValue.Bottom);
-
-			instance._top.Window.Offset = thickness;
-			instance._left.Window.Offset = thickness;
-			instance._right.Window.Offset = thickness;
-			instance._bottom.Window.Offset = thickness;
+			instance.UpdateThickness(newValue);
 		}
 
 		#endregion
@@ -199,6 +185,11 @@ namespace MetroRadiance.Chrome
 		#endregion
 
 
+		public WindowChrome()
+		{
+			this.UpdateThickness(this.BorderThickness);
+		}
+
 		/// <summary>
 		/// 指定した WPF <see cref="Window"/> に、このクローム UI をアタッチします。
 		/// </summary>
@@ -231,6 +222,25 @@ namespace MetroRadiance.Chrome
 			this._left.Window.Detach();
 			this._right.Window.Detach();
 			this._bottom.Window.Detach();
+		}
+
+		private void UpdateThickness(Thickness thickness)
+		{
+			this._top.Edge.BorderThickness = thickness;
+			this._left.Edge.BorderThickness = thickness;
+			this._right.Edge.BorderThickness = thickness;
+			this._bottom.Edge.BorderThickness = thickness;
+
+			var offset = new Thickness(
+				ChromeWindow.Thickness + thickness.Left,
+				ChromeWindow.Thickness + thickness.Top,
+				ChromeWindow.Thickness + thickness.Right,
+				ChromeWindow.Thickness + thickness.Bottom);
+
+			this._top.Window.Offset = offset;
+			this._left.Window.Offset = offset;
+			this._right.Window.Offset = offset;
+			this._bottom.Window.Offset = offset;
 		}
 
 

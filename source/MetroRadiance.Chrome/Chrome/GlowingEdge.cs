@@ -75,7 +75,8 @@ namespace MetroRadiance.Chrome
 			{
 				// Offset, Opacity
 				Tuple.Create(1.0, 0.005),
-				Tuple.Create(0.6, 0.020),
+				Tuple.Create(0.8, 0.020),
+				Tuple.Create(0.6, 0.040),
 				Tuple.Create(0.4, 0.080),
 				Tuple.Create(0.2, 0.160),
 				Tuple.Create(0.1, 0.260),
