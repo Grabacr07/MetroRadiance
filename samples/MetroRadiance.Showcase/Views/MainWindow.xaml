@@ -19,7 +19,7 @@
 					  TextOptions.TextFormattingMode="Display">
 
 	<chrome:WindowChrome.Instance>
-		<chrome:WindowChrome CanResize="False">
+		<chrome:WindowChrome>
 			<chrome:WindowChrome.Top>
 				<Border Background="DarkRed"
 						Padding="24,3"
