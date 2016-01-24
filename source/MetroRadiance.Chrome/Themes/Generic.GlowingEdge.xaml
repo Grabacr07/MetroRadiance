@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:chrome="clr-namespace:MetroRadiance.Chrome">
+					xmlns:chrome="clr-namespace:MetroRadiance.Chrome"
+					xmlns:primitives="clr-namespace:MetroRadiance.Chrome.Primitives">
 
 	<PathGeometry x:Key="CornerGeometryKey"
 				  Figures="M8,0 L8,8 A8,8,0,0,1,0,0 z" />
@@ -30,7 +31,7 @@
 								<Border DockPanel.Dock="Right"
 										Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}"
 										Background="{TemplateBinding Background}" />
-								<Grid Width="8">
+								<Grid Width="{x:Static primitives:ChromeWindow.Thickness}">
 									<Grid.Background>
 										<LinearGradientBrush x:Name="PART_GradientBrush"
 															 StartPoint="1,0"
@@ -69,9 +70,9 @@
 								<Grid DockPanel.Dock="Bottom"
 									  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Top}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										<ColumnDefinition />
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 									</Grid.ColumnDefinitions>
 									<Rectangle Grid.Column="0"
 											   Cursor="SizeNWSE"
@@ -94,17 +95,17 @@
 										</Shape.Fill>
 									</Rectangle>
 								</Grid>
-								<Grid Height="8">
+								<Grid Height="{x:Static primitives:ChromeWindow.Thickness}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										<ColumnDefinition />
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 									</Grid.ColumnDefinitions>
 
 									<Path Grid.Column="0"
 										  Data="{StaticResource CornerGeometryKey}"
-										  Width="16"
-										  Height="16"
+										  Width="{x:Static chrome:GlowingEdge.__CornerThickness}"
+										  Height="{x:Static chrome:GlowingEdge.__CornerThickness}"
 										  HorizontalAlignment="Left"
 										  VerticalAlignment="Top"
 										  Stretch="Fill"
@@ -150,8 +151,8 @@
 
 									<Path Grid.Column="2"
 										  Data="{StaticResource CornerGeometryKey}"
-										  Width="16"
-										  Height="16"
+										  Width="{x:Static chrome:GlowingEdge.__CornerThickness}"
+										  Height="{x:Static chrome:GlowingEdge.__CornerThickness}"
 										  HorizontalAlignment="Right"
 										  VerticalAlignment="Top"
 										  Stretch="Fill"
@@ -177,7 +178,7 @@
 								<Border DockPanel.Dock="Left"
 										Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
 										Background="{TemplateBinding Background}" />
-								<Grid Width="8">
+								<Grid Width="{x:Static primitives:ChromeWindow.Thickness}">
 									<Grid.Background>
 										<LinearGradientBrush x:Name="PART_GradientBrush"
 															 StartPoint="0,0"
@@ -216,9 +217,9 @@
 								<Grid DockPanel.Dock="Top"
 									  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Bottom}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										<ColumnDefinition />
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 									</Grid.ColumnDefinitions>
 									<Rectangle Grid.Column="0"
 											   Cursor="SizeNESW"
@@ -241,17 +242,17 @@
 										</Shape.Fill>
 									</Rectangle>
 								</Grid>
-								<Grid Height="8">
+								<Grid Height="{x:Static primitives:ChromeWindow.Thickness}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										<ColumnDefinition />
-										<ColumnDefinition Width="8" />
+										<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 									</Grid.ColumnDefinitions>
 
 									<Path Grid.Column="0"
 										  Data="{StaticResource CornerGeometryKey}"
-										  Width="16"
-										  Height="16"
+										  Width="{x:Static chrome:GlowingEdge.__CornerThickness}"
+										  Height="{x:Static chrome:GlowingEdge.__CornerThickness}"
 										  HorizontalAlignment="Left"
 										  VerticalAlignment="Bottom"
 										  Stretch="Fill"
@@ -297,8 +298,8 @@
 
 									<Path Grid.Column="2"
 										  Data="{StaticResource CornerGeometryKey}"
-										  Width="16"
-										  Height="16"
+										  Width="{x:Static chrome:GlowingEdge.__CornerThickness}"
+										  Height="{x:Static chrome:GlowingEdge.__CornerThickness}"
 										  HorizontalAlignment="Right"
 										  VerticalAlignment="Bottom"
 										  Stretch="Fill"

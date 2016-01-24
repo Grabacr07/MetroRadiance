@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace MetroRadiance.Chrome.Primitives
 				new FrameworkPropertyMetadata(typeof(ChromeWindow)));
 		}
 
-		public static double DefaultThickness { get; set; } = 8.0;
+		public static double Thickness { get; set; } = 9.0;
 
 		private HwndSource _source;
 		private IntPtr _handle;
@@ -40,13 +41,13 @@ namespace MetroRadiance.Chrome.Primitives
 
 		#region Thickness dependency property
 
-		public static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register(
-			nameof(Thickness), typeof(Thickness), typeof(ChromeWindow), new PropertyMetadata(new Thickness(DefaultThickness)));
+		internal static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
+			nameof(Offset), typeof(Thickness), typeof(ChromeWindow), new PropertyMetadata(new Thickness(Thickness)));
 
-		public Thickness Thickness
+		internal Thickness Offset
 		{
-			get { return (Thickness)this.GetValue(ThicknessProperty); }
-			set { this.SetValue(ThicknessProperty, value); }
+			get { return (Thickness)this.GetValue(OffsetProperty); }
+			set { this.SetValue(OffsetProperty, value); }
 		}
 
 		#endregion
@@ -270,7 +271,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected double GetContentSizeOrDefault(Func<FrameworkElement, double> sizeSelector)
 		{
-			return this.GetContentValueOrDefault(sizeSelector, DefaultThickness).SpecifiedOrDefault(DefaultThickness);
+			return this.GetContentValueOrDefault(sizeSelector, Thickness).SpecifiedOrDefault(Thickness);
 		}
 
 		private void OwnerContentRenderedCallback(object sender, EventArgs eventArgs)

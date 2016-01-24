@@ -64,7 +64,6 @@ namespace MetroRadiance.Chrome
 		private static void BorderThicknessPropertyCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var instance = (WindowChrome)d;
-			var oldValue = (Thickness)e.OldValue;
 			var newValue = (Thickness)e.NewValue;
 
 			instance._top.Edge.BorderThickness = newValue;
@@ -73,14 +72,15 @@ namespace MetroRadiance.Chrome
 			instance._bottom.Edge.BorderThickness = newValue;
 
 			var thickness = new Thickness(
-				instance._left.Window.Thickness.Left - oldValue.Left + newValue.Left,
-				instance._left.Window.Thickness.Top - oldValue.Top + newValue.Top,
-				instance._left.Window.Thickness.Right - oldValue.Right + newValue.Right,
-				instance._left.Window.Thickness.Bottom - oldValue.Bottom + newValue.Bottom);
-			instance._top.Window.Thickness = thickness;
-			instance._left.Window.Thickness = thickness;
-			instance._right.Window.Thickness = thickness;
-			instance._bottom.Window.Thickness = thickness;
+				ChromeWindow.Thickness + newValue.Left,
+				ChromeWindow.Thickness + newValue.Top,
+				ChromeWindow.Thickness + newValue.Right,
+				ChromeWindow.Thickness + newValue.Bottom);
+
+			instance._top.Window.Offset = thickness;
+			instance._left.Window.Offset = thickness;
+			instance._right.Window.Offset = thickness;
+			instance._bottom.Window.Offset = thickness;
 		}
 
 		#endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using MetroRadiance.Chrome.Primitives;
 
 namespace MetroRadiance.Chrome
 {
@@ -14,6 +16,18 @@ namespace MetroRadiance.Chrome
 	public class GlowingEdge : Control, IValueConverter
 	{
 		private const string PART_GradientBrush = nameof(PART_GradientBrush);
+
+		#region Infrastructures
+		// ReSharper disable InconsistentNaming
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static GridLength __Thickness => new GridLength(ChromeWindow.Thickness);
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public static double __CornerThickness => ChromeWindow.Thickness * 2;
+
+		// ReSharper restore InconsistentNaming
+		#endregion
 
 		static GlowingEdge()
 		{
@@ -31,19 +45,6 @@ namespace MetroRadiance.Chrome
 		{
 			get { return (Dock)this.GetValue(PositionProperty); }
 			set { this.SetValue(PositionProperty, value); }
-		}
-
-		#endregion
-
-		#region Thickness dependency property
-
-		public static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register(
-			nameof(Thickness), typeof(double), typeof(GlowingEdge), new PropertyMetadata(.0));
-
-		public double Thickness
-		{
-			get { return (double)this.GetValue(ThicknessProperty); }
-			set { this.SetValue(ThicknessProperty, value); }
 		}
 
 		#endregion
