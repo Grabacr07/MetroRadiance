@@ -71,6 +71,30 @@ namespace MetroRadiance.Chrome
 
 		#endregion
 
+		#region CanResize dependency property
+
+		public static readonly DependencyProperty CanResizeProperty = DependencyProperty.Register(
+			nameof(CanResize), typeof(bool), typeof(WindowChrome), new PropertyMetadata(GlowingEdge.CanResizeProperty.DefaultMetadata.DefaultValue, CanResizePropertyCallback));
+
+		public bool CanResize
+		{
+			get { return (bool)this.GetValue(CanResizeProperty); }
+			set { this.SetValue(CanResizeProperty, value); }
+		}
+
+		private static void CanResizePropertyCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = (WindowChrome)d;
+			var newValue = (bool)e.NewValue;
+
+			instance._top.Edge.CanResize = newValue;
+			instance._left.Edge.CanResize = newValue;
+			instance._right.Edge.CanResize = newValue;
+			instance._bottom.Edge.CanResize = newValue;
+		}
+
+		#endregion
+
 		#region OverrideDefaultEdge dependency property
 
 		public static readonly DependencyProperty OverrideDefaultEdgeProperty = DependencyProperty.Register(
@@ -201,6 +225,8 @@ namespace MetroRadiance.Chrome
 			this._left.Window.Attach(window);
 			this._right.Window.Attach(window);
 			this._bottom.Window.Attach(window);
+
+			this.CanResize = true;
 		}
 
 		/// <summary>
@@ -214,6 +240,8 @@ namespace MetroRadiance.Chrome
 			this._left.Window.Attach(window);
 			this._right.Window.Attach(window);
 			this._bottom.Window.Attach(window);
+
+			this.CanResize = false;
 		}
 
 		public void Detach()

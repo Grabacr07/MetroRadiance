@@ -47,14 +47,17 @@
 									</Border>
 								</DockPanel>
 								<Rectangle Grid.Row="0"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNWSE"
 										   chrome:WindowChrome.SizingMode="TopLeft"
 										   Fill="Transparent" />
 								<Rectangle Grid.Row="1"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeWE"
 										   chrome:WindowChrome.SizingMode="Left"
 										   Fill="Transparent" />
 								<Rectangle Grid.Row="2"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNESW"
 										   chrome:WindowChrome.SizingMode="BottomLeft"
 										   Fill="Transparent" />
@@ -91,6 +94,7 @@
 											<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										</Grid.ColumnDefinitions>
 										<Rectangle Grid.Column="0"
+												   IsEnabled="{TemplateBinding CanResize}"
 												   Cursor="SizeNWSE"
 												   chrome:WindowChrome.SizingMode="TopLeft">
 											<Shape.Fill>
@@ -102,6 +106,7 @@
 										<Border Grid.Column="1"
 												Background="{TemplateBinding Background}" />
 										<Rectangle Grid.Column="2"
+												   IsEnabled="{TemplateBinding CanResize}"
 												   Cursor="SizeNESW"
 												   chrome:WindowChrome.SizingMode="TopRight">
 											<Shape.Fill>
@@ -126,6 +131,7 @@
 											  HorizontalAlignment="Left"
 											  VerticalAlignment="Top"
 											  Stretch="Fill"
+											  IsEnabled="{TemplateBinding CanResize}"
 											  Cursor="SizeNWSE"
 											  chrome:WindowChrome.SizingMode="TopLeft">
 											<Shape.Fill>
@@ -146,6 +152,7 @@
 											  HorizontalAlignment="Right"
 											  VerticalAlignment="Top"
 											  Stretch="Fill"
+											  IsEnabled="{TemplateBinding CanResize}"
 											  Cursor="SizeNESW"
 											  chrome:WindowChrome.SizingMode="TopRight">
 											<Shape.Fill>
@@ -157,12 +164,14 @@
 
 								<Rectangle Grid.Column="0"
 										   Grid.ColumnSpan="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNWSE"
 										   chrome:WindowChrome.SizingMode="TopLeft"
 										   Fill="Transparent" />
 								<Rectangle Grid.Column="1"
 										   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" />
 								<Rectangle Grid.Column="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNS"
 										   chrome:WindowChrome.SizingMode="Top"
 										   Fill="Transparent" />
@@ -170,6 +179,7 @@
 										   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" />
 								<Rectangle Grid.Column="4"
 										   Grid.ColumnSpan="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNESW"
 										   chrome:WindowChrome.SizingMode="TopRight"
 										   Fill="Transparent" />
@@ -204,14 +214,17 @@
 									</Border>
 								</DockPanel>
 								<Rectangle Grid.Row="0"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNESW"
 										   chrome:WindowChrome.SizingMode="TopRight"
 										   Fill="Transparent" />
 								<Rectangle Grid.Row="1"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeWE"
 										   chrome:WindowChrome.SizingMode="Right"
 										   Fill="Transparent" />
 								<Rectangle Grid.Row="2"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNWSE"
 										   chrome:WindowChrome.SizingMode="BottomRight"
 										   Fill="Transparent" />
@@ -248,6 +261,7 @@
 											<ColumnDefinition Width="{x:Static chrome:GlowingEdge.__Thickness}" />
 										</Grid.ColumnDefinitions>
 										<Rectangle Grid.Column="0"
+												   IsEnabled="{TemplateBinding CanResize}"
 												   Cursor="SizeNESW"
 												   chrome:WindowChrome.SizingMode="BottomLeft">
 											<Shape.Fill>
@@ -259,6 +273,7 @@
 										<Border Grid.Column="1"
 												Background="{TemplateBinding Background}" />
 										<Rectangle Grid.Column="2"
+												   IsEnabled="{TemplateBinding CanResize}"
 												   Cursor="SizeNWSE"
 												   chrome:WindowChrome.SizingMode="BottomRight">
 											<Shape.Fill>
@@ -283,8 +298,9 @@
 											  HorizontalAlignment="Left"
 											  VerticalAlignment="Bottom"
 											  Stretch="Fill"
+											  IsEnabled="{TemplateBinding CanResize}"
 											  Cursor="SizeNESW"
-											  chrome:WindowChrome.SizingMode="TopLeft">
+											  chrome:WindowChrome.SizingMode="BottomLeft">
 											<Shape.Fill>
 												<RadialGradientBrush x:Name="PART_GradientBrush2" />
 											</Shape.Fill>
@@ -303,8 +319,9 @@
 											  HorizontalAlignment="Right"
 											  VerticalAlignment="Bottom"
 											  Stretch="Fill"
+											  IsEnabled="{TemplateBinding CanResize}"
 											  Cursor="SizeNWSE"
-											  chrome:WindowChrome.SizingMode="TopRight">
+											  chrome:WindowChrome.SizingMode="BottomRight">
 											<Shape.Fill>
 												<RadialGradientBrush x:Name="PART_GradientBrush3" />
 											</Shape.Fill>
@@ -314,21 +331,24 @@
 
 								<Rectangle Grid.Column="0"
 										   Grid.ColumnSpan="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNESW"
-										   chrome:WindowChrome.SizingMode="TopLeft"
+										   chrome:WindowChrome.SizingMode="BottomLeft"
 										   Fill="Transparent" />
 								<Rectangle Grid.Column="1"
 										   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Left}" />
 								<Rectangle Grid.Column="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNS"
-										   chrome:WindowChrome.SizingMode="Top"
+										   chrome:WindowChrome.SizingMode="Bottom"
 										   Fill="Transparent" />
 								<Rectangle Grid.Column="5"
 										   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}" />
 								<Rectangle Grid.Column="4"
 										   Grid.ColumnSpan="3"
+										   IsEnabled="{TemplateBinding CanResize}"
 										   Cursor="SizeNWSE"
-										   chrome:WindowChrome.SizingMode="TopRight"
+										   chrome:WindowChrome.SizingMode="BottomRight"
 										   Fill="Transparent" />
 							</Grid>
 						</ControlTemplate>

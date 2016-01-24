@@ -49,6 +49,19 @@ namespace MetroRadiance.Chrome
 
 		#endregion
 
+		#region CanResize dependency property
+
+		public static readonly DependencyProperty CanResizeProperty = DependencyProperty.Register(
+			nameof(CanResize), typeof(bool), typeof(GlowingEdge), new PropertyMetadata(true));
+
+		public bool CanResize
+		{
+			get { return (bool)this.GetValue(CanResizeProperty); }
+			set { this.SetValue(CanResizeProperty, value); }
+		}
+
+		#endregion
+
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
