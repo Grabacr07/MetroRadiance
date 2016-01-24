@@ -323,6 +323,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 			return this.WndProcOverride(hwnd, msg, wParam, lParam, ref handled) ?? IntPtr.Zero;
 		}
+
 		private void ChangeDpi(Dpi dpi)
 		{
 			if (!PerMonitorDpi.IsSupported) return;

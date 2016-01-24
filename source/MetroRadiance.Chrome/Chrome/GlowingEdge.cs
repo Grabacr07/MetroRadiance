@@ -13,7 +13,7 @@ namespace MetroRadiance.Chrome
 	[TemplatePart(Name = PART_GradientBrush, Type = typeof(GradientBrush))]
 	public class GlowingEdge : Control, IValueConverter
 	{
-		private const string PART_GradientBrush = "PART_GradientBrush";
+		private const string PART_GradientBrush = nameof(PART_GradientBrush);
 
 		static GlowingEdge()
 		{
@@ -31,6 +31,19 @@ namespace MetroRadiance.Chrome
 		{
 			get { return (Dock)this.GetValue(PositionProperty); }
 			set { this.SetValue(PositionProperty, value); }
+		}
+
+		#endregion
+
+		#region Thickness dependency property
+
+		public static readonly DependencyProperty ThicknessProperty = DependencyProperty.Register(
+			nameof(Thickness), typeof(double), typeof(GlowingEdge), new PropertyMetadata(.0));
+
+		public double Thickness
+		{
+			get { return (double)this.GetValue(ThicknessProperty); }
+			set { this.SetValue(ThicknessProperty, value); }
 		}
 
 		#endregion

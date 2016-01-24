@@ -19,19 +19,15 @@
 					  TextOptions.TextFormattingMode="Display">
 
 	<chrome:WindowChrome.Instance>
-		<chrome:WindowChrome>
+		<chrome:WindowChrome BorderThickness="8">
 			<chrome:WindowChrome.Top>
-				<Grid>
-					<Border Background="DarkRed"
-							Padding="24,3"
-							Margin="8,0"
-							HorizontalAlignment="Right">
-						<TextBlock Text="光るやつに何かつける"
-								   Foreground="White" />
-					</Border>
-					<chrome:GlowingEdge Position="Top"
-										VerticalAlignment="Bottom" />
-				</Grid>
+				<Border Background="DarkRed"
+						Padding="24,3"
+						Margin="8,0"
+						HorizontalAlignment="Right">
+					<TextBlock Text="光るやつに何かつける"
+							   Foreground="White" />
+				</Border>
 			</chrome:WindowChrome.Top>
 		</chrome:WindowChrome>
 	</chrome:WindowChrome.Instance>

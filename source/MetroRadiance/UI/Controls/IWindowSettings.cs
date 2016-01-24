@@ -23,7 +23,7 @@ namespace MetroRadiance.UI.Controls
 		[UserScopedSetting]
 		public WINDOWPLACEMENT? Placement
 		{
-			get { return this["Placement"] != null ? (WINDOWPLACEMENT?)(WINDOWPLACEMENT)this["Placement"] : null; }
+			get { return (WINDOWPLACEMENT?)this["Placement"]; }
 			set { this["Placement"] = value; }
 		}
 	}

@@ -13,75 +13,99 @@ namespace MetroRadiance.Chrome
 	/// <summary>
 	/// ウィンドウにアタッチされ、四辺にカスタム UI を表示する機能を提供します。
 	/// </summary>
-	public class WindowChrome
+	public class WindowChrome : DependencyObject
 	{
-		private object _top = new GlowingEdge { Position = Dock.Top, };
-		private object _left = new GlowingEdge { Position = Dock.Left, };
-		private object _right = new GlowingEdge { Position = Dock.Right, };
-		private object _bottom = new GlowingEdge { Position = Dock.Bottom, };
-
-		private readonly ChromeWindow _topWindow;
-		private readonly ChromeWindow _leftWindow;
-		private readonly ChromeWindow _rightWindow;
-		private readonly ChromeWindow _bottomWindow;
-
 		private static readonly HashSet<FrameworkElement> _sizingElements = new HashSet<FrameworkElement>();
+
+		private readonly ChromePart _top = new ChromePart(new TopChromeWindow(), Dock.Top);
+		private readonly ChromePart _left = new ChromePart(new LeftChromeWindow(), Dock.Left);
+		private readonly ChromePart _right = new ChromePart(new RightChromeWindow(), Dock.Right);
+		private readonly ChromePart _bottom = new ChromePart(new BottomChromeWindow(), Dock.Bottom);
 
 		#region Content wrappers
 
 		public object Left
 		{
-			get { return this._left; }
-			set
-			{
-				this._left = value;
-				if (this._leftWindow != null)
-				{
-					this._leftWindow.Content = value;
-					this._leftWindow.Update();
-				}
-			}
+			get { return this._left.Content; }
+			set { this._left.Content = value; }
 		}
 
 		public object Right
 		{
-			get { return this._right; }
-			set
-			{
-				this._right = value;
-				if (this._rightWindow != null)
-				{
-					this._rightWindow.Content = value;
-					this._rightWindow.Update();
-				}
-			}
+			get { return this._right.Content; }
+			set { this._right.Content = value; }
 		}
 
 		public object Top
 		{
-			get { return this._top; }
-			set
-			{
-				this._top = value;
-				if (this._topWindow != null)
-				{
-					this._topWindow.Content = value;
-					this._topWindow.Update();
-				}
-			}
+			get { return this._top.Content; }
+			set { this._top.Content = value; }
 		}
 
 		public object Bottom
 		{
-			get { return this._bottom; }
-			set
+			get { return this._bottom.Content; }
+			set { this._bottom.Content = value; }
+		}
+
+		#endregion
+
+		#region BorderThickness dependency property
+
+		public static readonly DependencyProperty BorderThicknessProperty = DependencyProperty.Register(
+			nameof(BorderThickness), typeof(Thickness), typeof(WindowChrome), new PropertyMetadata(default(Thickness), BorderThicknessPropertyCallback));
+
+		public Thickness BorderThickness
+		{
+			get { return (Thickness)this.GetValue(BorderThicknessProperty); }
+			set { this.SetValue(BorderThicknessProperty, value); }
+		}
+
+		private static void BorderThicknessPropertyCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = (WindowChrome)d;
+			var newValue = (Thickness)e.NewValue;
+
+			instance._top.Edge.Thickness = newValue.Top;
+			instance._left.Edge.Thickness = newValue.Left;
+			instance._right.Edge.Thickness = newValue.Right;
+			instance._bottom.Edge.Thickness = newValue.Bottom;
+		}
+
+		#endregion
+
+		#region OverrideDefaultEdge dependency property
+
+		public static readonly DependencyProperty OverrideDefaultEdgeProperty = DependencyProperty.Register(
+			nameof(OverrideDefaultEdge), typeof(bool), typeof(WindowChrome), new PropertyMetadata(false, OverrideDefaultEdgePropertyCallback));
+
+		public bool OverrideDefaultEdge
+		{
+			get { return (bool)this.GetValue(OverrideDefaultEdgeProperty); }
+			set { this.SetValue(OverrideDefaultEdgeProperty, value); }
+		}
+
+		private static void OverrideDefaultEdgePropertyCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = (WindowChrome)d;
+			var oldValue = (bool)e.OldValue;
+			var newValue = (bool)e.NewValue;
+
+			if (!oldValue && newValue)
 			{
-				this._bottom = value;
-				if (this._bottomWindow != null)
-				{
-					this._bottomWindow.Content = value;
-					this._bottomWindow.Update();
-				}
+				// false -> true
+				instance._top.Edge.Visibility = Visibility.Collapsed;
+				instance._left.Edge.Visibility = Visibility.Collapsed;
+				instance._right.Edge.Visibility = Visibility.Collapsed;
+				instance._bottom.Edge.Visibility = Visibility.Collapsed;
+			}
+			if (oldValue && !newValue)
+			{
+				// true -> false
+				instance._top.Edge.Visibility = Visibility.Visible;
+				instance._left.Edge.Visibility = Visibility.Visible;
+				instance._right.Edge.Visibility = Visibility.Visible;
+				instance._bottom.Edge.Visibility = Visibility.Visible;
 			}
 		}
 
@@ -163,13 +187,6 @@ namespace MetroRadiance.Chrome
 
 		#endregion
 
-		public WindowChrome()
-		{
-			this._topWindow = new TopChromeWindow();
-			this._leftWindow = new LeftChromeWindow();
-			this._rightWindow = new RightChromeWindow();
-			this._bottomWindow = new BottomChromeWindow();
-		}
 
 		/// <summary>
 		/// 指定した WPF <see cref="Window"/> に、このクローム UI をアタッチします。
@@ -177,12 +194,11 @@ namespace MetroRadiance.Chrome
 		public void Attach(Window window)
 		{
 			this.Detach();
-			this.AttachContent();
 
-			this._topWindow.Attach(window);
-			this._leftWindow.Attach(window);
-			this._rightWindow.Attach(window);
-			this._bottomWindow.Attach(window);
+			this._top.Window.Attach(window);
+			this._left.Window.Attach(window);
+			this._right.Window.Attach(window);
+			this._bottom.Window.Attach(window);
 		}
 
 		/// <summary>
@@ -191,28 +207,55 @@ namespace MetroRadiance.Chrome
 		public void Attach(IChromeOwner window)
 		{
 			this.Detach();
-			this.AttachContent();
 
-			this._topWindow.Attach(window);
-			this._leftWindow.Attach(window);
-			this._rightWindow.Attach(window);
-			this._bottomWindow.Attach(window);
-		}
-
-		private void AttachContent()
-		{
-			this._topWindow.Content = this._top;
-			this._leftWindow.Content = this._left;
-			this._rightWindow.Content = this._right;
-			this._bottomWindow.Content = this._bottom;
+			this._top.Window.Attach(window);
+			this._left.Window.Attach(window);
+			this._right.Window.Attach(window);
+			this._bottom.Window.Attach(window);
 		}
 
 		public void Detach()
 		{
-			this._topWindow.Detach();
-			this._leftWindow.Detach();
-			this._rightWindow.Detach();
-			this._bottomWindow.Detach();
+			this._top.Window.Detach();
+			this._left.Window.Detach();
+			this._right.Window.Detach();
+			this._bottom.Window.Detach();
+		}
+
+
+		private class ChromePart
+		{
+			private readonly ContentControl _customContentHost;
+
+			public GlowingEdge Edge { get; }
+
+			public ChromeWindow Window { get; }
+
+			public object Content
+			{
+				get { return this._customContentHost.Content; }
+				set
+				{
+					if (this._customContentHost.Content == value) return;
+
+					this._customContentHost.Content = value;
+					this.Window?.Update();
+				}
+			}
+
+			public ChromePart(ChromeWindow window, Dock position)
+			{
+				this._customContentHost = new ContentControl();
+				this.Edge = new GlowingEdge { Position = position, };
+				
+				var grid = new Grid();
+				grid.Children.Add(this.Edge);
+				grid.Children.Add(this._customContentHost);
+
+				this.Window = window;
+				this.Window.Content = grid;
+			}
+
 		}
 	}
 }
