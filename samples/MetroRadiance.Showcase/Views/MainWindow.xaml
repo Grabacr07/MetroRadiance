@@ -10,7 +10,7 @@
 					  xmlns:views="clr-namespace:MetroRadiance.Showcase.Views"
 					  Title="MainWindow"
 					  Width="500"
-					  Height="300"
+					  Height="1300"
 					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  WindowState="{Binding WindowState}"
@@ -19,7 +19,7 @@
 					  TextOptions.TextFormattingMode="Display">
 
 	<chrome:WindowChrome.Instance>
-		<chrome:WindowChrome>
+		<chrome:WindowChrome x:Name="WindowChrome">
 			<chrome:WindowChrome.Top>
 				<Border Background="DarkRed"
 						Padding="24,3"
@@ -172,6 +172,11 @@
 							Margin="5"
 							Click="OpenFileDialog" />
 				</WrapPanel>
+
+				<CheckBox IsChecked="{Binding ElementName=WindowChrome, Path=OverrideDefaultEdge}"
+						  Content="OverrideDefaultEdge"
+						  HorizontalAlignment="Center"
+						  Margin="5" />
 
 				<views:HsvSample />
 				<views:BrushSamples />

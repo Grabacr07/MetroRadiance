@@ -25,7 +25,7 @@
 				Value="True" />
 		<Setter Property="ShellChrome">
 			<Setter.Value>
-				<WindowChrome ResizeBorderThickness="1"
+				<WindowChrome ResizeBorderThickness="0"
 							  GlassFrameThickness="0"
 							  CornerRadius="0" />
 			</Setter.Value>

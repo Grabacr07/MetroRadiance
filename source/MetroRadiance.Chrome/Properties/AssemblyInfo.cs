@@ -18,5 +18,5 @@ using System.Windows.Markup;
 
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/chrome", "MetroRadiance.Chrome")]
 
-[assembly: AssemblyVersion("2.0.4")]
-[assembly: AssemblyInformationalVersion("2.0.4-alpha")]
+[assembly: AssemblyVersion("2.0.5")]
+[assembly: AssemblyInformationalVersion("2.0.5-alpha")]

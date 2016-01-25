@@ -14,7 +14,7 @@
         <tags>WPF</tags>
         <dependencies>
             <dependency id="MetroRadiance.Core" version="2.0.5-alpha" />
-            <dependency id="MetroRadiance.Chrome" version="2.0.4-alpha" />
+            <dependency id="MetroRadiance.Chrome" version="2.0.5-alpha" />
         </dependencies>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="System.Windows.Interactivity" targetFramework="net45" />
