@@ -12,22 +12,59 @@ Visual Studio 2012 ～ 2015 のようなウィンドウを作るための WPF �
 ### MetroRadiance.Core
 
 MetroRadiance コア ライブラリ。
-* Per-Monitor DPI 計算
-* Win32 API ラッパー
 
+* Win32 API ラッパー
+* Per-Monitor DPI 計算
+* Windows テーマ機能
+  - アクセント カラーの取得
+  - アクセント カラー変更イベント
+  - Light/Dark テーマ判定 (Windows 10)
+
+```csharp
+using MetroRadiance.Platform;
+```
+
+```csharp
+// Subscribe accent color change event from Windows theme.
+var disposable = WindowsTheme.RegisterAccentColorListener(color =>
+{
+    // apply color to your app.
+});
+
+// Unsubscribe color change event.
+disposable.Dispose();
+```
+
+* HSV 色空間サポート
+
+```csharp
+using MetroRadiance.Media;
+```
+
+```csharp
+// Get Windows accent color (using MetroRadiance.Platform;)
+var rgbColor = WindowsTheme.GetAccentColor();
+
+// Convert from RGB to HSV color.
+var hsvColor = rgbColor.ToHsv();
+hsvColor.V *= 0.8;
+
+// Convert from HSV to RGB color.
+var newColor = hsvColor.ToRgb();
+```
 
 ### MetroRadiance.Chrome
 
 Window 向け Chrome ライブラリ。
-* MetroChromeBehavior (任意の Window に Visual Studio のような光る枠を付与する Behavior)
+
+* 任意の Window に Visual Studio のような光る枠を付与する
+  - MetroRadiance.Chrome.WindowChrome
 
 ```XAML
-<Window>
-    <controls:MetroWindow.MetroChromeBehavior>
-        <chrome:MetroChromeBehavior ActiveBrush="{DynamicResource AccentBrushKey}"
-                                    nactiveBrush="{DynamicResource BorderBrushKey}"
-                                    Mode="Office2013" />
-    </controls:MetroWindow.MetroChromeBehavior>
+<Window xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome">
+    <chrome:WindowChrome.Instance>
+        <chrome:WindowChrome />
+    </chrome:WindowChrome.Instance>
 </Window>
 ```
 
