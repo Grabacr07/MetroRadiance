@@ -11,13 +11,9 @@ using System.Windows;
 [assembly: ComVisible(false)]
 [assembly: Guid("F3EACB40-2C04-418F-8297-AD00858824A9")]
 
-//[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("MetroRadiance")]
-//[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("MetroRadiance.Chrome")]
-//[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("MetroRadiance.Chrome.Externals")]
-
 [assembly: ThemeInfo(
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
 
-[assembly: AssemblyVersion("2.0.5")]
-[assembly: AssemblyInformationalVersion("2.0.5-alpha")]
+[assembly: AssemblyVersion("2.1.0")]
+[assembly: AssemblyInformationalVersion("2.1.0")]

@@ -46,10 +46,12 @@
   <ItemGroup>
     <Page Include="Themes\Generic.ChromeWindow.xaml">
       <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.GlowingEdge.xaml">
       <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">

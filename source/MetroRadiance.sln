@@ -23,6 +23,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{A0801FF5-3
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".settings", ".settings", "{D36A100D-8C9C-499F-97CD-7BFB768D86B4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		MetroRadiance.sln.DotSettings = MetroRadiance.sln.DotSettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
