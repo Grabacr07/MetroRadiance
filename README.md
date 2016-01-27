@@ -9,13 +9,34 @@ Visual Studio 2012 ～ 2015 のようなウィンドウを作るための WPF �
 
 ![ss150730085651kd](https://cloud.githubusercontent.com/assets/1779073/8972861/0e3eed28-3699-11e5-9bfe-18af42a6ed73.png)
 
+
+## Features
+
 ### MetroRadiance.Core
 
 MetroRadiance コア ライブラリ。
 
-* Win32 API ラッパー
-* Per-Monitor DPI 計算
-* Windows テーマ機能
+* DPI / Per-Monitor DPI サポート
+  - Window からシステム DPI 値 (WPF が認識している DPI) を取得
+  - HwndSource、またはウィンドウ ハンドルからモニター DPI を取得
+
+```csharp
+using MetroRadiance.Interop;
+```
+
+```csharp
+// Get system dpi.
+var systemDpi = window.GetSystemDpi();
+
+if (PerMonitorDpi.IsSupported)
+{
+    // Get monitor dpi.
+    var hwndSource = (HwndSource)PresentationSource.FromVisual(this);
+    var monitorDpi = hwndSource.GetDpi();
+}
+```
+
+* Windows テーマ サポート
   - アクセント カラーの取得
   - アクセント カラー変更イベント
   - Light/Dark テーマ判定 (Windows 10)
@@ -57,8 +78,8 @@ var newColor = hsvColor.ToRgb();
 
 Window 向け Chrome ライブラリ。
 
-* 任意の Window に Visual Studio のような光る枠を付与する
-  - MetroRadiance.Chrome.WindowChrome
+* Window に Visual Studio のような光る枠を付与する
+  - `MetroRadiance.Chrome.WindowChrome`
 
 ```XAML
 <Window xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome">
@@ -67,6 +88,28 @@ Window 向け Chrome ライブラリ。
     </chrome:WindowChrome.Instance>
 </Window>
 ```
+
+* Window の枠に任意の UI 要素を付与する
+  - `MetroRadiance.Chrome.WindowChrome.Top` / `.Left` / `.Right` / `.Bottom`
+
+```XAML
+<Window xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome">
+    <chrome:WindowChrome.Instance>
+        <chrome:WindowChrome>
+            <chrome:WindowChrome.Top>
+                <Border Background="DarkRed"
+                        Padding="24,3"
+                        Margin="8,0"
+                        HorizontalAlignment="Right">
+                    <TextBlock Text="光るやつに何かつける"
+                               Foreground="White" />
+                </Border>
+            </chrome:WindowChrome.Top>
+        </chrome:WindowChrome>
+    </chrome:WindowChrome.Instance>
+</Window>
+```
+
 
 ### MetroRadiance
 
@@ -77,3 +120,8 @@ Window 向け Chrome ライブラリ。
 * スタイル切り替え
 
 (書きかけ...)
+
+
+## License
+
+This library is under [the MIT License (MIT)](LICENSE.txt)
