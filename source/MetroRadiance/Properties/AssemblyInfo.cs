@@ -16,9 +16,9 @@ using System.Windows.Markup;
 	ResourceDictionaryLocation.None,
 	ResourceDictionaryLocation.SourceAssembly)]
 
-[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/behaviors", "MetroRadiance.UI.Behaviors")]
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/controls", "MetroRadiance.UI.Controls")]
 [assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/converters", "MetroRadiance.UI.Converters")]
+[assembly: XmlnsDefinition("http://schemes.grabacr.net/winfx/2014/interactivity", "MetroRadiance.UI.Interactivity")]
 
-[assembly: AssemblyVersion("2.1.0")]
-[assembly: AssemblyInformationalVersion("2.1.0")]
+[assembly: AssemblyVersion("2.1.1")]
+[assembly: AssemblyInformationalVersion("2.1.1")]
