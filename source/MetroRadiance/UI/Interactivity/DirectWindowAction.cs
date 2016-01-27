@@ -7,7 +7,7 @@ using System.Windows.Interactivity;
 using MetroRadiance.UI.Controls;
 using MetroRadiance.Utilities;
 
-namespace MetroRadiance.UI.Behaviors
+namespace MetroRadiance.UI.Interactivity
 {
 	internal class DirectWindowAction : TriggerAction<FrameworkElement>
 	{

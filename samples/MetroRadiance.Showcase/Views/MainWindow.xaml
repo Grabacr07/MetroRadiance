@@ -25,7 +25,7 @@
 						Padding="24,3"
 						Margin="8,0"
 						HorizontalAlignment="Right">
-					<TextBlock Text="光るやつに何かつける"
+					<TextBlock Text="any UI elements"
 							   Foreground="White" />
 				</Border>
 			</chrome:WindowChrome.Top>
@@ -174,7 +174,8 @@
 				</WrapPanel>
 
 				<CheckBox IsChecked="{Binding ElementName=WindowChrome, Path=OverrideDefaultEdge}"
-						  Content="OverrideDefaultEdge"
+						  Content="WindowChrome.OverrideDefaultEdge"
+						  FontFamily="Consolas"
 						  HorizontalAlignment="Center"
 						  Margin="5" />
 

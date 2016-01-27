@@ -203,7 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UI\Accent.cs" />
-    <Compile Include="UI\Behaviors\DirectWindowAction.cs" />
+    <Compile Include="UI\Interactivity\DirectWindowAction.cs" />
     <Compile Include="UI\Controls\Badge.cs" />
     <Compile Include="UI\Controls\BindableRichTextBox.cs" />
     <Compile Include="UI\Controls\BindableTextBlock.cs" />
