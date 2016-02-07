@@ -6,6 +6,8 @@
 				Value="{DynamicResource BackgroundBrushKey}" />
 		<Setter Property="BorderBrush"
 				Value="{DynamicResource BorderBrushKey}" />
+		<Setter Property="BorderThickness"
+				Value=".99" />
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="Padding"

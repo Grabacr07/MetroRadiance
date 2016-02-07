@@ -9,7 +9,7 @@
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="BorderThickness"
-				Value="0.99" />
+				Value=".99" />
 		<Setter Property="Padding"
 				Value="8,2" />
 		<Setter Property="FocusVisualStyle"
@@ -66,6 +66,8 @@
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
 		<Setter Property="Foreground"
 				Value="{DynamicResource ActiveForegroundBrushKey}" />
+		<Setter Property="BorderThickness"
+				Value=".99" />
 		<Setter Property="Width"
 				Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" />
 		<Setter Property="Padding"

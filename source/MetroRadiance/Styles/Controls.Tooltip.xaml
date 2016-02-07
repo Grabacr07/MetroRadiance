@@ -13,7 +13,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="ToolTip">
 					<Border Name="Border"
-							BorderThickness="1"
+							BorderThickness=".99"
 							BorderBrush="{DynamicResource BorderBrushKey}"
 							Background="{DynamicResource BackgroundBrushKey}"
 							Padding="6,4"
