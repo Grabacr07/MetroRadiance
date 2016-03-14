@@ -35,14 +35,14 @@ namespace MetroRadiance.UI
 
 		#region Theme 変更通知プロパティ
 
-		private Theme _Theme;
+		private Theme? _Theme;
 
 		/// <summary>
 		/// 現在設定されているテーマを取得します。
 		/// </summary>
 		public Theme Theme
 		{
-			get { return this._Theme; }
+			get { return this._Theme ?? Theme.Windows; }
 			private set
 			{
 				if (this._Theme != value)
@@ -57,14 +57,14 @@ namespace MetroRadiance.UI
 
 		#region Accent 変更通知プロパティ
 
-		private Accent _Accent;
+		private Accent? _Accent;
 
 		/// <summary>
 		/// 現在設定されているアクセントを取得します。
 		/// </summary>
 		public Accent Accent
 		{
-			get { return this._Accent; }
+			get { return this._Accent ?? Accent.Windows; }
 			private set
 			{
 				if (this._Accent != value)
