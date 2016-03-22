@@ -252,6 +252,16 @@ namespace MetroRadiance.Chrome
 			this._bottom.Window.Detach();
 		}
 
+		public void Close()
+		{
+			this.Detach();
+
+			this._top.Window.Close();
+			this._left.Window.Close();
+			this._right.Window.Close();
+			this._bottom.Window.Close();
+		}
+
 		private void UpdateThickness(Thickness thickness)
 		{
 			this._top.Edge.BorderThickness = thickness;
