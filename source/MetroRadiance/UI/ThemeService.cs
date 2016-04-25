@@ -28,7 +28,8 @@ namespace MetroRadiance.UI
 		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component");
 
 		private Dispatcher dispatcher;
-		private IDisposable windowsColorListener;
+		private IDisposable windowsAccentListener;
+		private IDisposable windowsThemeListener;
 
 		private readonly List<ResourceDictionary> themeResources = new List<ResourceDictionary>();
 		private readonly List<ResourceDictionary> accentResources = new List<ResourceDictionary>();
@@ -48,6 +49,7 @@ namespace MetroRadiance.UI
 				if (this._Theme != value)
 				{
 					this._Theme = value;
+					this.UpdateListener(value);
 					this.RaisePropertyChanged();
 				}
 			}
@@ -162,6 +164,19 @@ namespace MetroRadiance.UI
 			this.Theme = theme;
 		}
 
+		private void ChangeThemeCore(Platform.Theme theme)
+		{
+			switch (theme)
+			{
+				case Platform.Theme.Dark:
+					this.ChangeThemeCore(Theme.Dark);
+					break;
+				case Platform.Theme.Light:
+					this.ChangeThemeCore(Theme.Light);
+					break;
+			}
+		}
+
 		private void ChangeThemeCore(Theme theme)
 		{
 			var dic = GetThemeResource(theme);
@@ -206,10 +221,8 @@ namespace MetroRadiance.UI
 
 		private static ResourceDictionary GetThemeResource(Theme theme)
 		{
-			// Windows のテーマ設定 (Dark/Light) は現状ではレジストリ設定なので、
-			// アプリ起動中には変わらないという前提
 			var specified = theme.SyncToWindows
-				? WindowsTheme.IsDarkTheme ? Theme.Dark.Specified : Theme.Light.Specified
+				? WindowsTheme.Theme.Current == Platform.Theme.Dark ? Theme.Dark.Specified : Theme.Light.Specified
 				: theme.Specified;
 			if (specified == null) throw new ArgumentException($"Invalid theme value '{theme}'.");
 
@@ -221,7 +234,7 @@ namespace MetroRadiance.UI
 		{
 			return accent.Specified != null
 				? new ResourceDictionary { Source = CreateAccentResourceUri(accent.Specified.Value), }
-				: GetAccentResource(accent.Color ?? WindowsTheme.GetAccentColor());
+				: GetAccentResource(accent.Color ?? WindowsTheme.Accent.Current);
 		}
 
 		private static ResourceDictionary GetAccentResource(Color color)
@@ -263,17 +276,33 @@ namespace MetroRadiance.UI
 		{
 			if (accent == Accent.Windows)
 			{
-				if (this.windowsColorListener == null)
+				if (this.windowsAccentListener == null)
 				{
 					// アクセントが Windows 依存で、リスナーが未登録だったら購読する
-					this.windowsColorListener = WindowsTheme.RegisterAccentColorListener(x => this.ChangeAccentCore(x));
+					this.windowsAccentListener = WindowsTheme.Accent.RegisterListener(x => this.ChangeAccentCore(x));
 				}
 			}
-			else if (this.windowsColorListener != null)
+			else if (this.windowsAccentListener != null)
 			{
 				// アクセントが Windows 依存でないのにリスナーが登録されてたら解除する
-				this.windowsColorListener.Dispose();
-				this.windowsColorListener = null;
+				this.windowsAccentListener.Dispose();
+				this.windowsAccentListener = null;
+			}
+		}
+
+		private void UpdateListener(Theme theme)
+		{
+			if (theme == Theme.Windows)
+			{
+				if (this.windowsThemeListener == null)
+				{
+					this.windowsThemeListener = WindowsTheme.Theme.RegisterListener(x => this.ChangeThemeCore(x));
+				}
+			}
+			else if (this.windowsThemeListener != null)
+			{
+				this.windowsThemeListener.Dispose();
+				this.windowsThemeListener = null;
 			}
 		}
 

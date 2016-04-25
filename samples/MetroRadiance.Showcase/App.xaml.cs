@@ -13,7 +13,7 @@ namespace MetroRadiance.Showcase
 		{
 			base.OnStartup(e);
 
-			ThemeService.Current.Register(this, Theme.Dark, Accent.Windows);
+			ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);
 		}
 	}
 }

@@ -52,6 +52,7 @@
     <Compile Include="Media\ColorHelper.cs" />
     <Compile Include="Media\HsvColor.cs" />
     <Compile Include="Media\Luminosity.cs" />
+    <Compile Include="Platform\ThemeValue.cs" />
     <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
