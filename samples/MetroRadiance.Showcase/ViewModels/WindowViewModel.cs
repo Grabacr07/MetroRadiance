@@ -187,5 +187,10 @@ namespace MetroRadiance.Showcase.ViewModels
 		{
 			ThemeService.Current.ChangeTheme(Theme.Light);
 		}
+
+		public void ChangeWindowsTheme()
+		{
+			ThemeService.Current.ChangeTheme(Theme.Windows);
+		}
 	}
 }

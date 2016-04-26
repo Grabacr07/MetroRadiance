@@ -9,8 +9,8 @@
 					  xmlns:viewModels="clr-namespace:MetroRadiance.Showcase.ViewModels"
 					  xmlns:views="clr-namespace:MetroRadiance.Showcase.Views"
 					  Title="MainWindow"
-					  Width="500"
-					  Height="1300"
+					  Width="700"
+					  Height="700"
 					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  WindowState="{Binding WindowState}"
@@ -97,7 +97,20 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
+					<Button Content="Windows theme"
+							Width="120"
+							Height="30"
+							Margin="5">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<ei:CallMethodAction TargetObject="{Binding}"
+													 MethodName="ChangeWindowsTheme" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Button>
 				</WrapPanel>
+
+				<Border Height="5" />
 
 				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Purple"
@@ -133,9 +146,6 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Button>
-				</WrapPanel>
-
-				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Red"
 							Width="100"
 							Height="30"
@@ -159,6 +169,8 @@
 						</i:Interaction.Triggers>
 					</Button>
 				</WrapPanel>
+
+				<Border Height="5" />
 
 				<WrapPanel HorizontalAlignment="Center">
 					<Button Content="Hide"
