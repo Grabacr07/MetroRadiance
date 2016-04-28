@@ -127,10 +127,21 @@ namespace MetroRadiance.Platform
 	{
 		internal override Color GetValue()
 		{
+			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM";
+			const string valueName = "ColorizationColor";
 			int color;
-			bool opaque;
 
-			Dwmapi.DwmGetColorizationColor(out color, out opaque);
+			var colorizationColor = Registry.GetValue(keyName, valueName, null) as int?;
+			if (colorizationColor != null)
+			{
+				color = colorizationColor.Value;
+			}
+			else
+			{
+				bool opaque;
+				Dwmapi.DwmGetColorizationColor(out color, out opaque);
+			}
+
 			return ColorHelper.GetColorFromInt64(color);
 		}
 
