@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroRadiance.Showcase.Views.BrushSamples"
+﻿<UserControl x:Class="MetroRadiance.Showcase.UI.BrushSamples"
 			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,25 +6,23 @@
 			 xmlns:metro="http://schemes.grabacr.net/winfx/2014/controls"
 			 mc:Ignorable="d"
 			 d:DesignWidth="300"
-			 FontFamily="Segoe UI Light"
-			 FontSize="14"
 			 metro:ThemeHelper.HasThemeResources="True">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="./Resources.xaml" />
 			</ResourceDictionary.MergedDictionaries>
-
-			<BooleanToVisibilityConverter x:Key="VisibilityConverter" />
 		</ResourceDictionary>
 	</UserControl.Resources>
 
 	<Border Padding="4">
 		<StackPanel>
 			<TextBlock Text="Border &amp; Background Brushes"
+					   FontFamily="Segoe UI Light"
+					   FontSize="18"
 					   Foreground="{DynamicResource ForegroundBrushKey}"
 					   HorizontalAlignment="Center"
-					   Margin="4" />
+					   Margin="0,0,0,8" />
 			<Border BorderThickness="3"
 					BorderBrush="{DynamicResource BorderBrushKey}"
 					Background="{DynamicResource BackgroundBrushKey}"

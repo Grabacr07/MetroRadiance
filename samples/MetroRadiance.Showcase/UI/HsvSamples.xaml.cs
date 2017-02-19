@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using MetroRadiance.Media;
 
-namespace MetroRadiance.Showcase.Views
+namespace MetroRadiance.Showcase.UI
 {
-	partial class HsvSample
+	partial class HsvSamples
 	{
-		public HsvSample()
+		public HsvSamples()
 		{
 			this.InitializeComponent();
 
@@ -33,9 +33,9 @@ namespace MetroRadiance.Showcase.Views
 			var l = Luminosity.FromRgb(c);
 			var w = l <= 128;
 
-			this.background.Background = new SolidColorBrush(c);
-			this.foreground.Foreground = w ? Brushes.White : Brushes.Black;
-			this.foreground.Text = l + " " + c;
+			this.colorbox.Background = new SolidColorBrush(c);
+			this.colorbox.Foreground = w ? Brushes.White : Brushes.Black;
+			this.colorbox.Text = $"Color: {c}, Luminosity: {l}";
 		}
 	}
 }

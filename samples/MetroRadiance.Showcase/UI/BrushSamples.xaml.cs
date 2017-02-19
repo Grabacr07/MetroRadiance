@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MetroRadiance.Showcase.Views
+namespace MetroRadiance.Showcase.UI
 {
-	partial class ControlSamples
+	partial class BrushSamples
 	{
-		public ControlSamples()
+		public BrushSamples()
 		{
 			this.InitializeComponent();
 		}

@@ -7,7 +7,7 @@ using MetroRadiance.UI;
 
 namespace MetroRadiance.Showcase
 {
-	public partial class App
+	public partial class Application
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
