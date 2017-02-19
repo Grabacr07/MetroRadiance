@@ -375,7 +375,7 @@ namespace MetroRadiance.UI
 		}
 
 		#endregion
-
+		
 
 		[Obsolete("Register メソッドを使用してください。")]
 		[EditorBrowsable(EditorBrowsableState.Never)]

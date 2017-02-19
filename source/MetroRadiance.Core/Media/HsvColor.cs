@@ -53,7 +53,7 @@ namespace MetroRadiance.Media
 
 		public override string ToString()
 		{
-			return $"H:{this.H.ToString("##.000")}, S:{(int)(this.S * 100)}, V:{(int)(this.V * 100)}";
+			return $"H:{this.H:##.000}, S:{(int)(this.S * 100)}, V:{(int)(this.V * 100)}";
 		}
 
 		public static bool operator ==(HsvColor color1, HsvColor color2)
