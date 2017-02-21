@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MetroRadiance.Showcase.UI
 {
@@ -11,6 +11,11 @@ namespace MetroRadiance.Showcase.UI
 		{
 			this.InitializeComponent();
 			this.DataContext = new SampleValues();
+		}
+
+		private void HandleBlurWindowButtonClicked(object sender, RoutedEventArgs e)
+		{
+			new BlurWindowSample().Show();
 		}
 	}
 

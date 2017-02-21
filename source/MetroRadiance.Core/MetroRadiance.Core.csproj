@@ -45,15 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interop\Dpi.cs" />
-    <Compile Include="Interop\ImmersiveColor.cs" />
+    <Compile Include="Platform\ImmersiveColor.cs" />
     <Compile Include="Interop\InteropExtensions.cs" />
     <Compile Include="Interop\MonitorDpiType.cs" />
     <Compile Include="Interop\PerMonitorDpi.cs" />
     <Compile Include="Interop\Win32\SHCore.cs" />
     <Compile Include="Interop\Win32\UxTheme.cs" />
+    <Compile Include="Interop\Win32\WindowCompositionAttributeData.cs" />
     <Compile Include="Media\ColorHelper.cs" />
     <Compile Include="Media\HsvColor.cs" />
     <Compile Include="Media\Luminosity.cs" />
+    <Compile Include="Platform\WindowComposition.cs" />
     <Compile Include="Platform\WindowsThemeValues.cs" />
     <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Platform\WindowsThemeValue.cs" />

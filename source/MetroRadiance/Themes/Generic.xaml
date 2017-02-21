@@ -6,6 +6,7 @@
 
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.Badge.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.BindableRichTextBox.xaml" />
+		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.BlurWindow.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.CaptionButton.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.CaptionIcon.xaml" />
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ExpanderButton.xaml" />

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Media;
-using MetroRadiance.Interop;
 using MetroRadiance.Media;
+using MetroRadiance.Platform;
 
 namespace MetroRadiance.Showcase.UI
 {

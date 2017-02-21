@@ -7,7 +7,7 @@
 			 mc:Ignorable="d"
 			 d:DesignWidth="500"
 			 d:DesignHeight="500">
-	
+
 	<ScrollViewer HorizontalScrollBarVisibility="Disabled"
 				  VerticalScrollBarVisibility="Auto">
 		<StackPanel Margin="8,0,8,8">
@@ -57,6 +57,13 @@
 				<RadioButton Content="ラジオボタン 3"
 							 Margin="4" />
 			</StackPanel>
+
+			<Button Content="BlurWindow"
+					Margin="4,8"
+					Width="140"
+					Height="30"
+					HorizontalAlignment="Left"
+					Click="HandleBlurWindowButtonClicked"/>
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>

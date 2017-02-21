@@ -106,5 +106,8 @@ namespace MetroRadiance.Interop.Win32
 
 		[DllImport("user32.dll")]
 		public static extern bool CloseWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 	}
 }

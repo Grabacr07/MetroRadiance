@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using MetroRadiance.Interop.Win32;
-using MetroRadiance.Media;
 
 // ReSharper disable InconsistentNaming
 
-namespace MetroRadiance.Interop
+namespace MetroRadiance.Platform
 {
 	public static class ImmersiveColor
 	{
@@ -16,7 +16,12 @@ namespace MetroRadiance.Interop
 			var colorSet = UxTheme.GetImmersiveUserColorSetPreference(false, false);
 			var colorType = UxTheme.GetImmersiveColorTypeFromName(name);
 			var rawColor = UxTheme.GetImmersiveColorFromColorSetEx(colorSet, colorType, false, 0);
-			return ColorHelper.GetColorFromInt64(rawColor);
+			
+			var a = (byte)((0xFF000000 & rawColor) >> 24);
+			var b = (byte)((0x00FF0000 & rawColor) >> 16);
+			var g = (byte)((0x0000FF00 & rawColor) >> 8);
+			var r = (byte)(0x000000FF & rawColor);
+			return Color.FromArgb(a, r, g, b);
 		}
 	}
 

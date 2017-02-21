@@ -219,7 +219,7 @@ namespace MetroRadiance.UI
 			}
 		}
 
-		private static ResourceDictionary GetThemeResource(Theme theme)
+		private static ResourceDictionary GetThemeResource(Theme theme, bool highContrast = false)
 		{
 			var specified = theme.SyncToWindows
 				? WindowsTheme.Theme.Current == Platform.Theme.Dark ? Theme.Dark.Specified : Theme.Light.Specified
@@ -227,6 +227,12 @@ namespace MetroRadiance.UI
 			if (specified == null) throw new ArgumentException($"Invalid theme value '{theme}'.");
 
 			var dic = new ResourceDictionary { Source = CreateThemeResourceUri(specified.Value), };
+
+			if (highContrast)
+			{
+				
+			}
+
 			return dic;
 		}
 
