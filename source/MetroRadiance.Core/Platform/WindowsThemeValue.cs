@@ -13,11 +13,32 @@ namespace MetroRadiance.Platform
 		private event EventHandler<T> _changedEvent;
 		private readonly HashSet<EventHandler<T>> _handlers = new HashSet<EventHandler<T>>();
 		private ListenerWindow _listenerWindow;
+		private T _current;
+		private bool _hasCache;
+
+		private bool RequireCallGetValue => !this._hasCache || this._listenerWindow == null;
 
 		/// <summary>
 		/// 現在の設定値を取得します。
 		/// </summary>
-		public T Current => this.GetValue();
+		public T Current
+		{
+			get
+			{
+				if (this.RequireCallGetValue)
+				{
+					this._current = this.GetValue();
+					this._hasCache = true;
+				}
+
+				return this._current;
+			}
+			set
+			{
+				this._current = value;
+				this._hasCache = true;
+			}
+		}
 
 		/// <summary>
 		/// テーマ設定が変更されると発生します。
@@ -66,12 +87,14 @@ namespace MetroRadiance.Platform
 				{
 					this._listenerWindow?.Close();
 					this._listenerWindow = null;
+					this._hasCache = false;
 				}
 			}
 		}
 
 		internal void Update(T data)
 		{
+			this.Current = data;
 			this._changedEvent?.Invoke(this, data);
 		}
 
