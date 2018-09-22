@@ -199,7 +199,11 @@ namespace MetroRadiance.UI.Controls
 					var placement = this.WindowSettings.Placement.Value;
 					placement.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
 					placement.flags = 0;
-					placement.showCmd = placement.showCmd == ShowWindowFlags.SW_SHOWMINIMIZED ? ShowWindowFlags.SW_SHOWNORMAL : placement.showCmd;
+
+					if (placement.showCmd == ShowWindowFlags.SW_MINIMIZE || placement.showCmd == ShowWindowFlags.SW_SHOWMINIMIZED)
+					{
+						placement.showCmd = ShowWindowFlags.SW_RESTORE;
+					}
 
 					User32.SetWindowPlacement(this.source.Handle, ref placement);
 				}
