@@ -41,6 +41,17 @@ namespace MetroRadiance.Platform
 		}
 	}
 
+	public class SystemThemeValue : ThemeValue
+	{
+		internal override Theme GetValue()
+		{
+			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+			const string valueName = "SystemUsesLightTheme";
+
+			return (Registry.GetValue(keyName, valueName, null) as int? ?? (int)base.GetValue()) == 0 ? Theme.Dark : Theme.Light;
+		}
+	}
+
 	public class AccentValue : WindowsThemeValue<Color>
 	{
 		internal override Color GetValue()

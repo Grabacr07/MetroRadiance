@@ -11,9 +11,14 @@ namespace MetroRadiance.Platform
 	public static class WindowsTheme
 	{
 		/// <summary>
-		/// Windows のテーマ設定と、その変更通知機能へアクセスできるようにします。
+		/// Windows の既定のアプリテーマ設定と、その変更通知機能へアクセスできるようにします。
 		/// </summary>
 		public static ThemeValue Theme { get; } = new ThemeValue();
+
+		/// <summary>
+		/// Windows の既定のシステムテーマ設定と、その変更通知機能へアクセスできるようにします。
+		/// </summary>
+		public static SystemThemeValue SystemTheme { get; } = new SystemThemeValue();
 
 		/// <summary>
 		/// Windows のアクセント カラー設定と、その変更通知機能へアクセスできるようにします。
