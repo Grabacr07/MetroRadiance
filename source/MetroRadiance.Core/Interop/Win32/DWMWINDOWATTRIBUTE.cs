@@ -2,7 +2,7 @@
 
 namespace MetroRadiance.Interop.Win32
 {
-	public enum DWMWINDOWATTRIBUTE
+	public enum DWMWINDOWATTRIBUTE : uint
 	{
 		DWMWA_NCRENDERING_ENABLED = 1,      // [get] Is non-client rendering enabled/disabled
 		DWMWA_NCRENDERING_POLICY,           // [set] Non-client rendering policy

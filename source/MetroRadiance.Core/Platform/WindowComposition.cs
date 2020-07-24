@@ -10,29 +10,56 @@ namespace MetroRadiance.Platform
 {
 	public static class WindowComposition
 	{
-		public static void Set(Window window, AccentState accentState, AccentFlags accentFlags)
+		public static void Disable(Window window)
 		{
-			var hwndSource = PresentationSource.FromVisual(window) as HwndSource;
-			if (hwndSource == null) return;
-
-			var accent = new AccentPolicy
+			var accentPolicy = new AccentPolicy
 			{
-				AccentState = accentState,
+				AccentState = AccentState.ACCENT_DISABLED,
+			};
+			SetAccentPolicy(window, accentPolicy);
+		}
+
+		public static void EnableBlur(Window window, AccentFlags accentFlags)
+		{
+			var accentPolicy = new AccentPolicy
+			{
+				AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND,
 				AccentFlags = accentFlags,
 			};
-			var accentStructSize = Marshal.SizeOf(accent);
-			var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-			Marshal.StructureToPtr(accent, accentPtr, false);
+			SetAccentPolicy(window, accentPolicy);
+		}
 
-			var data = new WindowCompositionAttributeData
+		public static void SetAccentPolicy(Window window, AccentPolicy accentPolicy)
+		{
+			var windowInteropHelper = new WindowInteropHelper(window);
+			var hWnd = windowInteropHelper.EnsureHandle();
+			SetAccentPolicy(hWnd, accentPolicy);
+		}
+
+		public static void SetAccentPolicy(IntPtr hWnd, AccentPolicy accentPolicy)
+		{
+			var accentStructSize = Marshal.SizeOf(typeof(AccentPolicy));
+			var accentPtr = IntPtr.Zero;
+			try
 			{
-				Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
-				SizeOfData = accentStructSize,
-				Data = accentPtr,
-			};
-			User32.SetWindowCompositionAttribute(hwndSource.Handle, ref data);
+				accentPtr = Marshal.AllocCoTaskMem(accentStructSize);
+				Marshal.StructureToPtr(accentPolicy, accentPtr, false);
 
-			Marshal.FreeHGlobal(accentPtr);
+				var data = new WindowCompositionAttributeData
+				{
+					Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+					SizeOfData = accentStructSize,
+					Data = accentPtr,
+				};
+				User32.SetWindowCompositionAttribute(hWnd, data);
+			}
+			finally
+			{
+				if (accentPtr != IntPtr.Zero)
+				{
+					Marshal.FreeCoTaskMem(accentPtr);
+				}
+			}
 		}
 	}
 }
