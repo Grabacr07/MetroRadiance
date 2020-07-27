@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MetroRadiance.Interop.Win32;
 using MetroRadiance.Media;
 using MetroRadiance.Platform;
 using MetroRadiance.Utilities;
@@ -114,6 +115,8 @@ namespace MetroRadiance.UI
 
 		internal IDisposable Register(ResourceDictionary rd, Theme theme, Accent accent)
 		{
+			this.SetAppMode(theme);
+
 			var allDictionaries = EnumerateDictionaries(rd).ToArray();
 
 			var themeDic = GetThemeResource(theme);
@@ -179,6 +182,8 @@ namespace MetroRadiance.UI
 
 		private void ChangeThemeCore(Theme theme)
 		{
+			this.SetAppMode(theme);
+
 			var dic = GetThemeResource(theme);
 
 			foreach (var key in dic.Keys.OfType<string>())
@@ -188,6 +193,24 @@ namespace MetroRadiance.UI
 					resource[key] = dic[key];
 				}
 			}
+		}
+
+		private bool SetAppMode(Theme theme)
+		{
+			PreferredAppMode appMode;
+			if (theme.SyncToWindows)
+			{
+				appMode = PreferredAppMode.APPMODE_ALLOWDARK;
+			}
+			else if (theme.Specified == Theme.SpecifiedColor.Dark)
+			{
+				appMode = PreferredAppMode.APPMODE_FORCEDARK;
+			}
+			else
+			{
+				appMode = PreferredAppMode.APPMODE_DEFAULT;
+			}
+			return AppMode.SetAppMode(appMode);
 		}
 
 		public void ChangeAccent(Accent accent)
