@@ -30,5 +30,10 @@ namespace MetroRadiance.Platform
 		public static ColorPrevalenceValue ColorPrevalence { get; } = new ColorPrevalenceValue();
 
 		public static TransparencyValue Transparency { get; } = new TransparencyValue();
+		
+		/// <summary>
+		/// Windows の文字の大きさ設定と、その変更通知機能へアクセスできるようにします。
+		/// </summary>
+		public static TextScaleFactorValue TextScaleFactor { get; } = new TextScaleFactorValue();
 	}
 }
