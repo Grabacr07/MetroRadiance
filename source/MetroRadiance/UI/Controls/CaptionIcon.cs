@@ -56,7 +56,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
-			var window = Window.GetWindow(this) as MetroWindow;
+			var window = Window.GetWindow(this) as Window;
 			if (window == null)
 			{
 				base.OnMouseDown(e);
@@ -71,7 +71,9 @@ namespace MetroRadiance.UI.Controls
 					{
 						this.isSystemMenuOpened = true;
 						var point = this.PointToScreen(new Point(0, this.ActualHeight));
-						SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
+						var source = PresentationSource.FromVisual(window);
+						var matrix = source.CompositionTarget.TransformToDevice;
+						SystemCommands.ShowSystemMenu(window, new Point(point.X / matrix.M11, point.Y / matrix.M22));
 					}
 					else
 					{
@@ -87,7 +89,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
 		{
-			var window = Window.GetWindow(this) as MetroWindow;
+			var window = Window.GetWindow(this) as Window;
 			if (window == null)
 			{
 				base.OnMouseRightButtonUp(e);
@@ -95,7 +97,9 @@ namespace MetroRadiance.UI.Controls
 			}
 
 			var point = this.PointToScreen(e.GetPosition(this));
-			SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
+			var source = PresentationSource.FromVisual(window);
+			var matrix = source.CompositionTarget.TransformToDevice;
+			SystemCommands.ShowSystemMenu(window, new Point(point.X / matrix.M11, point.Y / matrix.M22));
 		}
 
 		protected override void OnMouseLeave(MouseEventArgs e)
