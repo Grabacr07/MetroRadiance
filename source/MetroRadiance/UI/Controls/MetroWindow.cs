@@ -239,9 +239,8 @@ namespace MetroRadiance.UI.Controls
 
 			if (!e.Cancel && this.WindowSettings != null)
 			{
-				WINDOWPLACEMENT placement;
 				var hwnd = new WindowInteropHelper(this).Handle;
-				User32.GetWindowPlacement(hwnd, out placement);
+				var placement = User32.GetWindowPlacement(hwnd);
 
 				this.WindowSettings.Placement = this.IsRestoringWindowPlacement ? (WINDOWPLACEMENT?)placement : null;
 				this.WindowSettings.Save();
@@ -275,6 +274,14 @@ namespace MetroRadiance.UI.Controls
 					}
 				}
 			}
+			else if (msg == (int)WindowsMessages.WM_NCCALCSIZE)
+			{
+				if (wParam != IntPtr.Zero)
+				{
+					var result = this.CalcNonClientSize(hwnd, lParam, ref handled);
+					if (handled) return result;
+				}
+			}
 			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
 			{
 				var dpiX = wParam.ToLoWord();
@@ -284,6 +291,30 @@ namespace MetroRadiance.UI.Controls
 			}
 
 			return IntPtr.Zero;
+		}
+
+		private IntPtr CalcNonClientSize(IntPtr hWnd, IntPtr lParam, ref bool handled)
+		{
+			if (!User32.IsZoomed(hWnd)) return IntPtr.Zero;
+
+			var rcsize = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(lParam);
+			if (rcsize.lppos.flags.HasFlag(SetWindowPosFlags.SWP_NOSIZE)) return IntPtr.Zero;
+
+			var hMonitor = User32.MonitorFromWindow(hWnd, MonitorDefaultTo.MONITOR_DEFAULTTONEAREST);
+			if (hMonitor == IntPtr.Zero) return IntPtr.Zero;
+
+			var monitorInfo = new MONITORINFO()
+			{
+				cbSize = (uint)Marshal.SizeOf(typeof(MONITORINFO))
+			};
+			if (!User32.GetMonitorInfo(hMonitor, ref monitorInfo)) return IntPtr.Zero;
+
+			var workArea = monitorInfo.rcWork;
+			rcsize.rgrc[0] = workArea;
+			rcsize.rgrc[1] = workArea;
+			Marshal.StructureToPtr(rcsize, lParam, true);
+			handled = true;
+			return (IntPtr)(WindowValidRects.WVR_ALIGNTOP | WindowValidRects.WVR_ALIGNLEFT | WindowValidRects.WVR_VALIDRECTS);
 		}
 
 		private void ChangeDpi(Dpi dpi)
