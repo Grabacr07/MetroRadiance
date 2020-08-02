@@ -100,6 +100,10 @@ namespace MetroRadiance.Interop.Win32
 		public static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorDefaultTo dwFlags);
 
 		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool IsWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
 		public static extern IntPtr GetActiveWindow();
 
 		[DllImport("user32.dll")]

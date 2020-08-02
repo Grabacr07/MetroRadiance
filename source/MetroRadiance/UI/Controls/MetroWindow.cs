@@ -310,6 +310,8 @@ namespace MetroRadiance.UI.Controls
 			if (!User32.GetMonitorInfo(hMonitor, ref monitorInfo)) return IntPtr.Zero;
 
 			var workArea = monitorInfo.rcWork;
+			AppBar.ApplyAppbarSpace(monitorInfo.rcMonitor, ref workArea);
+
 			rcsize.rgrc[0] = workArea;
 			rcsize.rgrc[1] = workArea;
 			Marshal.StructureToPtr(rcsize, lParam, true);

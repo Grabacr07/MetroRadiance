@@ -44,10 +44,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interop\Appbar.cs" />
     <Compile Include="Interop\Dpi.cs" />
+    <Compile Include="Interop\Win32\APPBARDATA.cs" />
+    <Compile Include="Interop\Win32\AppBarEdges.cs" />
+    <Compile Include="Interop\Win32\AppBarMessages.cs" />
+    <Compile Include="Interop\Win32\AppBarStates.cs" />
     <Compile Include="Interop\Win32\MONITORINFOEX.cs" />
     <Compile Include="Interop\Win32\NCCALCSIZE_PARAMS.cs" />
     <Compile Include="Interop\Win32\WindowValidRects.cs" />
+    <Compile Include="Interop\Win32\Shell32.cs" />
     <Compile Include="Platform\ImmersiveColor.cs" />
     <Compile Include="Interop\InteropExtensions.cs" />
     <Compile Include="Interop\MonitorDpiType.cs" />
