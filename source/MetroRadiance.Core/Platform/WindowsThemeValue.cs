@@ -8,7 +8,7 @@ using MetroRadiance.Utilities;
 
 namespace MetroRadiance.Platform
 {
-	public abstract class WindowsThemeValue<T>
+	public abstract class WindowsThemeValue<T> : IWindowsThemeValue<T>
 	{
 		private event EventHandler<T> _changedEvent;
 		private readonly HashSet<EventHandler<T>> _handlers = new HashSet<EventHandler<T>>();
@@ -17,6 +17,11 @@ namespace MetroRadiance.Platform
 		private bool _hasCache;
 
 		private bool RequireCallGetValue => !this._hasCache || this._listenerWindow == null;
+
+		/// <summary>
+		/// 設定値が動的に変更されるかを取得します。
+		/// </summary>
+		public bool IsDynamic => false;
 
 		/// <summary>
 		/// 現在の設定値を取得します。
@@ -33,7 +38,7 @@ namespace MetroRadiance.Platform
 
 				return this._current;
 			}
-			set
+			protected set
 			{
 				this._current = value;
 				this._hasCache = true;
@@ -47,20 +52,6 @@ namespace MetroRadiance.Platform
 		{
 			add { this.Add(value); }
 			remove { this.Remove(value); }
-		}
-
-		/// <summary>
-		/// テーマ設定が変更されたときに通知を受け取るメソッドを登録します。
-		/// </summary>
-		/// <param name="callback">テーマ設定が変更されたときに通知を受け取るメソッド。</param>
-		/// <returns>通知の購読を解除するときに使用する <see cref="IDisposable"/> オブジェクト。</returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public IDisposable RegisterListener(Action<T> callback)
-		{
-			EventHandler<T> handler = (sender, e) => callback?.Invoke(e);
-			this.Changed += handler;
-
-			return Disposable.Create(() => this.Changed -= handler);
 		}
 
 		private void Add(EventHandler<T> listener)
@@ -92,15 +83,15 @@ namespace MetroRadiance.Platform
 			}
 		}
 
-		internal void Update(T data)
+		protected void Update(T data)
 		{
 			this.Current = data;
 			this._changedEvent?.Invoke(this, data);
 		}
 
-		internal abstract T GetValue();
+		protected abstract T GetValue();
 
-		internal abstract IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled);
+		protected abstract IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled);
 
 		private class ListenerWindow : TransparentWindow
 		{

@@ -55,7 +55,9 @@
     <Compile Include="Media\ColorHelper.cs" />
     <Compile Include="Media\HsvColor.cs" />
     <Compile Include="Media\Luminosity.cs" />
+    <Compile Include="Platform\IWindowsThemeValue.cs" />
     <Compile Include="Platform\WindowComposition.cs" />
+    <Compile Include="Platform\WindowsThemeConstantValue.cs" />
     <Compile Include="Platform\WindowsThemeValues.cs" />
     <Compile Include="Platform\TransparentWindow.cs" />
     <Compile Include="Platform\WindowsThemeValue.cs" />
