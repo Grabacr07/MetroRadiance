@@ -155,9 +155,31 @@ namespace MetroRadiance.UI.Controls
 
 			instance.Loaded += (sender, args) =>
 			{
-				var chrome = ShellChrome.GetWindowChrome(window);
-				if (chrome != null) chrome.CaptionHeight = instance.ActualHeight;
+				window.UpdateIsCaptionBarHeight();
 			};
+		}
+
+		private void UpdateIsCaptionBarHeight()
+		{
+			var chrome = ShellChrome.GetWindowChrome(this);
+			if (chrome == null) return;
+
+			var captionBar = this.captionBar;
+			if (captionBar != null)
+			{
+				if (this.systemDpi.Y > 0)
+				{
+					chrome.CaptionHeight = captionBar.ActualHeight * this.CurrentDpi.Y / this.systemDpi.Y;
+				}
+				else
+				{
+					chrome.CaptionHeight = captionBar.ActualHeight;
+				}
+			}
+			else
+			{
+				chrome.CaptionHeight = 0;
+			}
 		}
 
 		#endregion
@@ -331,6 +353,8 @@ namespace MetroRadiance.UI.Controls
 			this.Height = this.Height * dpi.Y / this.CurrentDpi.Y;
 
 			this.CurrentDpi = dpi;
+
+			this.UpdateIsCaptionBarHeight();
 		}
 	}
 }
