@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace MetroRadiance.Interop
 {
@@ -10,7 +12,7 @@ namespace MetroRadiance.Interop
 	/// モニターの DPI (dots per inch) を表します。
 	/// </summary>
 	[DebuggerDisplay("X = {X} ({ScaleX}), Y = {Y} ({ScaleY})")]
-	public struct Dpi
+	public struct Dpi : IEquatable<Dpi>
 	{
 		public static readonly Dpi Default = new Dpi(96, 96);
 
@@ -30,6 +32,32 @@ namespace MetroRadiance.Interop
 			this.X = x;
 			this.Y = y;
 		}
+
+		public Point LogicalToPhysical(Point logical)
+			=> new Point(logical.X * this.ScaleX, logical.Y * this.ScaleY);
+
+		public Point PhysicalToLogical(Point physical)
+			=> new Point(physical.X / this.ScaleX, physical.Y / this.ScaleY);
+
+		public Size LogicalToPhysical(Size logical)
+			=> new Size(logical.Width * this.ScaleX, logical.Height * this.ScaleY);
+
+		public Size PhysicalToLogical(Size physical)
+			=> new Size(physical.Width / this.ScaleX, physical.Height / this.ScaleY);
+
+		public Rect LogicalToPhysical(Rect logical)
+			=> new Rect(
+				logical.X * this.ScaleX,
+				logical.Y * this.ScaleY,
+				logical.Width * this.ScaleX,
+				logical.Height * this.ScaleY);
+
+		public Rect PhysicalToLogical(Rect physical)
+			=> new Rect(
+				physical.X / this.ScaleX,
+				physical.Y / this.ScaleY,
+				physical.Width / this.ScaleX,
+				physical.Height / this.ScaleY);
 
 		public static bool operator ==(Dpi dpi1, Dpi dpi2)
 		{
@@ -59,5 +87,19 @@ namespace MetroRadiance.Interop
 				return ((int)this.X * 397) ^ (int)this.Y;
 			}
 		}
+
+		public static Dpi FromVisual(Visual visual)
+		{
+			var source = PresentationSource.FromVisual(visual);
+			if (source == null) throw new ObjectDisposedException(nameof(visual));
+
+			return FromPresentationSource(source);
+		}
+
+		public static Dpi FromPresentationSource(PresentationSource source)
+			=> FromMatrix(source.CompositionTarget.TransformToDevice);
+
+		public static Dpi FromMatrix(Matrix matrix)
+			=> new Dpi((uint)(96 * matrix.M11), (uint)(96 * matrix.M22));
 	}
 }
