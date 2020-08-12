@@ -326,16 +326,19 @@ namespace MetroRadiance.Chrome.Primitives
 				return new IntPtr(3);
 			}
 
-			//if (msg == (int)WindowsMessages.WM_DPICHANGED)
-			//{
+			#if NET40 || NET45 || NET451 || NET452 || NET46 || NET461
+			// Note: Double scaling is avoided on .NET Framework 4.6.2 or later.
+			if (msg == (int)WindowsMessages.WM_DPICHANGED)
+			{
 			//	System.Diagnostics.Debug.WriteLine("WM_DPICHANGED: " + this.GetType().Name);
 
 			//	var dpiX = wParam.ToLoWord();
 			//	var dpiY = wParam.ToHiWord();
 			//	this.ChangeDpi(new Dpi(dpiX, dpiY));
-			//	handled = true;
-			//	return IntPtr.Zero;
-			//}
+				handled = true;
+				return IntPtr.Zero;
+			}
+			#endif
 
 			return this.WndProcOverride(hwnd, msg, wParam, lParam, ref handled) ?? IntPtr.Zero;
 		}
