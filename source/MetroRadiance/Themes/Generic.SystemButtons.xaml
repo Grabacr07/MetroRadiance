@@ -11,13 +11,38 @@
 				<ControlTemplate TargetType="{x:Type controls:SystemButtons}">
 					<StackPanel Orientation="Horizontal">
 						<controls:CaptionButton WindowAction="Minimize" />
-						<controls:CaptionButton WindowAction="Normalize"
+						<controls:CaptionButton x:Name="NormalizeCaptionButton"
+												WindowAction="Normalize"
 												d:IsHidden="True" />
-						<controls:CaptionButton WindowAction="Maximize" />
+						<controls:CaptionButton x:Name="MaximizeCaptionButton"
+												WindowAction="Maximize" />
 						<controls:CaptionButton WindowAction="Close" />
 					</StackPanel>
+					<ControlTemplate.Triggers>
+						<DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+									Value="CanMinimize">
+							<Setter TargetName="NormalizeCaptionButton"
+									Property="IsEnabled"
+									Value="False" />
+							<Setter TargetName="MaximizeCaptionButton"
+									Property="IsEnabled"
+									Value="False" />
+						</DataTrigger>
+					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+						 Value="NoResize">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type controls:SystemButtons}">
+							<controls:CaptionButton WindowAction="Close" />
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</DataTrigger>
+		</Style.Triggers>
 	</Style>
 </ResourceDictionary>

@@ -12,6 +12,7 @@ namespace MetroRadiance.UI.Controls
 		static SystemButtons()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(SystemButtons), new FrameworkPropertyMetadata(typeof(SystemButtons)));
+			IsTabStopProperty.OverrideMetadata(typeof(SystemButtons), new FrameworkPropertyMetadata(false));
 		}
 	}
 }
