@@ -7,8 +7,8 @@ namespace MetroRadiance.Interop.Win32
 {
 	public static class Dwmapi
 	{
-		[DllImport("Dwmapi.dll")]
-		public static extern void DwmGetColorizationColor([Out] out int pcrColorization, [Out] out bool pfOpaqueBlend);
+		[DllImport("Dwmapi.dll", ExactSpelling = true)]
+		public static extern void DwmGetColorizationColor([Out] out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
 
 		[DllImport("Dwmapi.dll")]
 		public static extern void DwmGetWindowAttribute(IntPtr hWnd, DWMWINDOWATTRIBUTE dwAttribute, [Out] out RECT pvAttribute, int cbAttribute);

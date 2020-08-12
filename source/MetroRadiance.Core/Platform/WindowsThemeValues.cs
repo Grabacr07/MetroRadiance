@@ -15,9 +15,9 @@ namespace MetroRadiance.Platform
 		Light = 1,
 	}
 
-	public class ThemeValue : WindowsThemeValue<Theme>
+	internal class ThemeValue : WindowsThemeValue<Theme>
 	{
-		internal override Theme GetValue()
+		protected override Theme GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "AppsUseLightTheme";
@@ -25,7 +25,7 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? == 0 ? Theme.Dark : Theme.Light;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
@@ -41,9 +41,9 @@ namespace MetroRadiance.Platform
 		}
 	}
 
-	public class SystemThemeValue : ThemeValue
+	internal sealed class SystemThemeValue : ThemeValue
 	{
-		internal override Theme GetValue()
+		protected override Theme GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "SystemUsesLightTheme";
@@ -52,34 +52,34 @@ namespace MetroRadiance.Platform
 		}
 	}
 
-	public class AccentValue : WindowsThemeValue<Color>
+	internal sealed class AccentValue : WindowsThemeValue<Color>
 	{
-		internal override Color GetValue()
+		protected override Color GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM";
 			const string valueName = "ColorizationColor";
-			int color;
+			uint color;
 
 			var colorizationColor = Registry.GetValue(keyName, valueName, null) as int?;
 			if (colorizationColor != null)
 			{
-				color = colorizationColor.Value;
+				color = (uint)colorizationColor.Value;
 			}
 			else
 			{
 				bool opaque;
+				// Note: return the modified value on Windows Vista & 7
 				Dwmapi.DwmGetColorizationColor(out color, out opaque);
 			}
 
-			return ColorHelper.GetColorFromInt64(color);
+			return ColorHelper.GetColorFromUInt32(color);
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
 			{
-				var color = ColorHelper.GetColorFromInt64((long)wParam);
-				this.Update(color);
+				this.Update(this.GetValue());
 				handled = true;
 			}
 
@@ -88,11 +88,11 @@ namespace MetroRadiance.Platform
 	}
 
 
-	public sealed class HighContrastValue : WindowsThemeValue<bool>
+	internal sealed class HighContrastValue : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue() => System.Windows.SystemParameters.HighContrast;
+		protected override bool GetValue() => System.Windows.SystemParameters.HighContrast;
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_THEMECHANGED)
 			{
@@ -104,9 +104,9 @@ namespace MetroRadiance.Platform
 		}
 	}
 
-	public sealed class ColorPrevalenceValue : WindowsThemeValue<bool>
+	internal sealed class ColorPrevalenceValue : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue()
+		protected override bool GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "ColorPrevalence";
@@ -114,7 +114,7 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? != 0;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
@@ -130,9 +130,9 @@ namespace MetroRadiance.Platform
 		}
 	}
 
-	public sealed class TransparencyValue : WindowsThemeValue<bool>
+	internal sealed class TransparencyValueWindows10 : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue()
+		protected override bool GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "EnableTransparency";
@@ -140,12 +140,61 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? != 0;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
 				var systemParmeter = Marshal.PtrToStringAuto(lParam);
 				if (systemParmeter == "ImmersiveColorSet")
+				{
+					this.Update(this.GetValue());
+					handled = true;
+				}
+			}
+
+			return IntPtr.Zero;
+		}
+	}
+
+	internal sealed class TransparencyValueWindowsVistaOr7 : WindowsThemeValue<bool>
+	{
+		protected override bool GetValue()
+		{
+			uint color;
+			bool opaque;
+			Dwmapi.DwmGetColorizationColor(out color, out opaque);
+			return opaque;
+		}
+
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
+			{
+				var opaque = Convert.ToBoolean((long)lParam);
+				this.Update(opaque);
+				handled = true;
+			}
+
+			return IntPtr.Zero;
+		}
+	}
+
+	internal sealed class TextScaleFactorValue : WindowsThemeValue<double>
+	{
+		protected override double GetValue()
+		{
+			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Accessibility";
+			const string valueName = "TextScaleFactor";
+
+			return (Registry.GetValue(keyName, valueName, null) as int? ?? 100) / 100.0;
+		}
+
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
+			{
+				var systemParmeter = Marshal.PtrToStringAuto(lParam);
+				if (systemParmeter == "WindowsThemeElement")
 				{
 					this.Update(this.GetValue());
 					handled = true;
