@@ -129,4 +129,7 @@
   <data name="CaptionButton_Normalize" xml:space="preserve">
     <value>向下还原</value>
   </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>Segoe UI, Microsoft YaHei UI, Segoe UI Emoji</value>
+  </data>
 </root>

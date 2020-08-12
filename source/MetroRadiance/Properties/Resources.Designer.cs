@@ -95,5 +95,14 @@ namespace MetroRadiance.Properties {
                 return ResourceManager.GetString("CaptionButton_Normalize", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Segoe UI, Segoe UI Emoji に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FontFamily {
+            get {
+                return ResourceManager.GetString("FontFamily", resourceCulture);
+            }
+        }
     }
 }

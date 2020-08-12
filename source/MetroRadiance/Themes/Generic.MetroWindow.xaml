@@ -2,13 +2,16 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 					xmlns:chrome="http://schemes.grabacr.net/winfx/2014/chrome"
-					xmlns:controls="clr-namespace:MetroRadiance.UI.Controls">
+					xmlns:controls="clr-namespace:MetroRadiance.UI.Controls"
+					xmlns:properties="clr-namespace:MetroRadiance.Properties">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/MetroRadiance;component/Themes/Generic.ResizeGrip.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 	<Style TargetType="{x:Type controls:MetroWindow}">
+		<Setter Property="FontFamily"
+				Value="{DynamicResource {x:Static properties:Resources.FontFamily}}" />
 		<Setter Property="Background"
 				Value="{DynamicResource ThemeBrushKey}" />
 		<Setter Property="Foreground"

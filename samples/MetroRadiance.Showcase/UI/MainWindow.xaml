@@ -10,7 +10,6 @@
 					  Title="MetroRadiance Showcase"
 					  Width="700"
 					  Height="700"
-					  FontFamily="Segoe UI"
 					  Background="{DynamicResource ThemeBrushKey}"
 					  IsRestoringWindowPlacement="True"
 					  UseLayoutRounding="True"

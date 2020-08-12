@@ -129,4 +129,7 @@
   <data name="CaptionButton_Normalize" xml:space="preserve">
     <value>Restore Down</value>
   </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>Segoe UI, Segoe UI Emoji</value>
+  </data>
 </root>

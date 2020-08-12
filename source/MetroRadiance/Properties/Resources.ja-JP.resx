@@ -129,4 +129,7 @@
   <data name="CaptionButton_Normalize" xml:space="preserve">
     <value>元に戻す</value>
   </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>Segoe UI, Meiryo UI, Segoe UI Emoji</value>
+  </data>
 </root>
