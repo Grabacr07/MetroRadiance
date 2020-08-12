@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -38,8 +39,19 @@ namespace MetroRadiance.Interop.Win32
 		[DllImport("user32.dll")]
 		public static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
 
-		[DllImport("user32.dll")]
-		public static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
+		[DllImport("user32.dll", SetLastError = true, ExactSpelling = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
+
+		public static WINDOWPLACEMENT GetWindowPlacement(IntPtr hWnd)
+		{
+			WINDOWPLACEMENT wndpl;
+			if (!GetWindowPlacement(hWnd, out wndpl)) 
+			{
+				throw new Win32Exception(Marshal.GetLastWin32Error());
+			}
+			return wndpl;
+		}
 
 		[DllImport("user32.dll")]
 		public static extern bool GetClientRect(IntPtr hWnd, out RECT rect);
@@ -76,9 +88,20 @@ namespace MetroRadiance.Interop.Win32
 		[DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
 		public static extern IntPtr SetClassLong64(IntPtr hWnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong);
 
+		[DllImport("user32.dll", EntryPoint = "GetMonitorInfoW", SetLastError = true, ExactSpelling = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+
+		[DllImport("user32.dll", EntryPoint = "GetMonitorInfoW", SetLastError = true, ExactSpelling = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool GetMonitorInfoEx(IntPtr hMonitor, ref MONITORINFOEX lpmi);
 
 		[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
 		public static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorDefaultTo dwFlags);
+
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool IsWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetActiveWindow();
