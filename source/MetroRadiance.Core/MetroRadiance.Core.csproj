@@ -62,6 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Platform\AppMode.cs" />
     <Compile Include="Platform\RawWindow.cs" />
     <Compile Include="Platform\WindowsTheme.cs" />
     <Compile Include="Interop\Win32\ClassLongPtrIndex.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Interop\Win32\HitTestValues.cs" />
     <Compile Include="Interop\Win32\MonitorDefaultTo.cs" />
     <Compile Include="Interop\Win32\NativeExtensions.cs" />
+    <Compile Include="Interop\Win32\PreferredAppMode.cs" />
     <Compile Include="Interop\Win32\User32.cs" />
     <Compile Include="Interop\Win32\ShowWindowFlags.cs" />
     <Compile Include="Interop\Win32\SetWindowPosFlags.cs" />
