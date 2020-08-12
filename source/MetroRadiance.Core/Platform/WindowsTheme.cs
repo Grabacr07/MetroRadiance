@@ -71,5 +71,10 @@ namespace MetroRadiance.Platform
 		public static IWindowsThemeValue<bool> ColorPrevalence { get; }
 
 		public static IWindowsThemeValue<bool> Transparency { get; }
+		
+		/// <summary>
+		/// Windows の文字の大きさ設定と、その変更通知機能へアクセスできるようにします。
+		/// </summary>
+		public static IWindowsThemeValue<double> TextScaleFactor { get; } = new TextScaleFactorValue();
 	}
 }

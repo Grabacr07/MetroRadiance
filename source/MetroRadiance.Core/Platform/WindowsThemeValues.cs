@@ -178,4 +178,30 @@ namespace MetroRadiance.Platform
 			return IntPtr.Zero;
 		}
 	}
+
+	internal sealed class TextScaleFactorValue : WindowsThemeValue<double>
+	{
+		protected override double GetValue()
+		{
+			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Accessibility";
+			const string valueName = "TextScaleFactor";
+
+			return (Registry.GetValue(keyName, valueName, null) as int? ?? 100) / 100.0;
+		}
+
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
+			{
+				var systemParmeter = Marshal.PtrToStringAuto(lParam);
+				if (systemParmeter == "WindowsThemeElement")
+				{
+					this.Update(this.GetValue());
+					handled = true;
+				}
+			}
+
+			return IntPtr.Zero;
+		}
+	}
 }
