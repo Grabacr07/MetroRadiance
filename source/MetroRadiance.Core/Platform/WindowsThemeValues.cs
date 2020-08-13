@@ -163,7 +163,7 @@ namespace MetroRadiance.Platform
 			uint color;
 			bool opaque;
 			Dwmapi.DwmGetColorizationColor(out color, out opaque);
-			return opaque;
+			return !opaque;
 		}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -171,7 +171,7 @@ namespace MetroRadiance.Platform
 			if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
 			{
 				var opaque = Convert.ToBoolean((long)lParam);
-				this.Update(opaque);
+				this.Update(!opaque);
 				handled = true;
 			}
 
