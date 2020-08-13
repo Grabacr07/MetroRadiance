@@ -21,7 +21,7 @@ namespace MetroRadiance.Platform
 		/// <summary>
 		/// 設定値が動的に変更されるかを取得します。
 		/// </summary>
-		public bool IsDynamic => false;
+		public bool IsDynamic => true;
 
 		/// <summary>
 		/// 現在の設定値を取得します。
