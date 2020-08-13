@@ -213,6 +213,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\Accent.cs" />
+    <Compile Include="UI\Controls\AcrylicBlurWindow.cs" />
     <Compile Include="UI\Controls\BlurWindow.cs" />
     <Compile Include="UI\Controls\BlurWindowThemeMode.cs" />
     <Compile Include="UI\Interactivity\DirectWindowAction.cs" />

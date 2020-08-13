@@ -17,6 +17,11 @@ namespace MetroRadiance.Showcase.UI
 		{
 			new BlurWindowSample().Show();
 		}
+
+		private void HandleAcrylicBlurWindowButtonClicked(object sender, RoutedEventArgs e)
+		{
+			new AcrylicBlurWindowSample().Show();
+		}
 	}
 
 	public class SampleValues

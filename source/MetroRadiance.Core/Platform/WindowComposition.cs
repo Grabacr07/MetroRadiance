@@ -4,7 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 using MetroRadiance.Interop.Win32;
+using MetroRadiance.Media;
 
 namespace MetroRadiance.Platform
 {
@@ -25,6 +27,17 @@ namespace MetroRadiance.Platform
 			{
 				AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND,
 				AccentFlags = accentFlags,
+			};
+			SetAccentPolicy(window, accentPolicy);
+		}
+
+		public static void EnableAcrylicBlur(Window window, Color backgroundColor, AccentFlags accentFlags)
+		{
+			var accentPolicy = new AccentPolicy
+			{
+				AccentState = AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND,
+				AccentFlags = accentFlags,
+				GradientColor = ColorHelper.GetColorAsUInt32(backgroundColor),
 			};
 			SetAccentPolicy(window, accentPolicy);
 		}
