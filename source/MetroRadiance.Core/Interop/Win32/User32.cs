@@ -56,10 +56,28 @@ namespace MetroRadiance.Interop.Win32
 		[DllImport("user32.dll")]
 		public static extern bool GetClientRect(IntPtr hWnd, out RECT rect);
 
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern bool PostMessage(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam);
+		[DllImport("user32.dll", SetLastError = true, ExactSpelling = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		private static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
 
-		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+		public static RECT GetWindowRect(IntPtr hWnd)
+		{
+			RECT rect;
+			var ret = GetWindowRect(hWnd, out rect);
+			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
+			return rect;
+		}
+
+		[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+		private static extern bool PostMessageW(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+		public static void PostMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+		{
+			var ret = PostMessageW(hWnd, msg, wParam, lParam);
+			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
+		}
+
+		[DllImport("user32.dll", EntryPoint = "SendMessageW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr SendMessage(IntPtr hWnd, WindowsMessages msg, IntPtr wParam, IntPtr lParam);
 
 		public static WindowClassStyles GetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex)

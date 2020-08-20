@@ -1,37 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using MetroRadiance.Interop;
+using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Chrome.Primitives
 {
 	internal class LeftChromeWindow : ChromeWindow
 	{
+		static LeftChromeWindow()
+		{
+			DefaultStyleKeyProperty.OverrideMetadata(
+				typeof(LeftChromeWindow),
+				new FrameworkPropertyMetadata(typeof(LeftChromeWindow)));
+			TitleProperty.OverrideMetadata(
+				typeof(LeftChromeWindow),
+				new FrameworkPropertyMetadata(nameof(LeftChromeWindow)));
+		}
+
 		public LeftChromeWindow()
 		{
 			this.SizeToContent = SizeToContent.Width;
 		}
 
-		protected override int GetLeft(Dpi dpi)
+		protected override void UpdateDpiResources() { }
+
+		protected override int GetLeft(RECT owner)
 		{
-			return this.Owner.Left.DpiRoundX(dpi) - this.GetWidth(this.CurrentDpi);
+			return owner.Left - this.GetWidth(owner);
 		}
 
-		protected override int GetTop(Dpi dpi)
+		protected override int GetTop(RECT owner)
 		{
-			return this.Owner.Top.DpiRoundY(dpi);
+			return owner.Top;
 		}
 
-		protected override int GetWidth(Dpi dpi)
+		protected override int GetWidth(RECT owner)
 		{
-			return this.GetContentSizeOrDefault(x => x.ActualWidth).DpiRoundX(dpi);
+			return this.ActualWidth.DpiRoundX(this.SystemDpi);
 		}
 
-		protected override int GetHeight(Dpi dpi)
+		protected override int GetHeight(RECT owner)
 		{
-			return this.Owner.ActualHeight.DpiRoundY(dpi);
+			return owner.Height;
+		}
+
+		protected override void OwnerSizeChangedCallback(object sender, EventArgs eventArgs)
+		{
+			this.UpdateSize();
 		}
 	}
 }

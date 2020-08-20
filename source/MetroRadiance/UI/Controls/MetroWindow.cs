@@ -62,27 +62,6 @@ namespace MetroRadiance.UI.Controls
 
 		#endregion
 
-		#region MetroChrome 依存関係プロパティ
-
-		public static readonly DependencyProperty MetroChromeProperty = DependencyProperty.Register(
-			nameof(MetroChrome), typeof(MetroChrome), typeof(MetroWindow), new PropertyMetadata(null, HandleMetroChromeChanged));
-
-		public MetroChrome MetroChrome
-		{
-			get { return (MetroChrome)this.GetValue(MetroChromeProperty); }
-			set { this.SetValue(MetroChromeProperty, value); }
-		}
-
-		private static void HandleMetroChromeChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
-		{
-			var chrome = (MetroChrome)args.NewValue;
-			var window = (Window)d;
-
-			MetroChrome.SetInstance(window, chrome);
-		}
-
-		#endregion
-
 		#region DpiScaleTransform 依存関係プロパティ
 
 		/// <summary>
@@ -164,7 +143,8 @@ namespace MetroRadiance.UI.Controls
 
 		public MetroWindow()
 		{
-			this.MetroChrome = new MetroChrome();
+			var metroChrome = new MetroChrome();
+			MetroChrome.SetInstance(this, metroChrome);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)

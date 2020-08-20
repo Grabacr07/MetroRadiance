@@ -14,10 +14,6 @@ namespace MetroRadiance.Platform
 	{
 		IntPtr Handle { get; }
 
-		double Left { get; }
-		double Top { get; }
-		double ActualWidth { get; }
-		double ActualHeight { get; }
 		bool IsActive { get; }
 		WindowState WindowState { get; }
 		ResizeMode ResizeMode { get; }
@@ -34,5 +30,6 @@ namespace MetroRadiance.Platform
 		bool Activate();
 
 		void Resize(SizingMode sizingMode);
+		void DoubleClick(SizingMode sizingMode);
 	}
 }

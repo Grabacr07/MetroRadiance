@@ -44,6 +44,9 @@ namespace MetroRadiance.Interop.Win32
 		public int Right;
 		public int Bottom;
 
+		public int Width => this.Right - this.Left;
+		public int Height => this.Bottom - this.Top;
+
 		public RECT(int left, int top, int right, int bottom)
 		{
 			this.Left = left;
@@ -54,7 +57,7 @@ namespace MetroRadiance.Interop.Win32
 
 		public static implicit operator Rect(RECT rect)
 		{
-			return new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+			return new Rect(rect.Left, rect.Top, rect.Width, rect.Height);
 		}
 	}
 }

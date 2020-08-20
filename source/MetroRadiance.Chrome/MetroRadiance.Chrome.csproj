@@ -49,7 +49,22 @@
       <DependentUpon>Generic.xaml</DependentUpon>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Generic.GlowingEdge.xaml">
+    <Page Include="Themes\Generic.GlowingEdge.Bottom.xaml">
+      <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.GlowingEdge.Left.xaml">
+      <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.GlowingEdge.Right.xaml">
+      <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.GlowingEdge.Top.xaml">
       <SubType>Designer</SubType>
       <DependentUpon>Generic.xaml</DependentUpon>
       <Generator>MSBuild:Compile</Generator>
@@ -60,7 +75,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chrome\GlowingEdge.cs" />
+    <Compile Include="Chrome\GlowingEdge..cs" />
+    <Compile Include="Chrome\GlowingEdge.Bottom.cs" />
+    <Compile Include="Chrome\GlowingEdge.Left.cs" />
+    <Compile Include="Chrome\GlowingEdge.Right.cs" />
+    <Compile Include="Chrome\GlowingEdge.Top.cs" />
     <Compile Include="Chrome\WindowChrome.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow.Bottom.cs" />
     <Compile Include="Chrome\Primitives\ChromeWindow.Top.cs" />
