@@ -10,6 +10,16 @@ namespace MetroRadiance.UI.Controls
 	public static class ThemeHelper
 	{
 		private static readonly Dictionary<FrameworkElement, IDisposable> registeredElements = new Dictionary<FrameworkElement, IDisposable>();
+		
+		private static void RemoveResources(FrameworkElement element)
+		{
+			IDisposable disposable;
+			if (registeredElements.TryGetValue(element, out disposable))
+			{
+				registeredElements.Remove(element);
+				disposable.Dispose();
+			}
+		}
 
 		#region HasThemeResources 添付プロパティ
 
@@ -42,17 +52,14 @@ namespace MetroRadiance.UI.Controls
 				if (oldValue && !newValue)
 				{
 					// true -> false
-					IDisposable disposable;
-					if (registeredElements.TryGetValue(element, out disposable))
-					{
-						registeredElements.Remove(element);
-						disposable.Dispose();
-					}
+					element.Unloaded -= ElementUnloadedCallback;
+					RemoveResources(element);
 				}
 				else if (!oldValue && newValue)
 				{
 					// false -> true
 					registeredElements[element] = ThemeService.Current.Register(element.Resources);
+					element.Unloaded += ElementUnloadedCallback;
 				}
 			};
 
@@ -70,6 +77,13 @@ namespace MetroRadiance.UI.Controls
 				};
 				element.Initialized += handler;
 			}
+		}
+
+		private static void ElementUnloadedCallback(object sender, RoutedEventArgs e)
+		{
+			var element = (FrameworkElement)sender;
+			element.Unloaded -= ElementUnloadedCallback;
+			RemoveResources(element);
 		}
 
 		#endregion
