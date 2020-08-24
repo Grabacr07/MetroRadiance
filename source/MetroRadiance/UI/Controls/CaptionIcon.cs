@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.UI.Controls
@@ -56,22 +57,18 @@ namespace MetroRadiance.UI.Controls
 
 		protected override void OnMouseDown(MouseButtonEventArgs e)
 		{
-			var window = Window.GetWindow(this) as MetroWindow;
-			if (window == null)
-			{
-				base.OnMouseDown(e);
-				return;
-			}
-
 			if (e.ChangedButton == MouseButton.Left)
 			{
+				var window = Window.GetWindow(this);
 				if (e.ClickCount == 1)
 				{
 					if (!this.isSystemMenuOpened)
 					{
 						this.isSystemMenuOpened = true;
+
 						var point = this.PointToScreen(new Point(0, this.ActualHeight));
-						SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
+						var dpi = Dpi.FromVisual(window);
+						SystemCommands.ShowSystemMenu(window, dpi.PhysicalToLogical(point));
 					}
 					else
 					{
@@ -83,19 +80,18 @@ namespace MetroRadiance.UI.Controls
 					window.Close();
 				}
 			}
+			else
+			{
+				base.OnMouseDown(e);
+			}
 		}
 
 		protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
 		{
-			var window = Window.GetWindow(this) as MetroWindow;
-			if (window == null)
-			{
-				base.OnMouseRightButtonUp(e);
-				return;
-			}
-
+			var window = Window.GetWindow(this);
 			var point = this.PointToScreen(e.GetPosition(this));
-			SystemCommands.ShowSystemMenu(window, new Point(point.X / window.CurrentDpi.ScaleX, point.Y / window.CurrentDpi.ScaleY));
+			var dpi = Dpi.FromVisual(window);
+			SystemCommands.ShowSystemMenu(window, dpi.PhysicalToLogical(point));
 		}
 
 		protected override void OnMouseLeave(MouseEventArgs e)

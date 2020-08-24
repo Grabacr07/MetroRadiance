@@ -32,9 +32,15 @@ namespace MetroRadiance.Interop.Win32
 			return (WindowExStyles)SetWindowLong(hWnd, (int)WindowLongFlags.GWL_EXSTYLE, (int)dwNewLong);
 		}
 
-		[DllImport("user32.dll")]
+		[DllImport("user32.dll", EntryPoint = "SetWindowPos", SetLastError = true, ExactSpelling = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags flags);
+		private static extern bool _SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags flags);
+
+		public static void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags flags)
+		{
+			var ret = _SetWindowPos(hWnd, hWndInsertAfter, x, y, cx, cy, flags);
+			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
+		}
 
 		[DllImport("user32.dll")]
 		public static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);

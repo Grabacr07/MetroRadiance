@@ -155,9 +155,31 @@ namespace MetroRadiance.UI.Controls
 
 			instance.Loaded += (sender, args) =>
 			{
-				var chrome = ShellChrome.GetWindowChrome(window);
-				if (chrome != null) chrome.CaptionHeight = instance.ActualHeight;
+				window.UpdateIsCaptionBarHeight();
 			};
+		}
+
+		private void UpdateIsCaptionBarHeight()
+		{
+			var chrome = ShellChrome.GetWindowChrome(this);
+			if (chrome == null) return;
+
+			var captionBar = this.captionBar;
+			if (captionBar != null)
+			{
+				if (this.systemDpi.Y > 0)
+				{
+					chrome.CaptionHeight = captionBar.ActualHeight * this.CurrentDpi.Y / this.systemDpi.Y;
+				}
+				else
+				{
+					chrome.CaptionHeight = captionBar.ActualHeight;
+				}
+			}
+			else
+			{
+				chrome.CaptionHeight = 0;
+			}
 		}
 
 		#endregion
@@ -286,7 +308,8 @@ namespace MetroRadiance.UI.Controls
 			{
 				var dpiX = wParam.ToLoWord();
 				var dpiY = wParam.ToHiWord();
-				this.ChangeDpi(new Dpi(dpiX, dpiY));
+				var rect = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+				this.ChangeDpi(new Dpi(dpiX, dpiY), rect);
 				handled = true;
 			}
 
@@ -319,18 +342,31 @@ namespace MetroRadiance.UI.Controls
 			return (IntPtr)(WindowValidRects.WVR_ALIGNTOP | WindowValidRects.WVR_ALIGNLEFT | WindowValidRects.WVR_VALIDRECTS);
 		}
 
-		private void ChangeDpi(Dpi dpi)
+		private void ChangeDpi(Dpi dpi, RECT rect)
 		{
 			if (!PerMonitorDpi.IsSupported) return;
 
+			this.ChangeDpi(dpi);
+
+			User32.SetWindowPos(
+				this.source.Handle,
+				IntPtr.Zero,
+				rect.Left,
+				rect.Top,
+				rect.Right - rect.Left,
+				rect.Bottom - rect.Top,
+				SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOOWNERZORDER);
+
+			this.CurrentDpi = dpi;
+
+			this.UpdateIsCaptionBarHeight();
+		}
+
+		private void ChangeDpi(Dpi dpi)
+		{
 			this.DpiScaleTransform = dpi == this.systemDpi
 				? Transform.Identity
 				: new ScaleTransform((double)dpi.X / this.systemDpi.X, (double)dpi.Y / this.systemDpi.Y);
-
-			this.Width = this.Width * dpi.X / this.CurrentDpi.X;
-			this.Height = this.Height * dpi.Y / this.CurrentDpi.Y;
-
-			this.CurrentDpi = dpi;
 		}
 	}
 }
