@@ -58,12 +58,20 @@
 							 Margin="4" />
 			</StackPanel>
 
-			<Button Content="BlurWindow"
-					Margin="4,8"
-					Width="140"
-					Height="30"
-					HorizontalAlignment="Left"
-					Click="HandleBlurWindowButtonClicked"/>
+            <StackPanel Margin="12,0">
+                <Button Content="BlurWindow"
+					    Margin="4,4"
+					    Width="140"
+					    Height="30"
+					    HorizontalAlignment="Left"
+					    Click="HandleBlurWindowButtonClicked"/>
+			    <Button Content="AcrylicBlurWindow"
+					    Margin="4,4"
+					    Width="140"
+					    Height="30"
+					    HorizontalAlignment="Left"
+					    Click="HandleAcrylicBlurWindowButtonClicked"/>
+              </StackPanel>
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>

@@ -91,6 +91,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UI\AcrylicBlurWindowSample.xaml.cs">
+      <DependentUpon>AcrylicBlurWindowSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\BlurWindowSample.xaml.cs">
       <DependentUpon>BlurWindowSample.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
     <Compile Include="UI\ThemeSamples.xaml.cs">
       <DependentUpon>ThemeSamples.xaml</DependentUpon>
     </Compile>
+    <Page Include="UI\AcrylicBlurWindowSample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\BlurWindowSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

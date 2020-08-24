@@ -9,11 +9,13 @@ namespace MetroRadiance.Interop.Win32
 {
 	public enum AccentState
 	{
-		ACCENT_DISABLED = 1,
-		ACCENT_ENABLE_GRADIENT = 0,
+		ACCENT_DISABLED = 0,
+		ACCENT_ENABLE_GRADIENT = 1,
 		ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
 		ACCENT_ENABLE_BLURBEHIND = 3,
-		ACCENT_INVALID_STATE = 4
+		ACCENT_ENABLE_ACRYLICBLURBEHIND = 4, // RS4 (1803)
+		ACCENT_ENABLE_HOSTBACKDROP = 5, // RS5 (1809)
+		ACCENT_INVALID_STATE = 6
 	}
 
 	[Flags]
@@ -31,15 +33,15 @@ namespace MetroRadiance.Interop.Win32
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct AccentPolicy
+	public struct AccentPolicy
 	{
 		public AccentState AccentState;
 		public AccentFlags AccentFlags;
-		public int GradientColor;
+		public uint GradientColor;
 		public int AnimationId;
 	}
 
-	public enum WindowCompositionAttribute
+	public enum WindowCompositionAttribute : uint
 	{
 		WCA_UNDEFINED = 0,
 		WCA_NCRENDERING_ENABLED = 1,
