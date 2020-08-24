@@ -232,7 +232,11 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			if (!this.GetIsUpdateAvailable()) return;
 
-			this.CheckDpiChange();
+			if (this.CheckDpiChange())
+			{
+				this.UpdateLocationAndSizeCore();
+				return;
+			}
 
 			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
 			var width = this.GetWidth(ownerRect);
@@ -247,7 +251,11 @@ namespace MetroRadiance.Chrome.Primitives
 			if (!this.GetIsUpdateAvailable()) return;
 
 			this.CheckDpiChange();
+			this.UpdateLocationAndSizeCore();
+		}
 
+		private void UpdateLocationAndSizeCore()
+		{
 			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
 			var left = this.GetLeft(ownerRect);
 			var top = this.GetTop(ownerRect);
@@ -258,7 +266,7 @@ namespace MetroRadiance.Chrome.Primitives
 			User32.SetWindowPos(this._handle, IntPtr.Zero, left, top, width, height, flags);
 		}
 
-		private void CheckDpiChange()
+		private bool CheckDpiChange()
 		{
 			if (PerMonitorDpi.IsSupported)
 			{
@@ -270,8 +278,11 @@ namespace MetroRadiance.Chrome.Primitives
 						: new ScaleTransform((double)currentDpi.X / this.SystemDpi.X, (double)currentDpi.Y / this.SystemDpi.Y);
 					this.CurrentDpi = currentDpi;
 					this.UpdateDpiResources();
+					this.UpdateLayout();
+					return true;
 				}
 			}
+			return false;
 		}
 
 		public override void OnApplyTemplate()
@@ -403,9 +414,8 @@ namespace MetroRadiance.Chrome.Primitives
 				return new IntPtr(3);
 			}
 
-			#if NET40 || NET45 || NET451 || NET452 || NET46 || NET461
 			// Note: Double scaling is avoided on .NET Framework 4.6.2 or later.
-			if (msg == (int)WindowsMessages.WM_DPICHANGED)
+			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
 			{
 			//	System.Diagnostics.Debug.WriteLine("WM_DPICHANGED: " + this.GetType().Name);
 
@@ -415,7 +425,6 @@ namespace MetroRadiance.Chrome.Primitives
 				handled = true;
 				return IntPtr.Zero;
 			}
-			#endif
 
 			return IntPtr.Zero;
 		}
