@@ -22,6 +22,8 @@ namespace MetroRadiance.Platform
 		/// <summary>
 		/// テーマ設定が変更されると発生します。
 		/// </summary>
+		#pragma warning disable 67
 		public event EventHandler<T> Changed;
+		#pragma warning restore 67
 	}
 }
