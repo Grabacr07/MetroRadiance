@@ -11,16 +11,30 @@ namespace MetroRadiance.Chrome.Primitives
 {
 	internal class WindowWrapper : IChromeOwner
 	{
-		private static readonly Dictionary<Window, WindowWrapper> _wrappers = new Dictionary<Window, WindowWrapper>();
+		#region WindowWrapper 添付プロパティ
+
+		public static readonly DependencyProperty WindowWrapperProperty =
+			DependencyProperty.RegisterAttached("WindowWrapper", typeof(WindowWrapper), typeof(Window), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None));
+
+		public static void SetWindowWrapper(FrameworkElement element, WindowWrapper value)
+		{
+			element.SetValue(WindowWrapperProperty, value);
+		}
+		public static WindowWrapper GetWindowWrapper(FrameworkElement element)
+		{
+			return (WindowWrapper)element.GetValue(WindowWrapperProperty);
+		}
+
+		#endregion
+		
 
 		public static WindowWrapper Create(Window window)
 		{
-			WindowWrapper wrapper;
-			if (!_wrappers.TryGetValue(window, out wrapper))
+			var wrapper = GetWindowWrapper(window);
+			if (wrapper == null)
 			{
 				wrapper = new WindowWrapper(window);
-				_wrappers.Add(window, wrapper);
-				window.Closed += (sender, args) => _wrappers.Remove(window);
+				SetWindowWrapper(window, wrapper);
 			}
 
 			return wrapper;
@@ -29,10 +43,6 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public Window Window { get; }
 		public IntPtr Handle { get; private set; }
-		public double Left => this.Window.Left;
-		public double Top => this.Window.Top;
-		public double ActualWidth => this.Window.ActualWidth;
-		public double ActualHeight => this.Window.ActualHeight;
 		public bool IsActive => this.Window.IsActive;
 		public WindowState WindowState => this.Window.WindowState;
 		public ResizeMode ResizeMode => this.Window.ResizeMode;
@@ -86,6 +96,11 @@ namespace MetroRadiance.Chrome.Primitives
 		public void Resize(SizingMode sizingMode)
 		{
 			User32.PostMessage(this.Handle, (uint)WindowsMessages.WM_NCLBUTTONDOWN, (IntPtr)sizingMode, IntPtr.Zero);
+		}
+
+		public void DoubleClick(SizingMode sizingMode)
+		{
+			User32.PostMessage(this.Handle, (uint)WindowsMessages.WM_NCLBUTTONDBLCLK, (IntPtr)sizingMode, IntPtr.Zero);
 		}
 	}
 }

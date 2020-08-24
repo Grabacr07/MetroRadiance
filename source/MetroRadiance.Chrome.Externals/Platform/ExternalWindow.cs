@@ -18,15 +18,8 @@ namespace MetroRadiance.Platform
 	{
 		private static IChromeHookService _serviceInstance;
 		private readonly IChromeHook _external;
-		private Rect _rect;
 
 		public IntPtr Handle { get; }
-
-		public double Left => this._rect.X;
-		public double Top => this._rect.Y;
-
-		public double ActualWidth => this._rect.Width;
-		public double ActualHeight => this._rect.Height;
 
 		public bool IsActive { get; private set; }
 
@@ -73,8 +66,7 @@ namespace MetroRadiance.Platform
 			this._external.Activated += this.ExternalOnActivated;
 			this._external.Deactivated += this.ExternalOnDeactivated;
 			this._external.Closed += this.ExternalOnClosed;
-
-			this._rect = this.GetExtendFrameBounds();
+			
 			this.IsActive = User32.GetForegroundWindow() == this.Handle;
 			this.WindowState = WindowState.Normal;
 			if (User32.IsIconic(hWnd)) this.WindowState = WindowState.Minimized;
@@ -106,13 +98,11 @@ namespace MetroRadiance.Platform
 
 		private void ExternalOnSizeChanged(IChromeHook sender, Size newSize)
 		{
-			this._rect = this.GetExtendFrameBounds();
 			this.SizeChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void ExternalOnWindowMoved(IChromeHook sender, Point newLocation)
 		{
-			this._rect = this.GetExtendFrameBounds();
 			this.LocationChanged?.Invoke(this, EventArgs.Empty);
 		}
 
@@ -139,23 +129,14 @@ namespace MetroRadiance.Platform
 			this._external.Dispose();
 		}
 
-		private Rect GetExtendFrameBounds()
-		{
-			RECT frameBounds;
-			Dwmapi.DwmGetWindowAttribute(this.Handle, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out frameBounds, Marshal.SizeOf(typeof(RECT)));
-
-			var dpi = PerMonitorDpi.GetDpi(this.Handle);
-			var l = frameBounds.Left * (1 / dpi.ScaleX);
-			var t = frameBounds.Top * (1 / dpi.ScaleY);
-			var w = (frameBounds.Right - frameBounds.Left) * (1 / dpi.ScaleX);
-			var h = (frameBounds.Bottom - frameBounds.Top) * (1 / dpi.ScaleY);
-
-			return new Rect(l, t, w, h);
-		}
-
 		public void Resize(SizingMode sizingMode)
 		{
 			User32.PostMessage(this.Handle, _serviceInstance.PseudoNcLButtonDownMessage, (IntPtr)sizingMode, IntPtr.Zero);
+		}
+
+		public void DoubleClick(SizingMode sizingMode)
+		{
+			User32.PostMessage(this.Handle, (uint)WindowsMessages.WM_NCLBUTTONDBLCLK, (IntPtr)sizingMode, IntPtr.Zero);
 		}
 	}
 }

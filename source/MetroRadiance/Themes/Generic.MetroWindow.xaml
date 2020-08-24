@@ -30,7 +30,8 @@
 			<Setter.Value>
 				<WindowChrome ResizeBorderThickness="0"
 							  GlassFrameThickness="0"
-							  CornerRadius="0" />
+							  CornerRadius="0"
+							  UseAeroCaptionButtons="False" />
 			</Setter.Value>
 		</Setter>
 		<Setter Property="Template">

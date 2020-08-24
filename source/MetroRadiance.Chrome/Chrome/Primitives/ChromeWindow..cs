@@ -15,14 +15,32 @@ using MetroRadiance.Properties;
 
 namespace MetroRadiance.Chrome.Primitives
 {
+	[TemplatePart(Name = PART_GlowingEdge, Type = typeof(GlowingEdge))]
 	internal abstract class ChromeWindow : Window
 	{
 		static ChromeWindow()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(
+			AllowsTransparencyProperty.OverrideMetadata(
 				typeof(ChromeWindow),
-				new FrameworkPropertyMetadata(typeof(ChromeWindow)));
+				new FrameworkPropertyMetadata(true));
+			ResizeModeProperty.OverrideMetadata(
+				typeof(ChromeWindow),
+				new FrameworkPropertyMetadata(ResizeMode.NoResize));
+			ShowActivatedProperty.OverrideMetadata(
+				typeof(ChromeWindow),
+				new FrameworkPropertyMetadata(false));
+			ShowInTaskbarProperty.OverrideMetadata(
+				typeof(ChromeWindow),
+				new FrameworkPropertyMetadata(false));
+			VisibilityProperty.OverrideMetadata(
+				typeof(ChromeWindow),
+				new FrameworkPropertyMetadata(Visibility.Collapsed));
+			WindowStyleProperty.OverrideMetadata(
+				typeof(ChromeWindow),
+				new FrameworkPropertyMetadata(WindowStyle.None));
 		}
+
+		private const string PART_GlowingEdge = nameof(PART_GlowingEdge);
 
 		public static double Thickness { get; set; } = 8.0;
 
@@ -31,23 +49,32 @@ namespace MetroRadiance.Chrome.Primitives
 		private bool _sourceInitialized;
 		private bool _closed;
 		private WindowState _ownerPreviewState;
-		private Dpi _systemDpi;
 
+		protected Dpi SystemDpi { get; private set; }
 		protected Dpi CurrentDpi { get; private set; }
 
-		internal new IChromeOwner Owner { get; private set; }
+		public new IChromeOwner Owner { get; private set; }
 
-		internal SizingMode SizingMode { get; set; }
+		public SizingMode SizingMode { get; set; }
+
+		public GlowingEdge Edge { get; private set; }
 
 		#region Thickness dependency property
 
-		internal static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
-			nameof(Offset), typeof(Thickness), typeof(ChromeWindow), new PropertyMetadata(new Thickness(Thickness)));
+		public static readonly DependencyProperty OffsetProperty = DependencyProperty.Register(
+			nameof(Offset), typeof(Thickness), typeof(ChromeWindow), new PropertyMetadata(new Thickness(Thickness), OffsetChangedCallback));
 
-		internal Thickness Offset
+		public Thickness Offset
 		{
 			get { return (Thickness)this.GetValue(OffsetProperty); }
 			set { this.SetValue(OffsetProperty, value); }
+		}
+
+
+		private static void OffsetChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var instance = (ChromeWindow)d;
+			instance.UpdateDpiResources();
 		}
 
 		#endregion
@@ -67,15 +94,6 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected ChromeWindow()
 		{
-			this.Title = nameof(ChromeWindow);
-			this.WindowStyle = WindowStyle.None;
-			this.AllowsTransparency = true;
-			this.ShowActivated = false;
-			this.ShowInTaskbar = false;
-			this.Visibility = Visibility.Collapsed;
-			this.Background = Brushes.Transparent;
-			this.ResizeMode = ResizeMode.NoResize;
-			this.WindowStartupLocation = WindowStartupLocation.Manual;
 			this.Width = .0;
 			this.Height = .0;
 		}
@@ -84,7 +102,7 @@ namespace MetroRadiance.Chrome.Primitives
 		public void Attach(Window window)
 		{
 			var binding = new Binding(nameof(this.BorderBrush)) { Source = window, };
-			this.SetBinding(BackgroundProperty, binding);
+			this.SetBinding(BorderBrushProperty, binding);
 
 			var wrapper = WindowWrapper.Create(window);
 			var initialShow = window.IsLoaded;
@@ -104,7 +122,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Attach(window, true);
 		}
 
-		internal void Attach(IChromeOwner window, bool initialShow)
+		private void Attach(IChromeOwner window, bool initialShow)
 		{
 			this.Detach();
 
@@ -120,7 +138,8 @@ namespace MetroRadiance.Chrome.Primitives
 			{
 				this._ownerPreviewState = this.Owner.WindowState;
 				this.Show();
-				this.Update();
+				this.UpdateState(forceImmediate: true);
+				this.UpdateLocationAndSize();
 			}
 			else
 			{
@@ -130,38 +149,47 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public void Detach()
 		{
-			if (this.Owner == null) return;
+			var owner = this.Owner;
+			if (owner != null)
+			{
+				this.Owner = null;
+				base.Owner = null;
 
-			this.Owner.StateChanged -= this.OwnerStateChangedCallback;
-			this.Owner.LocationChanged -= this.OwnerLocationChangedCallback;
-			this.Owner.SizeChanged -= this.OwnerSizeChangedCallback;
-			this.Owner.Activated -= this.OwnerActivatedCallback;
-			this.Owner.Deactivated -= this.OwnerDeactivatedCallback;
-			this.Owner.Closed -= this.OwnerClosedCallback;
-			this.Owner.ContentRendered -= this.OwnerContentRenderedCallback;
-			this.Owner = null;
+				owner.StateChanged -= this.OwnerStateChangedCallback;
+				owner.LocationChanged -= this.OwnerLocationChangedCallback;
+				owner.SizeChanged -= this.OwnerSizeChangedCallback;
+				owner.Activated -= this.OwnerActivatedCallback;
+				owner.Deactivated -= this.OwnerDeactivatedCallback;
+				owner.Closed -= this.OwnerClosedCallback;
+				owner.ContentRendered -= this.OwnerContentRenderedCallback;
+			}
+			this.Visibility = Visibility.Collapsed;
 		}
 
-		public void Update()
+		private bool GetIsUpdateAvailable()
 		{
-			if (this.Owner == null || !this._sourceInitialized || this._closed) return;
+			return this.Owner != null && this._sourceInitialized && !this._closed;
+		}
+
+		private void UpdateState(bool forceImmediate = false)
+		{
+			if (!this.GetIsUpdateAvailable()) return;
 
 			if (this.Owner.Visibility == Visibility.Hidden)
 			{
 				this.Visibility = Visibility.Hidden;
-				this.UpdateCore();
 			}
 			else if (this.Owner.WindowState == WindowState.Normal)
 			{
 				if (this._ownerPreviewState == WindowState.Minimized
-					&& SystemParameters.MinimizeAnimation)
+					&& SystemParameters.MinimizeAnimation
+					&& !forceImmediate)
 				{
 					Action<Task> action = t =>
 					{
 						if (t.IsCompleted)
 						{
 							this.Visibility = Visibility.Visible;
-							this.UpdateCore();
 						}
 						else if (t.IsFaulted)
 						{
@@ -178,7 +206,6 @@ namespace MetroRadiance.Chrome.Primitives
 				else
 				{
 					this.Visibility = Visibility.Visible;
-					this.UpdateCore();
 				}
 			}
 			else
@@ -187,28 +214,71 @@ namespace MetroRadiance.Chrome.Primitives
 			}
 		}
 
-		private void UpdateCore()
+		private void UpdateLocation()
 		{
-			var positionDpi = this._systemDpi;
+			if (!this.GetIsUpdateAvailable()) return;
 
+			this.CheckDpiChange();
+
+			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var left = this.GetLeft(ownerRect);
+			var top = this.GetTop(ownerRect);
+			var flags = SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
+
+			User32.SetWindowPos(this._handle, IntPtr.Zero, left, top, 0, 0, flags);
+		}
+
+		protected void UpdateSize()
+		{
+			if (!this.GetIsUpdateAvailable()) return;
+
+			this.CheckDpiChange();
+
+			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var width = this.GetWidth(ownerRect);
+			var height = this.GetHeight(ownerRect);
+			var flags = SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
+
+			User32.SetWindowPos(this._handle, IntPtr.Zero, 0, 0, width, height, flags);
+		}
+
+		private void UpdateLocationAndSize()
+		{
+			if (!this.GetIsUpdateAvailable()) return;
+
+			this.CheckDpiChange();
+
+			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var left = this.GetLeft(ownerRect);
+			var top = this.GetTop(ownerRect);
+			var width = this.GetWidth(ownerRect);
+			var height = this.GetHeight(ownerRect);
+			var flags = SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
+
+			User32.SetWindowPos(this._handle, IntPtr.Zero, left, top, width, height, flags);
+		}
+
+		private void CheckDpiChange()
+		{
 			if (PerMonitorDpi.IsSupported)
 			{
 				var currentDpi = PerMonitorDpi.GetDpi(this.Owner.Handle);
 				if (currentDpi != this.CurrentDpi)
 				{
-					this.DpiScaleTransform = currentDpi == this._systemDpi
+					this.DpiScaleTransform = currentDpi == this.SystemDpi
 						? Transform.Identity
-						: new ScaleTransform((double)currentDpi.X / this._systemDpi.X, (double)currentDpi.Y / this._systemDpi.Y);
+						: new ScaleTransform((double)currentDpi.X / this.SystemDpi.X, (double)currentDpi.Y / this.SystemDpi.Y);
 					this.CurrentDpi = currentDpi;
+					this.UpdateDpiResources();
 				}
 			}
+		}
 
-			var left = this.GetLeft(positionDpi);
-			var top = this.GetTop(positionDpi);
-			var width = this.GetWidth(positionDpi);
-			var height = this.GetHeight(positionDpi);
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
 
-			User32.SetWindowPos(this._handle, this.Owner.Handle, left, top, width, height, SetWindowPosFlags.SWP_NOACTIVATE);
+			this.Edge = (GlowingEdge)this.GetTemplateChild(PART_GlowingEdge);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -221,14 +291,16 @@ namespace MetroRadiance.Chrome.Primitives
 			this._source = source;
 			this._source.AddHook(this.WndProc);
 			this._handle = source.Handle;
-			this._systemDpi = this.GetSystemDpi() ?? Dpi.Default;
-			this.CurrentDpi = this._systemDpi;
 
-			var wndStyle = User32.GetWindowLongEx(source.Handle);
-			var gclStyle = User32.GetClassLong(source.Handle, ClassLongPtrIndex.GCL_STYLE);
+			this.SystemDpi = this.GetSystemDpi() ?? Dpi.Default;
+			this.CurrentDpi = this.SystemDpi;
+			this.UpdateDpiResources();
 
-			User32.SetWindowLongEx(this._handle, wndStyle | WindowExStyles.WS_EX_TOOLWINDOW);
-			User32.SetClassLong(this._handle, ClassLongPtrIndex.GCL_STYLE, gclStyle | WindowClassStyles.CS_DBLCLKS);
+			var wndStyle = User32.GetWindowLong(this._handle);
+			var wexStyle = User32.GetWindowLongEx(this._handle);
+
+			User32.SetWindowLong(this._handle, wndStyle & ~WindowStyles.WS_SYSMENU);
+			User32.SetWindowLongEx(this._handle, wexStyle | WindowExStyles.WS_EX_TOOLWINDOW);
 
 			var wrapper = this.Owner as WindowWrapper;
 			if (wrapper != null)
@@ -249,14 +321,11 @@ namespace MetroRadiance.Chrome.Primitives
 			this._closed = true;
 		}
 
-		protected abstract int GetLeft(Dpi dpi);
-		protected abstract int GetTop(Dpi dpi);
-		protected abstract int GetWidth(Dpi dpi);
-		protected abstract int GetHeight(Dpi dpi);
-		protected virtual IntPtr? WndProcOverride(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			return null;
-		}
+		protected abstract void UpdateDpiResources();
+		protected abstract int GetLeft(RECT owner);
+		protected abstract int GetTop(RECT owner);
+		protected abstract int GetWidth(RECT owner);
+		protected abstract int GetHeight(RECT owner);
 
 		protected T GetContentValueOrDefault<T>(Func<FrameworkElement, T> valueSelector, T @default)
 		{
@@ -279,38 +348,41 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void OwnerContentRenderedCallback(object sender, EventArgs eventArgs)
 		{
-			if (this._closed) return;
+			var owner = (Window)sender;
+			owner.ContentRendered -= this.OwnerContentRenderedCallback;
 
-			this._ownerPreviewState = this.Owner.WindowState;
+			this._ownerPreviewState = owner.WindowState;
 			this.Show();
-			this.Update();
+			this.UpdateState(forceImmediate: true);
+			this.UpdateLocationAndSize();
 		}
 
 		private void OwnerStateChangedCallback(object sender, EventArgs eventArgs)
 		{
 			if (this._closed) return;
-			this.Update();
+			this.UpdateState();
+			this.UpdateLocation();
 			this._ownerPreviewState = this.Owner.WindowState;
 		}
 
 		private void OwnerLocationChangedCallback(object sender, EventArgs eventArgs)
 		{
-			this.Update();
+			this.UpdateLocation();
 		}
 
-		private void OwnerSizeChangedCallback(object sender, EventArgs eventArgs)
+		protected virtual void OwnerSizeChangedCallback(object sender, EventArgs eventArgs)
 		{
-			this.Update();
+			this.UpdateLocationAndSize();
 		}
 
 		private void OwnerActivatedCallback(object sender, EventArgs eventArgs)
 		{
-			this.Update();
+			this.UpdateState();
 		}
 
 		private void OwnerDeactivatedCallback(object sender, EventArgs eventArgs)
 		{
-			this.Update();
+			this.UpdateState();
 		}
 
 		private void OwnerClosedCallback(object sender, EventArgs eventArgs)
@@ -322,6 +394,11 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			if (msg == (int)WindowsMessages.WM_MOUSEACTIVATE)
 			{
+				if (!this.Owner.IsActive)
+				{
+					this.Owner.Activate();
+				}
+
 				handled = true;
 				return new IntPtr(3);
 			}
@@ -340,28 +417,17 @@ namespace MetroRadiance.Chrome.Primitives
 			}
 			#endif
 
-			return this.WndProcOverride(hwnd, msg, wParam, lParam, ref handled) ?? IntPtr.Zero;
-		}
-
-		private void ChangeDpi(Dpi dpi)
-		{
-			if (!PerMonitorDpi.IsSupported) return;
-
-			this.DpiScaleTransform = dpi == this._systemDpi
-				? Transform.Identity
-				: new ScaleTransform((double)dpi.X / this._systemDpi.X, (double)dpi.Y / this._systemDpi.Y);
-
-			this.CurrentDpi = dpi;
+			return IntPtr.Zero;
 		}
 
 		internal void Resize(SizingMode mode)
 		{
-			if (!this.Owner.IsActive)
-			{
-				this.Owner.Activate();
-			}
-
 			this.Owner.Resize(mode);
+		}
+
+		internal void DoubleClick(SizingMode mode)
+		{
+			this.Owner.DoubleClick(mode);
 		}
 	}
 }

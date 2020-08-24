@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using MetroRadiance.Chrome.Primitives;
 using MetroRadiance.Platform;
 
@@ -15,12 +13,10 @@ namespace MetroRadiance.Chrome
 	/// </summary>
 	public class WindowChrome : DependencyObject
 	{
-		private static readonly HashSet<FrameworkElement> _sizingElements = new HashSet<FrameworkElement>();
-
-		private readonly ChromePart _top = new ChromePart(new TopChromeWindow(), Dock.Top);
-		private readonly ChromePart _left = new ChromePart(new LeftChromeWindow(), Dock.Left);
-		private readonly ChromePart _right = new ChromePart(new RightChromeWindow(), Dock.Right);
-		private readonly ChromePart _bottom = new ChromePart(new BottomChromeWindow(), Dock.Bottom);
+		private readonly TopChromeWindow _top = new TopChromeWindow();
+		private readonly LeftChromeWindow _left = new LeftChromeWindow();
+		private readonly RightChromeWindow _right = new RightChromeWindow();
+		private readonly BottomChromeWindow _bottom = new BottomChromeWindow();
 
 		#region Content wrappers
 
@@ -132,53 +128,6 @@ namespace MetroRadiance.Chrome
 
 		#endregion
 
-		#region SizingMode attached property
-
-		public static readonly DependencyProperty SizingModeProperty = DependencyProperty.RegisterAttached(
-			"SizingMode", typeof(SizingMode), typeof(WindowChrome), new PropertyMetadata(SizingMode.None, SizingModeChangedCallback));
-
-		public static void SetSizingMode(FrameworkElement element, SizingMode value)
-		{
-			element.SetValue(SizingModeProperty, value);
-		}
-
-		public static SizingMode GetSizingMode(FrameworkElement element)
-		{
-			return (SizingMode)element.GetValue(SizingModeProperty);
-		}
-
-		private static void SizingModeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var element = d as FrameworkElement;
-			if (element == null) return;
-
-			var newValue = (SizingMode)e.NewValue;
-			if (newValue != SizingMode.None)
-			{
-				if (_sizingElements.Add(element))
-				{
-					element.PreviewMouseLeftButtonDown += SizingElementButtonDownCallback;
-				}
-			}
-			else
-			{
-				if (_sizingElements.Remove(element))
-				{
-					element.PreviewMouseLeftButtonDown -= SizingElementButtonDownCallback;
-				}
-			}
-		}
-
-		private static void SizingElementButtonDownCallback(object sender, MouseButtonEventArgs args)
-		{
-			var element = sender as FrameworkElement;
-			if (element == null) return;
-
-			(Window.GetWindow(element) as ChromeWindow)?.Resize(GetSizingMode(element));
-		}
-
-		#endregion
-
 		#region Instance attached property
 
 		public static readonly DependencyProperty InstanceProperty = DependencyProperty.RegisterAttached(
@@ -221,10 +170,10 @@ namespace MetroRadiance.Chrome
 		{
 			this.Detach();
 
-			this._top.Window.Attach(window);
-			this._left.Window.Attach(window);
-			this._right.Window.Attach(window);
-			this._bottom.Window.Attach(window);
+			this._top.Attach(window);
+			this._left.Attach(window);
+			this._right.Attach(window);
+			this._bottom.Attach(window);
 
 			this.CanResize = true;
 		}
@@ -236,38 +185,38 @@ namespace MetroRadiance.Chrome
 		{
 			this.Detach();
 
-			this._top.Window.Attach(window);
-			this._left.Window.Attach(window);
-			this._right.Window.Attach(window);
-			this._bottom.Window.Attach(window);
+			this._top.Attach(window);
+			this._left.Attach(window);
+			this._right.Attach(window);
+			this._bottom.Attach(window);
 
 			this.CanResize = false;
 		}
 
 		public void Detach()
 		{
-			this._top.Window.Detach();
-			this._left.Window.Detach();
-			this._right.Window.Detach();
-			this._bottom.Window.Detach();
+			this._top.Detach();
+			this._left.Detach();
+			this._right.Detach();
+			this._bottom.Detach();
 		}
 
 		public void Close()
 		{
 			this.Detach();
 
-			this._top.Window.Close();
-			this._left.Window.Close();
-			this._right.Window.Close();
-			this._bottom.Window.Close();
+			this._top.Close();
+			this._left.Close();
+			this._right.Close();
+			this._bottom.Close();
 		}
 
 		private void UpdateThickness(Thickness thickness)
 		{
-			this._top.Edge.BorderThickness = thickness;
-			this._left.Edge.BorderThickness = thickness;
-			this._right.Edge.BorderThickness = thickness;
-			this._bottom.Edge.BorderThickness = thickness;
+			this._top.BorderThickness = thickness;
+			this._left.BorderThickness = thickness;
+			this._right.BorderThickness = thickness;
+			this._bottom.BorderThickness = thickness;
 
 			var offset = new Thickness(
 				ChromeWindow.Thickness + thickness.Left,
@@ -275,45 +224,10 @@ namespace MetroRadiance.Chrome
 				ChromeWindow.Thickness + thickness.Right,
 				ChromeWindow.Thickness + thickness.Bottom);
 
-			this._top.Window.Offset = offset;
-			this._left.Window.Offset = offset;
-			this._right.Window.Offset = offset;
-			this._bottom.Window.Offset = offset;
-		}
-
-
-		private class ChromePart
-		{
-			private readonly ContentControl _customContentHost;
-
-			public GlowingEdge Edge { get; }
-
-			public ChromeWindow Window { get; }
-
-			public object Content
-			{
-				get { return this._customContentHost.Content; }
-				set
-				{
-					if (this._customContentHost.Content == value) return;
-
-					this._customContentHost.Content = value;
-					this.Window?.Update();
-				}
-			}
-
-			public ChromePart(ChromeWindow window, Dock position)
-			{
-				this._customContentHost = new ContentControl();
-				this.Edge = new GlowingEdge { Position = position, };
-
-				var grid = new Grid();
-				grid.Children.Add(this.Edge);
-				grid.Children.Add(this._customContentHost);
-
-				this.Window = window;
-				this.Window.Content = grid;
-			}
+			this._top.Offset = offset;
+			this._left.Offset = offset;
+			this._right.Offset = offset;
+			this._bottom.Offset = offset;
 		}
 	}
 }
