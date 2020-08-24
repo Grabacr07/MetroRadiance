@@ -26,6 +26,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		public static double Thickness { get; set; } = 8.0;
 
+		private readonly WindowInteropHelper _windowInteropHelper;
 		private HwndSource _source;
 		private IntPtr _handle;
 		private bool _sourceInitialized;
@@ -78,6 +79,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.WindowStartupLocation = WindowStartupLocation.Manual;
 			this.Width = .0;
 			this.Height = .0;
+			this._windowInteropHelper = new WindowInteropHelper(this);
 		}
 
 
@@ -108,6 +110,7 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			this.Detach();
 
+			this._windowInteropHelper.Owner = window.Handle;
 			this.Owner = window;
 			this.Owner.StateChanged += this.OwnerStateChangedCallback;
 			this.Owner.LocationChanged += this.OwnerLocationChangedCallback;
@@ -140,6 +143,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Owner.Closed -= this.OwnerClosedCallback;
 			this.Owner.ContentRendered -= this.OwnerContentRenderedCallback;
 			this.Owner = null;
+			this._windowInteropHelper.Owner = IntPtr.Zero;
 		}
 
 		public void Update()
