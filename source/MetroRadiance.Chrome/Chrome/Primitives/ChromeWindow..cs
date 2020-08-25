@@ -113,7 +113,7 @@ namespace MetroRadiance.Chrome.Primitives
 		public void Attach(IChromeOwner window)
 		{
 			Action<Color> applyAccent = color =>
-				this.Background = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+				this.BorderBrush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
 
 			var disposable = WindowsTheme.Accent.RegisterListener(applyAccent);
 			this.Closed += (sender, e) => disposable.Dispose();
