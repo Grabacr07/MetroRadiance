@@ -49,6 +49,7 @@ namespace MetroRadiance.Chrome.Primitives
 		private IntPtr _handle;
 		private bool _sourceInitialized;
 		private bool _closed;
+		private bool _firstActivated;
 		private WindowState _ownerPreviewState;
 
 		protected Dpi SystemDpi { get; private set; }
@@ -165,6 +166,8 @@ namespace MetroRadiance.Chrome.Primitives
 				owner.ContentRendered -= this.OwnerContentRenderedCallback;
 			}
 			this.Visibility = Visibility.Collapsed;
+			this._firstActivated = false;
+			this._closed = false;
 		}
 
 		private bool GetIsUpdateAvailable()
@@ -191,6 +194,7 @@ namespace MetroRadiance.Chrome.Primitives
 						if (t.IsCompleted)
 						{
 							this.Visibility = Visibility.Visible;
+							this.UpdateLocationAndSizeCore();
 						}
 						else if (t.IsFaulted)
 						{
@@ -207,6 +211,7 @@ namespace MetroRadiance.Chrome.Primitives
 				else
 				{
 					this.Visibility = Visibility.Visible;
+					this.UpdateLocationAndSizeCore();
 				}
 			}
 			else
@@ -217,7 +222,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void UpdateLocation()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
 			this.CheckDpiChange();
 
@@ -231,7 +236,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected void UpdateSize()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
 			if (this.CheckDpiChange())
 			{
@@ -249,7 +254,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void UpdateLocationAndSize()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
 			this.CheckDpiChange();
 			this.UpdateLocationAndSizeCore();
@@ -385,7 +390,6 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			if (this._closed) return;
 			this.UpdateState();
-			this.UpdateLocation();
 			this._ownerPreviewState = this.Owner.WindowState;
 		}
 
@@ -401,12 +405,13 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void OwnerActivatedCallback(object sender, EventArgs eventArgs)
 		{
+			if (!this._firstActivated) return;
+			this._firstActivated = true;
 			this.UpdateState();
 		}
 
 		private void OwnerDeactivatedCallback(object sender, EventArgs eventArgs)
 		{
-			this.UpdateState();
 		}
 
 		private void OwnerClosedCallback(object sender, EventArgs eventArgs)
