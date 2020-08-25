@@ -15,7 +15,17 @@ namespace MetroRadiance.Interop.Win32
 		public static extern void DwmGetWindowAttribute(IntPtr hWnd, DWMWINDOWATTRIBUTE dwAttribute, [Out] out RECT pvAttribute, uint cbAttribute);
 
 		[DllImport("Dwmapi.dll", EntryPoint = "DwmGetWindowAttribute", ExactSpelling = true, PreserveSig = false)]
+		public static extern void DwmGetWindowAttributeAsBoolean(IntPtr hWnd, DWMWINDOWATTRIBUTE dwAttribute, [Out] out bool pvAttribute, uint cbAttribute);
+
+		[DllImport("Dwmapi.dll", EntryPoint = "DwmGetWindowAttribute", ExactSpelling = true, PreserveSig = false)]
 		public static extern void DwmGetWindowAttributeAsRectangle(IntPtr hWnd, DWMWINDOWATTRIBUTE dwAttribute, [Out] out RECT pvAttribute, uint cbAttribute);
+
+		public static bool DwmGetCloaked(IntPtr hWnd)
+		{
+			bool cloaked;
+			DwmGetWindowAttributeAsBoolean(hWnd, DWMWINDOWATTRIBUTE.DWMWA_CLOAKED, out cloaked, (uint)Marshal.SizeOf(typeof(bool)));
+			return cloaked;
+		}
 
 		public static RECT DwmGetCaptionButtonBounds(IntPtr hWnd)
 		{

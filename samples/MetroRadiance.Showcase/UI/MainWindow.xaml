@@ -192,6 +192,15 @@
 
 				<ui:ControlSamples />
 			</TabItem>
+
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="External Chrome"
+							   Style="{StaticResource TabHeaderTextStyleKey}" />
+				</TabItem.Header>
+
+				<ui:ExternalChromeSamples />
+			</TabItem>
 		</TabControl>
 
 		<Grid Grid.Row="2"
