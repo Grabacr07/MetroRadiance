@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -220,7 +221,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 			this.CheckDpiChange();
 
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var left = this.GetLeft(ownerRect);
 			var top = this.GetTop(ownerRect);
 			var flags = SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
@@ -238,7 +239,7 @@ namespace MetroRadiance.Chrome.Primitives
 				return;
 			}
 
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var width = this.GetWidth(ownerRect);
 			var height = this.GetHeight(ownerRect);
 			var flags = SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
@@ -256,7 +257,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void UpdateLocationAndSizeCore()
 		{
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var left = this.GetLeft(ownerRect);
 			var top = this.GetTop(ownerRect);
 			var width = this.GetWidth(ownerRect);
@@ -283,6 +284,18 @@ namespace MetroRadiance.Chrome.Primitives
 				}
 			}
 			return false;
+		}
+
+		private static RECT GetWindowRect(IntPtr hWnd)
+		{
+			try
+			{
+				return Dwmapi.DwmGetExtendedFrameBounds(hWnd);
+			}
+			catch (COMException)
+			{
+				return User32.GetWindowRect(hWnd);
+			}
 		}
 
 		public override void OnApplyTemplate()
