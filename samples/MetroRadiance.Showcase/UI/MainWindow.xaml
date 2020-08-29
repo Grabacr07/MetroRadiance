@@ -17,6 +17,17 @@
 
 	<chrome:WindowChrome.Instance>
 		<chrome:WindowChrome x:Name="WindowChrome">
+			<chrome:WindowChrome.Left>
+				<Border Background="DarkBlue"
+						Padding="24,3"
+						VerticalAlignment="Bottom">
+					<Border.LayoutTransform>
+						<RotateTransform Angle="90" />
+					</Border.LayoutTransform>
+					<TextBlock Text="UI element on Left"
+							   Foreground="White" />
+				</Border>
+			</chrome:WindowChrome.Left>
 			<chrome:WindowChrome.Top>
 				<Border Background="DarkRed"
 						Padding="24,3"
