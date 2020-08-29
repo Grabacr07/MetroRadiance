@@ -48,5 +48,10 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			this.UpdateSize();
 		}
+
+		protected override void ChangeSettings()
+		{
+			this.UpdateLocation();
+		}
 	}
 }

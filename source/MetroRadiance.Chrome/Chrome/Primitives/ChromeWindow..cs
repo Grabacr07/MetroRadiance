@@ -220,7 +220,7 @@ namespace MetroRadiance.Chrome.Primitives
 			}
 		}
 
-		private void UpdateLocation()
+		protected void UpdateLocation()
 		{
 			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
@@ -432,6 +432,13 @@ namespace MetroRadiance.Chrome.Primitives
 				return new IntPtr(3);
 			}
 
+			else if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
+			{
+				this.ChangeSettings();
+				handled = true;
+				return IntPtr.Zero;
+			}
+
 			// Note: Double scaling is avoided on .NET Framework 4.6.2 or later.
 			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
 			{
@@ -446,6 +453,8 @@ namespace MetroRadiance.Chrome.Primitives
 
 			return IntPtr.Zero;
 		}
+
+		protected virtual void ChangeSettings() { }
 
 		internal void Resize(SizingMode mode)
 		{
