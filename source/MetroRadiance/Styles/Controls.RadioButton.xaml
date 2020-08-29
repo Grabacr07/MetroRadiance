@@ -32,23 +32,20 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-						<Border x:Name="radioButtonBorder"
-								BorderBrush="{TemplateBinding BorderBrush}"
-								BorderThickness="{TemplateBinding BorderThickness}"
-								Background="{TemplateBinding Background}"
-								CornerRadius="100"
-								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-								Margin="1,1,2,1">
-							<Grid x:Name="markGrid"
-								  Margin="3">
-								<Ellipse x:Name="optionMark"
-										 MinWidth="5"
-										 MinHeight="5"
-										 Opacity="0"
-										 Fill="{DynamicResource ForegroundBrushKey}" />
-							</Grid>
-						</Border>
+						<Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+							  Margin="1,1,2,1">
+							<Ellipse x:Name="radioButtonBorder"
+									 Fill="{TemplateBinding Background}"
+									 Stroke="{TemplateBinding BorderBrush}"
+									 StrokeThickness="{TemplateBinding BorderThickness}" />
+							<Ellipse x:Name="optionMark"
+									 Margin="4"
+									 MinWidth="5"
+									 MinHeight="5"
+									 Opacity="0"
+									 Fill="{DynamicResource ForegroundBrushKey}" />
+						</Grid>
 						<ContentPresenter x:Name="contentPresenter"
 										  Grid.Column="1"
 										  Content="{TemplateBinding Content}"
@@ -69,7 +66,7 @@
 						</Trigger>
 						<Trigger Property="IsMouseOver"
 								 Value="True">
-							<Setter Property="BorderBrush"
+							<Setter Property="Stroke"
 									TargetName="radioButtonBorder"
 									Value="{DynamicResource AccentBrushKey}" />
 							<Setter Property="Fill"
@@ -78,10 +75,10 @@
 						</Trigger>
 						<Trigger Property="IsEnabled"
 								 Value="False">
-							<Setter Property="BorderBrush"
+							<Setter Property="Stroke"
 									TargetName="radioButtonBorder"
 									Value="{DynamicResource InactiveBorderBrushKey}" />
-							<Setter Property="Background"
+							<Setter Property="Fill"
 									TargetName="radioButtonBorder"
 									Value="Transparent" />
 							<Setter Property="Fill"
@@ -92,10 +89,10 @@
 						</Trigger>
 						<Trigger Property="IsPressed"
 								 Value="True">
-							<Setter Property="Background"
+							<Setter Property="Fill"
 									TargetName="radioButtonBorder"
 									Value="{DynamicResource AccentBrushKey}" />
-							<Setter Property="BorderBrush"
+							<Setter Property="Stroke"
 									TargetName="radioButtonBorder"
 									Value="{DynamicResource AccentBrushKey}" />
 							<Setter Property="Fill"
