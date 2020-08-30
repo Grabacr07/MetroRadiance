@@ -17,13 +17,20 @@ namespace MetroRadiance.Chrome.Primitives
 				new FrameworkPropertyMetadata(nameof(RightChromeWindow)));
 		}
 
+		private int _topScaledBorderThickness = 0;
+		private int _bottomScaledBorderThickness = 0;
+
 		public RightChromeWindow()
 		{
 			this.SizeToContent = SizeToContent.Width;
 		}
 
-		protected override void UpdateDpiResources() { }
-		
+		protected override void UpdateDpiResources()
+		{
+			this._topScaledBorderThickness = this.BorderThickness.Top.DpiRoundX(this.CurrentDpi);
+			this._bottomScaledBorderThickness = this.BorderThickness.Bottom.DpiRoundX(this.CurrentDpi);
+		}
+
 		protected override int GetLeft(RECT owner)
 		{
 			return owner.Right;
@@ -31,7 +38,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override int GetTop(RECT owner)
 		{
-			return owner.Top;
+			return owner.Top - this._topScaledBorderThickness;
 		}
 
 		protected override int GetWidth(RECT owner)
@@ -41,7 +48,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected override int GetHeight(RECT owner)
 		{
-			return owner.Height;
+			return owner.Height + this._topScaledBorderThickness + this._bottomScaledBorderThickness;
 		}
 	}
 }

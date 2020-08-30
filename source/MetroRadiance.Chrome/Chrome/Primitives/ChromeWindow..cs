@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,6 +49,7 @@ namespace MetroRadiance.Chrome.Primitives
 		private IntPtr _handle;
 		private bool _sourceInitialized;
 		private bool _closed;
+		private bool _firstActivated;
 		private WindowState _ownerPreviewState;
 
 		protected Dpi SystemDpi { get; private set; }
@@ -113,7 +115,7 @@ namespace MetroRadiance.Chrome.Primitives
 		public void Attach(IChromeOwner window)
 		{
 			Action<Color> applyAccent = color =>
-				this.Background = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+				this.BorderBrush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
 
 			var disposable = WindowsTheme.Accent.RegisterListener(applyAccent);
 			this.Closed += (sender, e) => disposable.Dispose();
@@ -164,6 +166,8 @@ namespace MetroRadiance.Chrome.Primitives
 				owner.ContentRendered -= this.OwnerContentRenderedCallback;
 			}
 			this.Visibility = Visibility.Collapsed;
+			this._firstActivated = false;
+			this._closed = false;
 		}
 
 		private bool GetIsUpdateAvailable()
@@ -190,6 +194,7 @@ namespace MetroRadiance.Chrome.Primitives
 						if (t.IsCompleted)
 						{
 							this.Visibility = Visibility.Visible;
+							this.UpdateLocationAndSizeCore();
 						}
 						else if (t.IsFaulted)
 						{
@@ -206,6 +211,7 @@ namespace MetroRadiance.Chrome.Primitives
 				else
 				{
 					this.Visibility = Visibility.Visible;
+					this.UpdateLocationAndSizeCore();
 				}
 			}
 			else
@@ -214,13 +220,13 @@ namespace MetroRadiance.Chrome.Primitives
 			}
 		}
 
-		private void UpdateLocation()
+		protected void UpdateLocation()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
 			this.CheckDpiChange();
 
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var left = this.GetLeft(ownerRect);
 			var top = this.GetTop(ownerRect);
 			var flags = SetWindowPosFlags.SWP_NOSIZE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
@@ -230,11 +236,15 @@ namespace MetroRadiance.Chrome.Primitives
 
 		protected void UpdateSize()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
-			this.CheckDpiChange();
+			if (this.CheckDpiChange())
+			{
+				this.UpdateLocationAndSizeCore();
+				return;
+			}
 
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var width = this.GetWidth(ownerRect);
 			var height = this.GetHeight(ownerRect);
 			var flags = SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOACTIVATE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOSENDCHANGING;
@@ -244,11 +254,15 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void UpdateLocationAndSize()
 		{
-			if (!this.GetIsUpdateAvailable()) return;
+			if (!this.GetIsUpdateAvailable() || this._ownerPreviewState != WindowState.Normal) return;
 
 			this.CheckDpiChange();
+			this.UpdateLocationAndSizeCore();
+		}
 
-			var ownerRect = User32.GetWindowRect(this.Owner.Handle);
+		private void UpdateLocationAndSizeCore()
+		{
+			var ownerRect = GetWindowRect(this.Owner.Handle);
 			var left = this.GetLeft(ownerRect);
 			var top = this.GetTop(ownerRect);
 			var width = this.GetWidth(ownerRect);
@@ -258,7 +272,7 @@ namespace MetroRadiance.Chrome.Primitives
 			User32.SetWindowPos(this._handle, IntPtr.Zero, left, top, width, height, flags);
 		}
 
-		private void CheckDpiChange()
+		private bool CheckDpiChange()
 		{
 			if (PerMonitorDpi.IsSupported)
 			{
@@ -270,7 +284,22 @@ namespace MetroRadiance.Chrome.Primitives
 						: new ScaleTransform((double)currentDpi.X / this.SystemDpi.X, (double)currentDpi.Y / this.SystemDpi.Y);
 					this.CurrentDpi = currentDpi;
 					this.UpdateDpiResources();
+					this.UpdateLayout();
+					return true;
 				}
+			}
+			return false;
+		}
+
+		private static RECT GetWindowRect(IntPtr hWnd)
+		{
+			try
+			{
+				return Dwmapi.DwmGetExtendedFrameBounds(hWnd);
+			}
+			catch (COMException)
+			{
+				return User32.GetWindowRect(hWnd);
 			}
 		}
 
@@ -361,7 +390,6 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			if (this._closed) return;
 			this.UpdateState();
-			this.UpdateLocation();
 			this._ownerPreviewState = this.Owner.WindowState;
 		}
 
@@ -377,12 +405,13 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private void OwnerActivatedCallback(object sender, EventArgs eventArgs)
 		{
+			if (!this._firstActivated) return;
+			this._firstActivated = true;
 			this.UpdateState();
 		}
 
 		private void OwnerDeactivatedCallback(object sender, EventArgs eventArgs)
 		{
-			this.UpdateState();
 		}
 
 		private void OwnerClosedCallback(object sender, EventArgs eventArgs)
@@ -403,9 +432,15 @@ namespace MetroRadiance.Chrome.Primitives
 				return new IntPtr(3);
 			}
 
-			#if NET40 || NET45 || NET451 || NET452 || NET46 || NET461
+			else if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
+			{
+				this.ChangeSettings();
+				handled = true;
+				return IntPtr.Zero;
+			}
+
 			// Note: Double scaling is avoided on .NET Framework 4.6.2 or later.
-			if (msg == (int)WindowsMessages.WM_DPICHANGED)
+			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
 			{
 			//	System.Diagnostics.Debug.WriteLine("WM_DPICHANGED: " + this.GetType().Name);
 
@@ -415,10 +450,11 @@ namespace MetroRadiance.Chrome.Primitives
 				handled = true;
 				return IntPtr.Zero;
 			}
-			#endif
 
 			return IntPtr.Zero;
 		}
+
+		protected virtual void ChangeSettings() { }
 
 		internal void Resize(SizingMode mode)
 		{

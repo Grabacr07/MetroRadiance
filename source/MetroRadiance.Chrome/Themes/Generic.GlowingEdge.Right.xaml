@@ -13,9 +13,11 @@
 				<ControlTemplate TargetType="{x:Type chrome:RightGlowingEdge}">
 					<Grid>
 						<Grid.RowDefinitions>
+							<RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Top, Mode=OneTime}" />
 							<RowDefinition Height="{StaticResource TiltedCursorMarginKey}" />
 							<RowDefinition />
 							<RowDefinition Height="{StaticResource TiltedCursorMarginKey}" />
+							<RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Bottom, Mode=OneTime}" />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right, Mode=OneTime}" />
@@ -23,9 +25,11 @@
 						</Grid.ColumnDefinitions>
 
 						<Rectangle Grid.Column="0"
+								   Grid.Row="1"
 								   Grid.RowSpan="3"
 								   Fill="{TemplateBinding BorderBrush}" />
 						<Rectangle Grid.Column="1"
+								   Grid.Row="1"
 								   Grid.RowSpan="3">
 							<Rectangle.Fill>
 								<LinearGradientBrush x:Name="PART_GradientBrush"
@@ -35,19 +39,19 @@
 						</Rectangle>
 
 						<Rectangle x:Name="PART_TopRightThumb"
-								   Grid.Row="0"
+								   Grid.Row="1"
 								   Grid.ColumnSpan="2"
 								   IsEnabled="{TemplateBinding CanResize}"
 								   Cursor="SizeNESW"
 								   Fill="Transparent" />
 						<Rectangle x:Name="PART_RightThumb"
-								   Grid.Row="1"
+								   Grid.Row="2"
 								   Grid.ColumnSpan="2"
 								   IsEnabled="{TemplateBinding CanResize}"
 								   Cursor="SizeWE"
 								   Fill="Transparent" />
 						<Rectangle x:Name="PART_BottomRightThumb"
-								   Grid.Row="2"
+								   Grid.Row="3"
 								   Grid.ColumnSpan="2"
 								   IsEnabled="{TemplateBinding CanResize}"
 								   Cursor="SizeNWSE"

@@ -86,30 +86,30 @@ namespace MetroRadiance.Interop.Win32
 		[DllImport("user32.dll", EntryPoint = "SendMessageW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr SendMessage(IntPtr hWnd, WindowsMessages msg, IntPtr wParam, IntPtr lParam);
 
-		public static WindowClassStyles GetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex)
+		public static IntPtr GetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex)
 		{
 			return Environment.Is64BitProcess
-				? (WindowClassStyles)GetClassLong64(hwnd, nIndex)
-				: (WindowClassStyles)GetClassLong32(hwnd, nIndex);
+				? GetClassLong64(hwnd, nIndex)
+				: GetClassLong32(hwnd, nIndex);
 		}
 
-		[DllImport("user32.dll", EntryPoint = "GetClassLong")]
+		[DllImport("user32.dll", EntryPoint = "GetClassLongW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr GetClassLong32(IntPtr hwnd, ClassLongPtrIndex nIndex);
 
-		[DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
+		[DllImport("user32.dll", EntryPoint = "GetClassLongPtrW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr GetClassLong64(IntPtr hwnd, ClassLongPtrIndex nIndex);
 
-		public static WindowClassStyles SetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex, WindowClassStyles dwNewLong)
+		public static IntPtr SetClassLong(IntPtr hwnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong)
 		{
 			return Environment.Is64BitProcess
-				? (WindowClassStyles)SetClassLong64(hwnd, nIndex, (IntPtr)dwNewLong)
-				: (WindowClassStyles)SetClassLong32(hwnd, nIndex, (IntPtr)dwNewLong);
+				? SetClassLong64(hwnd, nIndex, dwNewLong)
+				: SetClassLong32(hwnd, nIndex, dwNewLong);
 		}
 
-		[DllImport("user32.dll", EntryPoint = "SetClassLong")]
+		[DllImport("user32.dll", EntryPoint = "SetClassLongW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr SetClassLong32(IntPtr hWnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong);
 
-		[DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+		[DllImport("user32.dll", EntryPoint = "SetClassLongPtrW", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
 		public static extern IntPtr SetClassLong64(IntPtr hWnd, ClassLongPtrIndex nIndex, IntPtr dwNewLong);
 
 		[DllImport("user32.dll", EntryPoint = "GetMonitorInfoW", SetLastError = true, ExactSpelling = true)]

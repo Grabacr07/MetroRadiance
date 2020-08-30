@@ -171,9 +171,9 @@ namespace MetroRadiance.Chrome
 			this.Detach();
 
 			this._top.Attach(window);
+			this._bottom.Attach(window);
 			this._left.Attach(window);
 			this._right.Attach(window);
-			this._bottom.Attach(window);
 
 			this.CanResize = true;
 		}
