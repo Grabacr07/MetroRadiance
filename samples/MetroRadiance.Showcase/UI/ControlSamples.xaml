@@ -24,6 +24,8 @@
 					  Margin="4" />
 			<StackPanel Margin="12,0"
 						IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
+				<TextBox Margin="5"
+						 Text="TextBox" />
 				<metro:PromptTextBox Margin="5">
 					<metro:PromptTextBox.Text>
 						<Binding Path="Int32"
