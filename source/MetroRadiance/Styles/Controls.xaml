@@ -9,6 +9,7 @@
 		<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.PasswordBox.xaml" />
 		<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.RadioButton.xaml" />
 		<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.Scrollbar.xaml" />
+		<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.TextBox.xaml" />
 		<ResourceDictionary Source="pack://application:,,,/MetroRadiance;component/Styles/Controls.Tooltip.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
