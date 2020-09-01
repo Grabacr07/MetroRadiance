@@ -104,5 +104,41 @@ namespace MetroRadiance.Properties {
                 return ResourceManager.GetString("FontFamily", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Please enter a value. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NumberRule_ErrorMessage_Empty {
+            get {
+                return ResourceManager.GetString("NumberRule_ErrorMessage_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please enter a value less than or equal to {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NumberRule_ErrorMessage_Max {
+            get {
+                return ResourceManager.GetString("NumberRule_ErrorMessage_Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please enter a value greater than or equal to {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NumberRule_ErrorMessage_Min {
+            get {
+                return ResourceManager.GetString("NumberRule_ErrorMessage_Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please enter a number. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NumberRule_ErrorMessage_NonNumber {
+            get {
+                return ResourceManager.GetString("NumberRule_ErrorMessage_NonNumber", resourceCulture);
+            }
+        }
     }
 }

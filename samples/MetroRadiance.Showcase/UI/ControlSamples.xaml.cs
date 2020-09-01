@@ -27,5 +27,6 @@ namespace MetroRadiance.Showcase.UI
 	public class SampleValues
 	{
 		public int Int32 { get; set; } = 32;
+		public double Double { get; set; } = 7.4;
 	}
 }
