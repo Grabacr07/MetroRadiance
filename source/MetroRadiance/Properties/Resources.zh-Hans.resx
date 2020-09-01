@@ -132,4 +132,16 @@
   <data name="FontFamily" xml:space="preserve">
     <value>Segoe UI, Microsoft YaHei UI, Segoe UI Emoji</value>
   </data>
+  <data name="NumberRule_ErrorMessage_Empty" xml:space="preserve">
+    <value>请输入数值。</value>
+  </data>
+  <data name="NumberRule_ErrorMessage_Max" xml:space="preserve">
+    <value>请输入小于或等于 {0} 的数值。</value>
+  </data>
+  <data name="NumberRule_ErrorMessage_Min" xml:space="preserve">
+    <value>请输入大于或等于 {0} 的数值。</value>
+  </data>
+  <data name="NumberRule_ErrorMessage_NonNumber" xml:space="preserve">
+    <value>请输入数字。</value>
+  </data>
 </root>

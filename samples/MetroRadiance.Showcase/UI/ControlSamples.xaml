@@ -35,6 +35,17 @@
 						</Binding>
 					</metro:PromptTextBox.Text>
 				</metro:PromptTextBox>
+				<metro:PromptTextBox Margin="5">
+					<metro:PromptTextBox.Text>
+						<Binding Path="Double"
+								 UpdateSourceTrigger="PropertyChanged">
+							<Binding.ValidationRules>
+								<metro:DoubleRule Min="-4.9"
+												  Max="9.9" />
+							</Binding.ValidationRules>
+						</Binding>
+					</metro:PromptTextBox.Text>
+				</metro:PromptTextBox>
 				<metro:PromptComboBox Margin="5"
 									  IsEditable="True">
 					<metro:PromptComboBox.Text>

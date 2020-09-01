@@ -12,6 +12,7 @@ namespace MetroRadiance.Showcase
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
+			FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false; // Debug for MetroRadiance.UI.Controls.DoubleRule
 			this.ShutdownMode = ShutdownMode.OnMainWindowClose;
 
 			ThemeService.Current.Register(this, Theme.Windows, Accent.Windows);

@@ -224,11 +224,11 @@
     <Compile Include="UI\Controls\CaptionButtonMode.cs" />
     <Compile Include="UI\Controls\CaptionIcon.cs" />
     <Compile Include="UI\Controls\ExpanderButton.cs" />
-    <Compile Include="UI\Controls\Int32Rule.cs" />
     <Compile Include="UI\Controls\ITabItem.cs" />
     <Compile Include="UI\Controls\IWindowSettings.cs" />
     <Compile Include="UI\Controls\LinkButton.cs" />
     <Compile Include="UI\Controls\MetroWindow.cs" />
+    <Compile Include="UI\Controls\NumberRule.cs" />
     <Compile Include="UI\Controls\ProgressRing.cs" />
     <Compile Include="UI\Controls\PromptComboBox.cs" />
     <Compile Include="UI\Controls\PromptTextBox.cs" />
